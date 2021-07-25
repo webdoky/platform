@@ -12,7 +12,7 @@
           Ресурси для розробників, від розробників
         </h1>
         <div class="flex justify-space-between">
-          <a href="/docs/Web">Веб-технології &#8594;</a>
+          <a href="/en-US/docs/web">Веб-технології &#8594;</a>
         </div>
         
 

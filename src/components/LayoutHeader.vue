@@ -20,7 +20,7 @@
               v-for="link in settings.nav.links"
               :key="link.path"
               :to="link.path"
-              class="block p-1 font-medium nav-link text-ui-typo hover:text-ui-primary sm:ml-4 md:whitespace-no-wrap"
+              class="block p-1 font-medium nav-link text-ui-typo hover:text-ui-primary sm:ml-4 md:whitespace-nowrap"
             >
               {{ link.title }}
             </g-link>

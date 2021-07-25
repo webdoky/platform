@@ -3,7 +3,7 @@
       <div class="flex flex-wrap items-start justify-start">
 
         <div class="order-2 w-full md:w-1/3 sm:pl-4 md:pl-6 lg:pl-8 sticky" style="top: 4rem">
-          <!-- <OnThisPage /> -->
+          <!-- <MdnOnThisPage /> -->
         </div>
 
         <div class="order-1 w-full md:w-2/3">
@@ -44,12 +44,12 @@ query ($id: ID!) {
 </page-query>
 
 <script>
-import OnThisPage from '@/components/OnThisPage.vue';
+import MdnOnThisPage from '@/components/MdnOnThisPage.vue';
 import NextPrevLinks from '@/components/NextPrevLinks.vue';
 
 export default {
   components: {
-    OnThisPage,
+    MdnOnThisPage,
     NextPrevLinks
   },
   

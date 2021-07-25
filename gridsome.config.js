@@ -15,10 +15,11 @@ module.exports = {
     web: process.env.URL_WEB || false,
     twitter: process.env.URL_TWITTER || false,
     github: process.env.URL_GITHUB || false,
+    localeName: 'en-US',
     nav: {
       links: [
-        { path: '/docs/', title: 'Технології' },
-        // { path: '/docs/', title: 'Довідники та керівництва' }
+        { path: '/en-US/docs/web', title: 'Технології' },
+        { path: '/docs/', title: 'Довідники та настанови' }
       ]
     },
     sidebar: [
