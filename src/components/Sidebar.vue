@@ -69,11 +69,11 @@ export default {
     },
     sidebar() {
       return this.$static.metadata.settings.sidebar.find(
-        sidebar => sidebar.name === this.$page.markdownPage.sidebar
+        sidebar => this.$page.markdownPage && sidebar.name === this.$page.markdownPage.sidebar
       );
     },
     showSidebar() {
-      return this.$page.markdownPage.sidebar
+      return this.$page.markdownPage?.sidebar
         && this.sidebar;
     },
     currentPage() {

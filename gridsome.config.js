@@ -18,7 +18,7 @@ module.exports = {
     nav: {
       links: [
         { path: '/docs/', title: 'Технології' },
-        { path: '/docs/', title: 'Довідники та керівництва' }
+        // { path: '/docs/', title: 'Довідники та керівництва' }
       ]
     },
     sidebar: [
@@ -59,6 +59,15 @@ module.exports = {
             '@gridsome/remark-prismjs'
           ]
         }
+      }
+    },
+
+    {
+      use: '@gridsome/source-filesystem',
+      options: {
+        baseDir: '../mdn-content/files',
+        path: '**/*.html',
+        typeName: 'HtmlPage',
       }
     },
 
