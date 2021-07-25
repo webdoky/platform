@@ -63,15 +63,6 @@ module.exports = {
     },
 
     {
-      use: '@gridsome/source-filesystem',
-      options: {
-        baseDir: '../mdn-content/files',
-        path: '**/*.html',
-        typeName: 'HtmlPage',
-      }
-    },
-
-    {
       use: 'gridsome-plugin-tailwindcss',
       options: {
         tailwindConfig: './tailwind.config.js',

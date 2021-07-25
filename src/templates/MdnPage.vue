@@ -7,7 +7,10 @@
         </div>
 
         <div class="order-1 w-full md:w-2/3">
-          <div class="content" v-html="$page.htmlPage.content" />
+          <div class="content">
+            <h1>{{$page.mdnPage.title}}</h1>
+            <div v-html="$page.mdnPage.content" />
+          </div>
 
           <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border">
             <!-- <NextPrevLinks /> -->
@@ -20,7 +23,7 @@
 
 <page-query>
 query ($id: ID!) {
-  htmlPage(id: $id) {
+  mdnPage(id: $id) {
     id
     title
     slug
@@ -28,10 +31,11 @@ query ($id: ID!) {
     content
     browser_compat
   }
-  allHtmlPage{
+  allMdnPage{
     edges {
       node {
         path
+        slug
         title
       }
     }
@@ -50,7 +54,7 @@ export default {
   },
   
   metaInfo() {
-    const title = this.$page.htmlPage.title;
+    const title = this.$page.mdnPage.title;
     const description = '';
 
     return {
