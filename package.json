@@ -10,6 +10,9 @@
     "autoprefixer": "^9",
     "gridsome": "^0.7.0",
     "postcss": "^7",
+    "rehype-autolink-headings": "^5.1.0",
+    "rehype-parse": "^7.0.1",
+    "rehype-stringify": "^8.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {

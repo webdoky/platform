@@ -1,7 +1,18 @@
 const fs = require('fs');
-const parse = require('gray-matter');
+const parseFrontMatter = require('gray-matter');
+const unified = require('unified')
+const rehypeParse = require('rehype-parse')
+const rehypeStringify = require('rehype-stringify')
+const link = require('rehype-autolink-headings')
 
 const walk = require('./src/utils/walk')
+const findHeadings = require('./src/utils/find-headings')
+
+// Prepare HTML parser with necessary plugins
+const processor = unified()
+  .use(rehypeParse, { fragment: true })
+  .use(link) // Wrap headings in links, so they became inteactive
+  .use(rehypeStringify);
 
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
@@ -29,11 +40,18 @@ module.exports = function (api) {
       .map(async path => {
         const input = await fs.promises.readFile(path)
 
-        const parsedInfo = parse(input);
-        const { content } = parsedInfo;
-        // console.log(parsedInfo, path, 'data??')
+        const parsedInfo = parseFrontMatter(input);
+        const { content: htmlContent } = parsedInfo;
+
+        const linkedContent = await processor.process(htmlContent); // wrap headings in links
+
+        // TODO: Find a better way, I don't want to parse this thing twice
+        const ast = processor.parse(linkedContent.contents);
+        const headings = findHeadings(ast);
+
         collection.addNode({
-          content,
+          content: processor.stringify(ast),
+          headings,
           ...parsedInfo.data,
           path: `/${locale}/docs/${parsedInfo.data.slug}`
         });
