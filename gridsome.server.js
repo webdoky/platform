@@ -1,9 +1,14 @@
 const fs = require('fs');
 const parseFrontMatter = require('gray-matter');
-const unified = require('unified')
-const rehypeParse = require('rehype-parse')
-const rehypeStringify = require('rehype-stringify')
-const link = require('rehype-autolink-headings')
+const unified = require('unified');
+const rehypeParse = require('rehype-parse');
+const rehypeStringify = require('rehype-stringify');
+const link = require('rehype-autolink-headings');
+const remarkHtml = require('remark-html');
+const remarkParse = require('remark-parse');
+const remarkSlug = require('remark-slug');
+const remarkExternalLinks = require('remark-external-links');
+const remarkAutolinkHeadings = require('remark-autolink-headings');
 
 const walk = require('./src/utils/walk')
 const findHeadings = require('./src/utils/find-headings')
@@ -13,6 +18,29 @@ const processor = unified()
   .use(rehypeParse, { fragment: true })
   .use(link) // Wrap headings in links, so they became inteactive
   .use(rehypeStringify);
+
+const markdownProcessor = unified()
+  .use(remarkParse)
+  .use([
+    remarkSlug,
+    [remarkExternalLinks, {
+      target: '_blank',
+      rel: ['noopener', 'noreferrer'],
+    }],
+    [remarkAutolinkHeadings, {
+      content: {
+        type: 'element',
+        tagName: 'span',
+        properties: {
+          className: 'icon icon-link'
+        }
+      },
+      linkProperties: {
+        'aria-hidden': 'true'
+      },
+    }]
+  ])
+  .use(remarkHtml)
 
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
@@ -34,8 +62,9 @@ module.exports = function (api) {
       typeName: 'MdnPage',
     });
 
-    const addingNodes = mdnContentFilenames
-      .filter(path => /\.html/.test(path)) // TODO: we'll need images here, + .md too
+    // TODO move this into a custom transformer or smth
+    const htmlPages = mdnContentFilenames
+      .filter(path => /\.html/.test(path)) // TODO: we'll need images here
       .filter(path => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
       .map(async path => {
         const input = await fs.promises.readFile(path)
@@ -55,9 +84,32 @@ module.exports = function (api) {
           ...parsedInfo.data,
           path: `/${locale}/docs/${parsedInfo.data.slug}`
         });
-      })
+      });
 
-    await Promise.all(addingNodes);
+    const mdPages = mdnContentFilenames
+      .filter(path => /\.md/.test(path)) // TODO: we'll need images here
+      .filter(path => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
+      .map(async path => {
+        const input = await fs.promises.readFile(path)
+
+        const parsedInfo = parseFrontMatter(input);
+        const { content: mdContent } = parsedInfo;
+
+        const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
+
+        // TODO: Find a better way, I don't want to parse this thing twice
+        const ast = processor.parse(linkedContent);
+        const headings = findHeadings(ast);
+
+        collection.addNode({
+          content: processor.stringify(ast),
+          headings,
+          ...parsedInfo.data,
+          path: `/${locale}/docs/${parsedInfo.data.slug}`
+        });
+      });
+
+    await Promise.all([...htmlPages, ...mdPages]);
   });
 
   api.createPages(async ({ createPage, graphql }) => {
