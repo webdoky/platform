@@ -9,6 +9,7 @@ const remarkParse = require('remark-parse');
 const remarkSlug = require('remark-slug');
 const remarkExternalLinks = require('remark-external-links');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
+const { CSSRef } = require('./kuma')
 
 const walk = require('./src/utils/walk')
 const findHeadings = require('./src/utils/find-headings')
@@ -42,6 +43,16 @@ const markdownProcessor = unified()
   ])
   .use(remarkHtml)
 
+const runMacros = (content) => {
+  let resultContent = content;
+
+  if (resultContent.indexOf('{{CSSRef}}') >= 0) {
+    resultContent = resultContent.replace('{{CSSRef}}', CSSRef(content));
+  }
+
+  return resultContent
+}
+
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
@@ -62,6 +73,27 @@ module.exports = function (api) {
       typeName: 'MdnPage',
     });
 
+    const addNodeToCollection = ({
+      content,
+      headings,
+      data,
+      path,
+    }) => {
+      let showSidebar = undefined;
+
+      if (content.indexOf('{{CSSRef}}') >= 0) {
+        showSidebar = 'CSSRef';
+      }
+
+      collection.addNode({
+        content: runMacros(content),
+        headings,
+        ...data,
+        path,
+        showSidebar,
+      });
+    }
+
     // TODO move this into a custom transformer or smth
     const htmlPages = mdnContentFilenames
       .filter(path => /\.html/.test(path)) // TODO: we'll need images here
@@ -78,10 +110,10 @@ module.exports = function (api) {
         const ast = processor.parse(linkedContent.contents);
         const headings = findHeadings(ast);
 
-        collection.addNode({
+        addNodeToCollection({
           content: processor.stringify(ast),
           headings,
-          ...parsedInfo.data,
+          data: parsedInfo.data,
           path: `/${locale}/docs/${parsedInfo.data.slug}`
         });
       });
@@ -101,10 +133,10 @@ module.exports = function (api) {
         const ast = processor.parse(linkedContent);
         const headings = findHeadings(ast);
 
-        collection.addNode({
+        addNodeToCollection({
           content: processor.stringify(ast),
           headings,
-          ...parsedInfo.data,
+          data: parsedInfo.data,
           path: `/${locale}/docs/${parsedInfo.data.slug}`
         });
       });
