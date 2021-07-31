@@ -79,10 +79,10 @@ module.exports = function (api) {
       data,
       path,
     }) => {
-      let showSidebar = undefined;
+      let hasSidebar = undefined;
 
       if (content.indexOf('{{CSSRef}}') >= 0) {
-        showSidebar = 'CSSRef';
+        hasSidebar = 'CSSRef';
       }
 
       collection.addNode({
@@ -90,7 +90,7 @@ module.exports = function (api) {
         headings,
         ...data,
         path,
-        showSidebar,
+        hasSidebar,
       });
     }
 

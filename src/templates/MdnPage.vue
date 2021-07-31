@@ -1,5 +1,20 @@
 <template>
-  <Layout>
+  <WebdocPageLayout>
+    <aside
+      v-if="$page.mdnPage.hasSidebar"
+      class="sidebar"
+      :class="{ 'open': sidebarOpen }"
+      :style="sidebarStyle"
+    >
+      <div class="w-full pb-16 bg-ui-background">
+        <WebdocNav @navigate="sidebarOpen = false" v-bind:show-sidebar="$page.mdnPage.hasSidebar" v-bind:all-pages="$page.allMdnPage.edges" v-bind:current-page="$page.mdnPage"  />
+      </div>
+    </aside>
+
+    <div
+      class="w-full pb-24"
+      :class="{'pl-0 lg:pl-12 lg:w-3/4': $page.mdnPage.hasSidebar}"
+    >
       <div class="flex flex-wrap items-start justify-start">
 
         <div class="order-2 w-full md:w-1/3 sm:pl-4 md:pl-6 lg:pl-8 sticky" style="top: 4rem">
@@ -18,7 +33,15 @@
         </div>
 
       </div>
-  </Layout>
+    </div>
+
+    <div v-if="$page.mdnPage.hasSidebar" class="fixed bottom-0 right-0 z-50 p-8 lg:hidden">
+      <button class="p-3 text-white rounded-full shadow-lg bg-ui-primary hover:text-white" @click="sidebarOpen = ! sidebarOpen">
+        <XIcon v-if="sidebarOpen" />
+        <MenuIcon v-else />
+      </button>
+    </div>
+  </WebdocPageLayout>
 </template>
 
 <page-query>
@@ -35,6 +58,7 @@ query ($id: ID!) {
       anchor
     }
     content
+    hasSidebar
     browser_compat
   }
   allMdnPage{
@@ -42,6 +66,7 @@ query ($id: ID!) {
       node {
         path
         slug
+        tags
         title
       }
     }
@@ -52,11 +77,37 @@ query ($id: ID!) {
 <script>
 import MdnOnThisPage from '@/components/MdnOnThisPage.vue';
 import NextPrevLinks from '@/components/NextPrevLinks.vue';
+import { MenuIcon, XIcon } from 'vue-feather-icons';
+import WebdocNav from '@/components/WebdocNav.vue';
 
 export default {
   components: {
     MdnOnThisPage,
-    NextPrevLinks
+    NextPrevLinks,
+    WebdocNav,
+    MenuIcon,
+    XIcon
+  },
+  data() {
+    return {
+      sidebarOpen: false,
+    }
+  },
+   watch: {
+    sidebarOpen: function(isOpen) {
+      document.body.classList.toggle('overflow-hidden', isOpen);
+    }
+  },
+  computed: {
+    sidebarStyle() {
+      return {
+        top: this.headerHeight + 'px',
+        height: `calc(100vh - ${this.headerHeight}px)`
+      }
+    },
+    hasSidebar() {
+      return this.$page && this.headerHeight > 0;
+    }
   },
   
   metaInfo() {
@@ -96,6 +147,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @import 'prism-themes/themes/prism-material-oceanic.css';
+
+.sidebar {
+  @apply fixed bg-ui-background px-4 inset-x-0 bottom-0 w-full border-r border-ui-border overflow-y-auto transition-all z-40;
+  transform: translateX(-100%);
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  @screen lg {
+    @apply w-1/4 px-0 bg-transparent top-0 bottom-auto inset-x-auto sticky z-0;
+    transform: translateX(0);
+  }
+}
 </style>
