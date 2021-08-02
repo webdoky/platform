@@ -9,7 +9,7 @@ const remarkParse = require('remark-parse');
 const remarkSlug = require('remark-slug');
 const remarkExternalLinks = require('remark-external-links');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
-const { CSSRef } = require('./kuma')
+const { CSSRef, JsSidebar } = require('./kuma')
 
 const walk = require('./src/utils/walk')
 const findHeadings = require('./src/utils/find-headings')
@@ -49,6 +49,9 @@ const runMacros = (content) => {
   if (resultContent.indexOf('{{CSSRef}}') >= 0) {
     resultContent = resultContent.replace('{{CSSRef}}', CSSRef(content));
   }
+  if (resultContent.indexOf('{{JsSidebar}}') >= 0) {
+    resultContent = resultContent.replace('{{JsSidebar}}', JsSidebar(content));
+  }
 
   return resultContent
 }
@@ -83,6 +86,9 @@ module.exports = function (api) {
 
       if (content.indexOf('{{CSSRef}}') >= 0) {
         hasSidebar = 'CSSRef';
+      }
+      if (content.indexOf('{{JsSidebar}}') >= 0) {
+        hasSidebar = 'JsSidebar';
       }
 
       collection.addNode({
