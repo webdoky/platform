@@ -65,7 +65,7 @@ module.exports = function (api) {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
-    const mdnContentPath = '../mdn-content/files'; // TODO: move this into config?
+    const mdnContentPath = '../webdoky-content/original-content/files'; // TODO: move this into config?
     const locale = 'en-US'
     const mdnContentFilenames = await walk(mdnContentPath); // TODO: move this to a custom transformer
 
