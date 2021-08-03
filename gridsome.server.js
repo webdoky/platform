@@ -58,6 +58,9 @@ const runMacros = (content) => {
   if (resultContent.indexOf('{{JsSidebar}}') >= 0) {
     resultContent = resultContent.replace('{{JsSidebar}}', JsSidebar(content));
   }
+  if (resultContent.indexOf('{{JSRef}}') >= 0) {
+    resultContent = resultContent.replace('{{JSRef}}', JsSidebar(content));
+  }
 
   return resultContent;
 };
@@ -90,6 +93,9 @@ module.exports = function (api) {
       }
       if (content.indexOf('{{JsSidebar}}') >= 0) {
         hasSidebar = 'JsSidebar';
+      }
+      if (content.indexOf('{{JSRef}}') >= 0) {
+        hasSidebar = 'JSRef';
       }
 
       collection.addNode({
