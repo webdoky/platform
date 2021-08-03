@@ -9,10 +9,10 @@ const remarkParse = require('remark-parse');
 const remarkSlug = require('remark-slug');
 const remarkExternalLinks = require('remark-external-links');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
-const { CSSRef, JsSidebar } = require('./kuma')
+const { CSSRef, JsSidebar } = require('./kuma');
 
-const walk = require('./src/utils/walk')
-const findHeadings = require('./src/utils/find-headings')
+const walk = require('./src/utils/walk');
+const findHeadings = require('./src/utils/find-headings');
 
 // Prepare HTML parser with necessary plugins
 const processor = unified()
@@ -24,24 +24,30 @@ const markdownProcessor = unified()
   .use(remarkParse)
   .use([
     remarkSlug,
-    [remarkExternalLinks, {
-      target: '_blank',
-      rel: ['noopener', 'noreferrer'],
-    }],
-    [remarkAutolinkHeadings, {
-      content: {
-        type: 'element',
-        tagName: 'span',
-        properties: {
-          className: 'icon icon-link'
-        }
+    [
+      remarkExternalLinks,
+      {
+        target: '_blank',
+        rel: ['noopener', 'noreferrer'],
       },
-      linkProperties: {
-        'aria-hidden': 'true'
+    ],
+    [
+      remarkAutolinkHeadings,
+      {
+        content: {
+          type: 'element',
+          tagName: 'span',
+          properties: {
+            className: 'icon icon-link',
+          },
+        },
+        linkProperties: {
+          'aria-hidden': 'true',
+        },
       },
-    }]
+    ],
   ])
-  .use(remarkHtml)
+  .use(remarkHtml);
 
 const runMacros = (content) => {
   let resultContent = content;
@@ -53,8 +59,8 @@ const runMacros = (content) => {
     resultContent = resultContent.replace('{{JsSidebar}}', JsSidebar(content));
   }
 
-  return resultContent
-}
+  return resultContent;
+};
 
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
@@ -69,19 +75,14 @@ module.exports = function (api) {
     addMetadata('settings', require('./gridsome.config').settings);
 
     const mdnContentPath = '../webdoky-content/original-content/files'; // TODO: move this into config?
-    const locale = 'en-US'
+    const locale = 'en-US';
     const mdnContentFilenames = await walk(mdnContentPath); // TODO: move this to a custom transformer
 
     const collection = addCollection({
       typeName: 'MdnPage',
     });
 
-    const addNodeToCollection = ({
-      content,
-      headings,
-      data,
-      path,
-    }) => {
+    const addNodeToCollection = ({ content, headings, data, path }) => {
       let hasSidebar = undefined;
 
       if (content.indexOf('{{CSSRef}}') >= 0) {
@@ -98,14 +99,14 @@ module.exports = function (api) {
         path,
         hasSidebar,
       });
-    }
+    };
 
     // TODO move this into a custom transformer or smth
     const htmlPages = mdnContentFilenames
-      .filter(path => /\.html/.test(path)) // TODO: we'll need images here
-      .filter(path => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
-      .map(async path => {
-        const input = await fs.promises.readFile(path)
+      .filter((path) => /\.html/.test(path)) // TODO: we'll need images here
+      .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
+      .map(async (path) => {
+        const input = await fs.promises.readFile(path);
 
         const parsedInfo = parseFrontMatter(input);
         const { content: htmlContent } = parsedInfo;
@@ -120,15 +121,15 @@ module.exports = function (api) {
           content: processor.stringify(ast),
           headings,
           data: parsedInfo.data,
-          path: `/${locale}/docs/${parsedInfo.data.slug}`
+          path: `/${locale}/docs/${parsedInfo.data.slug}`,
         });
       });
 
     const mdPages = mdnContentFilenames
-      .filter(path => /\.md/.test(path)) // TODO: we'll need images here
-      .filter(path => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
-      .map(async path => {
-        const input = await fs.promises.readFile(path)
+      .filter((path) => /\.md/.test(path)) // TODO: we'll need images here
+      .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
+      .map(async (path) => {
+        const input = await fs.promises.readFile(path);
 
         const parsedInfo = parseFrontMatter(input);
         const { content: mdContent } = parsedInfo;
@@ -143,7 +144,7 @@ module.exports = function (api) {
           content: processor.stringify(ast),
           headings,
           data: parsedInfo.data,
-          path: `/${locale}/docs/${parsedInfo.data.slug}`
+          path: `/${locale}/docs/${parsedInfo.data.slug}`,
         });
       });
 
@@ -153,4 +154,4 @@ module.exports = function (api) {
   api.createPages(async ({ createPage, graphql }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
   });
-}
+};
