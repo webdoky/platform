@@ -43,13 +43,13 @@
       "
       class="pt-0 mt-0 mb-1 text-sm tracking-tight border-none"
     >
-      Inheritance:
+      Успадкування:
     </h3>
     <h3
       v-if="functionInheritanceSections.length"
       class="pt-0 mt-0 mb-1 text-sm tracking-tight border-none"
     >
-      Function:
+      Функця:
     </h3>
     <div
       v-for="(section, index) in functionInheritanceSections"
@@ -80,7 +80,7 @@
       v-if="objectInheritanceSections.length"
       class="pt-0 mt-0 mb-1 text-sm tracking-tight border-none"
     >
-      Object:
+      Об'єкт:
     </h3>
     <div
       v-for="(section, index) in objectInheritanceSections"
