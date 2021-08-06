@@ -81,7 +81,7 @@ import NavSubMenu from '@/components/NavSubMenu';
 import NavItem from '@/components/NavItem';
 import { JSRefLabels } from '../../kuma';
 
-const locale = `/en-US`;
+const locale = `en-US`;
 
 export default {
   components: {
@@ -96,11 +96,11 @@ export default {
     generalLinks() {
       const pages = [
         {
-          path: `${locale}/docs/Web/JavaScript`,
+          path: `/${locale}/docs/Web/JavaScript`,
           title: JSRefLabels['JavaScript'],
         },
         {
-          path: `${locale}/docs/Web/JavaScript/Tutorials`,
+          path: `/${locale}/docs/Web/JavaScript/Tutorials`,
           title: JSRefLabels['Tutorials'],
         },
       ];
@@ -281,7 +281,7 @@ export default {
     refTitleLinks() {
       const pages = [
         {
-          path: `${locale}/docs/Web/JavaScript/Reference`,
+          path: `/${locale}/docs/Web/JavaScript/Reference`,
           title: JSRefLabels['Reference'],
         },
       ];
