@@ -10,6 +10,7 @@ const {
   default: JSRef,
   inheritanceData,
   groupData,
+  navLabels: JSRefNavLabels,
 } = require('./macros/js-ref');
 
 module.exports = {
@@ -20,4 +21,5 @@ module.exports = {
   JSRef,
   inheritanceData,
   groupData,
+  JSRefNavLabels,
 };

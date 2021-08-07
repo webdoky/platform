@@ -39,7 +39,7 @@
 
     <h3
       v-if="
-        functionInheritanceSections.length && objectInheritanceSections.length
+        functionInheritanceSections.length || objectInheritanceSections.length
       "
       class="pt-0 mt-0 mb-1 text-sm tracking-tight border-none"
     >
@@ -113,7 +113,7 @@
 <script>
 import NavSubMenu from '@/components/NavSubMenu';
 import NavItem from '@/components/NavItem';
-import { inheritanceData, groupData } from '../../kuma';
+import { inheritanceData, groupData, JSRefNavLabels } from '../../kuma';
 
 export default {
   components: {
@@ -258,14 +258,14 @@ export default {
 
       return [
         {
-          title: 'properties',
+          title: JSRefNavLabels['properties'],
           items: properties,
           expanded: properties.find(
             ({ path }) => path === this.currentPage.path
           ),
         },
         {
-          title: 'methods',
+          title: JSRefNavLabels['methods'],
           items: methods,
           expanded: methods.find(({ path }) => path === this.currentPage.path),
         },
@@ -279,14 +279,14 @@ export default {
 
         return [
           {
-            title: 'properties',
+            title: JSRefNavLabels['properties'],
             items: objectProperties,
             expanded: objectProperties.find(
               ({ path }) => path === this.currentPage.path
             ),
           },
           {
-            title: 'methods',
+            title: JSRefNavLabels['methods'],
             items: objectMethods,
             expanded: objectMethods.find(
               ({ path }) => path === this.currentPage.path
@@ -305,14 +305,14 @@ export default {
 
         return [
           {
-            title: 'properties',
+            title: JSRefNavLabels['properties'],
             items: functionProperties,
             expanded: functionProperties.find(
               ({ path }) => path === this.currentPage.path
             ),
           },
           {
-            title: 'methods',
+            title: JSRefNavLabels['methods'],
             items: functionMethods,
             expanded: functionMethods.find(
               ({ path }) => path === this.currentPage.path
