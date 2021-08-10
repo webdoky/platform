@@ -18,6 +18,15 @@ const parseArgs = (argumentString) => {
   const { args } = JSON.parse(`{"args":[${argumentString}]}`);
   return args;
 };
+const hasSidebar = ([name]) => {
+  const functionNames = {
+    CSSRef: 'CSSRef',
+    JsSidebar: 'JsSidebar',
+    jsSidebar: 'JsSidebar',
+    JSRef: 'JSRef',
+  };
+  return functionNames[name];
+};
 
 // Prepare HTML parser with necessary plugins
 const processor = unified()
@@ -57,6 +66,7 @@ const markdownProcessor = unified()
 const runMacros = (content) => {
   let resultContent = content;
   const recognizedMacros = [...content.matchAll(matchMacro)];
+  const data = {};
 
   recognizedMacros.map((expression) => {
     const [match, functionName, args] = expression;
@@ -72,9 +82,18 @@ const runMacros = (content) => {
       // don't spend processor cycles on replacing the same strings
       resultContent = resultContent.replace(match, result);
     }
+
+    // add additional data for nav components
+    const sidebarType = hasSidebar([functionName, args]);
+    if (sidebarType) {
+      data.hasSidebar = sidebarType;
+    }
   });
 
-  return resultContent;
+  return {
+    content: resultContent,
+    data,
+  };
 };
 
 // Server API makes it possible to hook into various parts of Gridsome
@@ -98,24 +117,15 @@ module.exports = function (api) {
     });
 
     const addNodeToCollection = ({ content, headings, data, path }) => {
-      let hasSidebar = undefined;
-
-      if (content.indexOf('{{CSSRef}}') >= 0) {
-        hasSidebar = 'CSSRef';
-      }
-      if (content.indexOf('{{JsSidebar}}') >= 0) {
-        hasSidebar = 'JsSidebar';
-      }
-      if (content.indexOf('{{JSRef}}') >= 0) {
-        hasSidebar = 'JSRef';
-      }
+      const { content: processedContent, data: processedData } =
+        runMacros(content);
 
       collection.addNode({
-        content: runMacros(content),
+        content: processedContent,
         headings,
         ...data,
         path,
-        hasSidebar,
+        ...processedData,
       });
     };
 

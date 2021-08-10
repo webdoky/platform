@@ -4,6 +4,7 @@ const {
 } = require('./macros/css-ref');
 const {
   default: JsSidebar,
+  default: jsSidebar,
   navLabels: JSRefLabels,
 } = require('./macros/js-sidebar');
 const {
@@ -18,6 +19,7 @@ module.exports = {
   CSSRef,
   CSSRefLabels,
   JsSidebar,
+  jsSidebar, // compatibility. TODO: maybe rework to ignore case?
   JSRefLabels,
   JSRef,
   inheritanceData,
