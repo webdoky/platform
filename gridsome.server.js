@@ -14,9 +14,20 @@ const kumaMacros = require('./kuma');
 const walk = require('./src/utils/walk');
 const findHeadings = require('./src/utils/find-headings');
 const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
+const matchArgument = /(?:"([^"]+)")|(?:'([^']+)')|(\d+)|(''|"")/g;
 const parseArgs = (argumentString) => {
-  const { args } = JSON.parse(`{"args":[${argumentString}]}`);
-  return args;
+  return [...argumentString.matchAll(matchArgument)].map(
+    ([, str1, str2, num, emptyStr]) => {
+      if (str1 || str2) {
+        return str1 || str2;
+      } else if (num) {
+        return parseInt(num);
+      } else if (emptyStr) {
+        return '';
+      }
+      return undefined;
+    }
+  );
 };
 const hasSidebar = ([name]) => {
   const functionNames = {
@@ -73,7 +84,7 @@ const runMacros = (content) => {
     let result = match; // uninterpolated macros will be visible by default
     if (kumaMacros[functionName]) {
       if (args) {
-        result = kumaMacros[functionName](parseArgs(args));
+        result = kumaMacros[functionName](...parseArgs(args));
       } else {
         result = kumaMacros[functionName]();
       }
