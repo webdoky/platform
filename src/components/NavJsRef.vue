@@ -49,7 +49,7 @@
       v-if="functionInheritanceSections.length"
       class="pt-0 mt-0 mb-1 text-sm tracking-tight border-none"
     >
-      Функця:
+      Функція:
     </h3>
     <div
       v-for="(section, index) in functionInheritanceSections"

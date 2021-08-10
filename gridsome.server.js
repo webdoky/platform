@@ -9,10 +9,15 @@ const remarkParse = require('remark-parse');
 const remarkSlug = require('remark-slug');
 const remarkExternalLinks = require('remark-external-links');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
-const { CSSRef, JsSidebar } = require('./kuma');
+const kumaMacros = require('./kuma');
 
 const walk = require('./src/utils/walk');
 const findHeadings = require('./src/utils/find-headings');
+const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
+const parseArgs = (argumentString) => {
+  const { args } = JSON.parse(`{"args":[${argumentString}]}`);
+  return args;
+};
 
 // Prepare HTML parser with necessary plugins
 const processor = unified()
@@ -51,16 +56,23 @@ const markdownProcessor = unified()
 
 const runMacros = (content) => {
   let resultContent = content;
+  const recognizedMacros = [...content.matchAll(matchMacro)];
 
-  if (resultContent.indexOf('{{CSSRef}}') >= 0) {
-    resultContent = resultContent.replace('{{CSSRef}}', CSSRef(content));
-  }
-  if (resultContent.indexOf('{{JsSidebar}}') >= 0) {
-    resultContent = resultContent.replace('{{JsSidebar}}', JsSidebar(content));
-  }
-  if (resultContent.indexOf('{{JSRef}}') >= 0) {
-    resultContent = resultContent.replace('{{JSRef}}', JsSidebar(content));
-  }
+  recognizedMacros.map((expression) => {
+    const [match, functionName, args] = expression;
+    let result = match; // uninterpolated macros will be visible by default
+    if (kumaMacros[functionName]) {
+      if (args) {
+        result = kumaMacros[functionName](parseArgs(args));
+      } else {
+        result = kumaMacros[functionName]();
+      }
+    }
+    if (result !== match) {
+      // don't spend processor cycles on replacing the same strings
+      resultContent = resultContent.replace(match, result);
+    }
+  });
 
   return resultContent;
 };
