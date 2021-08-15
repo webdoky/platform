@@ -15,6 +15,7 @@ const {
 } = require('./macros/js-ref');
 const { default: ReadOnlyInline } = require('./macros/read-only-inline');
 const { default: Glossary } = require('./macros/glossary');
+const { default: jsxref } = require('./macros/jsxref');
 
 module.exports = {
   CSSRef,
@@ -28,4 +29,5 @@ module.exports = {
   JSRefNavLabels,
   ReadOnlyInline,
   Glossary,
+  jsxref,
 };
