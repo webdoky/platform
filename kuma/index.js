@@ -1,33 +1,33 @@
 const {
-  default: CSSRef,
+  default: cssref,
   navLabels: CSSRefLabels,
 } = require('./macros/css-ref');
 const {
-  default: JsSidebar,
-  default: jsSidebar,
+  default: jssidebar,
   navLabels: JSRefLabels,
 } = require('./macros/js-sidebar');
 const {
-  default: JSRef,
+  default: jsref,
   inheritanceData,
   groupData,
   navLabels: JSRefNavLabels,
 } = require('./macros/js-ref');
-const { default: ReadOnlyInline } = require('./macros/read-only-inline');
-const { default: Glossary } = require('./macros/glossary');
+const { default: readonlyinline } = require('./macros/read-only-inline');
+const { default: glossary } = require('./macros/glossary');
 const { default: jsxref } = require('./macros/jsxref');
 
 module.exports = {
-  CSSRef,
+  cssref,
+  jssidebar,
+  jsref,
+  readonlyinline,
+  glossary,
+  jsxref,
+
+  // TODO: make these pluggable?
   CSSRefLabels,
-  JsSidebar,
-  jsSidebar, // compatibility. TODO: maybe rework to ignore case?
   JSRefLabels,
-  JSRef,
   inheritanceData,
   groupData,
   JSRefNavLabels,
-  ReadOnlyInline,
-  Glossary,
-  jsxref,
 };

@@ -31,12 +31,11 @@ const parseArgs = (argumentString) => {
 };
 const hasSidebar = ([name]) => {
   const functionNames = {
-    CSSRef: 'CSSRef',
-    JsSidebar: 'JsSidebar',
-    jsSidebar: 'JsSidebar',
-    JSRef: 'JSRef',
+    cssref: 'CSSRef',
+    jssidebar: 'JsSidebar',
+    jsref: 'JSRef',
   };
-  return functionNames[name];
+  return functionNames[name.toLowerCase()];
 };
 
 // Prepare HTML parser with necessary plugins
@@ -74,6 +73,11 @@ const markdownProcessor = unified()
   ])
   .use(remarkHtml);
 
+const lookupMacro = (name) => {
+  const lowercaseName = name.toLowerCase();
+  return kumaMacros[lowercaseName] || undefined;
+};
+
 const runMacros = (content) => {
   let resultContent = content;
   const recognizedMacros = [...content.matchAll(matchMacro)];
@@ -82,11 +86,12 @@ const runMacros = (content) => {
   recognizedMacros.map((expression) => {
     const [match, functionName, args] = expression;
     let result = match; // uninterpolated macros will be visible by default
-    if (kumaMacros[functionName]) {
+    const macroFunction = lookupMacro(functionName);
+    if (macroFunction) {
       if (args) {
-        result = kumaMacros[functionName](...parseArgs(args));
+        result = macroFunction(...parseArgs(args));
       } else {
-        result = kumaMacros[functionName]();
+        result = macroFunction();
       }
     }
     if (result !== match) {
