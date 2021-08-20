@@ -12,53 +12,107 @@
           Ресурси для розробників, від розробників
         </h1>
         <div class="flex justify-space-between">
-          <a href="/en-US/docs/web">Веб-технології &#8594;</a>
+          <a :href="`/${targetLocale}/docs/web`">Веб-технології &#8594;</a>
         </div>
-        
-
       </div>
 
-      <div class="pt-8 mx-auto mt-8 border-t md:mt-16 md:pt-16 border-top border-ui-border max-w-screen-sm"></div>
+      <div
+        class="
+          pt-8
+          mx-auto
+          mt-8
+          border-t
+          md:mt-16 md:pt-16
+          border-top border-ui-border
+          max-w-screen-sm
+        "
+      ></div>
 
       <div class="flex flex-wrap justify-center -mx-4">
-        <div class="flex flex-col items-center w-full px-4 mb-8 text-center md:w-1/3">
+        <div
+          class="
+            flex flex-col
+            items-center
+            w-full
+            px-4
+            mb-8
+            text-center
+            md:w-1/3
+          "
+        >
           <ZapIcon size="3x" class="mb-6 text-ui-primary" />
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
             Incredibly Fast
           </h3>
           <p class="text-lg text-left">
-            Powered by Gridsome. Built on Vue. Outputs static files. It wont't get any faster than this. <span class="border-b border-dashed border-ui-primary text-ui-primary">No seriously</span>.
+            Powered by Gridsome. Built on Vue. Outputs static files. It wont't
+            get any faster than this.
+            <span
+              class="border-b border-dashed border-ui-primary text-ui-primary"
+              >No seriously</span
+            >.
           </p>
         </div>
 
-        <div class="flex flex-col items-center w-full px-4 mb-8 text-center md:w-1/3">
+        <div
+          class="
+            flex flex-col
+            items-center
+            w-full
+            px-4
+            mb-8
+            text-center
+            md:w-1/3
+          "
+        >
           <SearchIcon size="3x" class="mb-6 text-ui-primary" />
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
             Instant Search
           </h3>
           <p class="text-lg text-left">
-            All headlines are indexed. Instant search powered by Fuse.js. Find what you are looking for in the <span class="border-b border-dashed border-ui-primary text-ui-primary">blink of an eye</span>.
+            All headlines are indexed. Instant search powered by Fuse.js. Find
+            what you are looking for in the
+            <span
+              class="border-b border-dashed border-ui-primary text-ui-primary"
+              >blink of an eye</span
+            >.
           </p>
         </div>
 
-        <div class="flex flex-col items-center w-full px-4 mb-8 text-center md:w-1/3">
+        <div
+          class="
+            flex flex-col
+            items-center
+            w-full
+            px-4
+            mb-8
+            text-center
+            md:w-1/3
+          "
+        >
           <MoonIcon size="3x" class="mb-6 text-ui-primary" />
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
             Lights out
           </h3>
           <p class="text-lg text-left">
-            Working late at night again? Enable dark mode with the click of a button.
+            Working late at night again? Enable dark mode with the click of a
+            button.
           </p>
         </div>
       </div>
-
     </div>
   </Layout>
 </template>
 
 <script>
 import Logo from '@/components/Logo';
-import { ArrowRightCircleIcon, ZapIcon, CodeIcon, MoonIcon, SearchIcon } from 'vue-feather-icons';
+import {
+  ArrowRightCircleIcon,
+  ZapIcon,
+  CodeIcon,
+  MoonIcon,
+  SearchIcon,
+} from 'vue-feather-icons';
 
 export default {
   components: {
@@ -67,19 +121,20 @@ export default {
     ZapIcon,
     CodeIcon,
     MoonIcon,
-    SearchIcon
+    SearchIcon,
   },
 
   metaInfo() {
     const title = 'Great Documentation starts here';
-    const description = 'DOCC is a starter theme with instant search and dark mode for writing great technical documentation. Based on Gridsome!';
+    const description =
+      'DOCC is a starter theme with instant search and dark mode for writing great technical documentation. Based on Gridsome!';
 
     return {
       title: title,
       meta: [
         {
           name: 'description',
-          content: description
+          content: description,
         },
         {
           key: 'og:title',
@@ -101,10 +156,15 @@ export default {
           name: 'twitter:description',
           content: description,
         },
-      ]
-    }
-  }
-}
+      ],
+    };
+  },
+  computed: {
+    targetLocale() {
+      return process.env.GRIDSOME_TARGET_LOCALE;
+    },
+  },
+};
 </script>
 
 <style>

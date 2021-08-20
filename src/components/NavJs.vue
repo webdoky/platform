@@ -81,7 +81,7 @@ import NavSubMenu from '@/components/NavSubMenu';
 import NavItem from '@/components/NavItem';
 import { JSRefLabels } from '../../kuma';
 
-const locale = `en-US`;
+const locale = process.env.GRIDSOME_TARGET_LOCALE;
 
 export default {
   components: {
@@ -293,33 +293,38 @@ export default {
     },
     refSections() {
       const jsPages = this.pages.filter(
-        ({ path }) => path.indexOf('/en-US/docs/Web/JavaScript/Reference/') >= 0
+        ({ path }) =>
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/`) >= 0
       );
 
       const globalObjectsPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Global_Objects') >=
-          0
+          path.indexOf(
+            `/${locale}/docs/Web/JavaScript/Reference/Global_Objects`
+          ) >= 0
       );
       const operatorsPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Operators') >= 0
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/Operators`) >=
+          0
       );
       const statementsPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Statements') >= 0
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/Statements`) >=
+          0
       );
       const functionsPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Functions') >= 0
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/Functions`) >=
+          0
       );
       const classesPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Classes') >= 0
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/Classes`) >= 0
       );
       const errorsPages = jsPages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Errors') >= 0
+          path.indexOf(`/${locale}/docs/Web/JavaScript/Reference/Errors`) >= 0
       );
 
       const morePages = [

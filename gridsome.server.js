@@ -13,6 +13,15 @@ const kumaMacros = require('./kuma');
 
 const walk = require('./src/utils/walk');
 const findHeadings = require('./src/utils/find-headings');
+
+// TODO: to config
+const pathToOriginalContent = process.env.PATH_TO_ORIGINAL_CONTENT;
+const sourceLocale = process.env.SOURCE_LOCALE;
+const pathToLocalizedContent = process.env.PATH_TO_LOCALIZED_CONTENT;
+const targetLocale = process.env.TARGET_LOCALE;
+
+// TODO: to libs
+
 const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
 const matchArgument = /(?:"([^"]+)")|(?:'([^']+)')|(\d+)|(''|"")/g;
 const parseArgs = (argumentString) => {
@@ -112,6 +121,21 @@ const runMacros = (content) => {
   };
 };
 
+const generateSlugToPathMap = (paths, locale) => {
+  const map = {};
+
+  paths.forEach((path) => {
+    const localPath = path.split(locale.toLowerCase())[1];
+    if (!localPath) {
+      throw new Error(`Failed to get subpath for ${path}`);
+    }
+
+    map[localPath] = path;
+  });
+
+  return map;
+};
+
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
@@ -124,20 +148,34 @@ module.exports = function (api) {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
-    const mdnContentPath = '../webdoky-content/original-content/files'; // TODO: move this into config?
-    const locale = 'en-US';
-    const mdnContentFilenames = await walk(mdnContentPath); // TODO: move this to a custom transformer
+    const originalContentFilenames = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}`
+    ); // TODO: move this to a custom transformer
+    const mapOfOriginalContent = generateSlugToPathMap(
+      originalContentFilenames,
+      sourceLocale
+    );
+    const localizedContentFilenames = await walk(
+      `${pathToLocalizedContent}/${targetLocale.toLowerCase()}`
+    );
+    const mapOfLocalizedContent = generateSlugToPathMap(
+      localizedContentFilenames,
+      targetLocale
+    );
 
     const collection = addCollection({
       typeName: 'MdnPage',
     });
 
-    const addNodeToCollection = ({ content, headings, data, path }) => {
+    const addNodeToCollection = (
+      { content, headings, data, path },
+      hasLocalizedContent = true
+    ) => {
       const { content: processedContent, data: processedData } =
         runMacros(content);
 
       collection.addNode({
-        content: processedContent,
+        content: hasLocalizedContent ? processedContent : '',
         headings,
         ...data,
         path,
@@ -146,14 +184,19 @@ module.exports = function (api) {
     };
 
     // TODO move this into a custom transformer or smth
-    const htmlPages = mdnContentFilenames
+    const htmlPages = Object.keys(mapOfOriginalContent)
       .filter((path) => /\.html/.test(path)) // TODO: we'll need images here
       .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
-      .map(async (path) => {
+      .map(async (key) => {
+        const hasLocalizedContent = mapOfLocalizedContent[key] || false;
+        let path = hasLocalizedContent
+          ? mapOfLocalizedContent[key]
+          : mapOfOriginalContent[key];
+
         const input = await fs.promises.readFile(path);
 
         const parsedInfo = parseFrontMatter(input);
-        const { content: htmlContent } = parsedInfo;
+        const { content: htmlContent, data } = parsedInfo;
 
         const linkedContent = await processor.process(htmlContent); // wrap headings in links
 
@@ -161,18 +204,26 @@ module.exports = function (api) {
         const ast = processor.parse(linkedContent.contents);
         const headings = findHeadings(ast);
 
-        addNodeToCollection({
-          content: processor.stringify(ast),
-          headings,
-          data: parsedInfo.data,
-          path: `/${locale}/docs/${parsedInfo.data.slug}`,
-        });
+        addNodeToCollection(
+          {
+            content: processor.stringify(ast),
+            headings,
+            data,
+            path: `/${targetLocale}/docs/${data.slug}`,
+          },
+          hasLocalizedContent
+        );
       });
 
-    const mdPages = mdnContentFilenames
+    const mdPages = Object.keys(mapOfOriginalContent)
       .filter((path) => /\.md/.test(path)) // TODO: we'll need images here
       .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
-      .map(async (path) => {
+      .map(async (key) => {
+        const hasLocalizedContent = mapOfLocalizedContent[key] || false;
+        let path = hasLocalizedContent
+          ? mapOfLocalizedContent[key]
+          : mapOfOriginalContent[key];
+
         const input = await fs.promises.readFile(path);
 
         const parsedInfo = parseFrontMatter(input);
@@ -184,12 +235,15 @@ module.exports = function (api) {
         const ast = processor.parse(linkedContent);
         const headings = findHeadings(ast);
 
-        addNodeToCollection({
-          content: processor.stringify(ast),
-          headings,
-          data: parsedInfo.data,
-          path: `/${locale}/docs/${parsedInfo.data.slug}`,
-        });
+        addNodeToCollection(
+          {
+            content: processor.stringify(ast),
+            headings,
+            data: parsedInfo.data,
+            path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,
+          },
+          hasLocalizedContent
+        );
       });
 
     await Promise.all([...htmlPages, ...mdPages]);

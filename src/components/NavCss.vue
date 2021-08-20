@@ -94,8 +94,9 @@ import NavSubMenu from '@/components/NavSubMenu';
 import NavItem from '@/components/NavItem';
 import { CSSRefLabels } from '../../kuma';
 
-const learnURL = `/en-US/docs/Learn/`;
-const webCssURL = `/en-US/docs/Web/CSS/`;
+const targetLocale = process.env.GRIDSOME_TARGET_LOCALE;
+const learnURL = `/${targetLocale}/docs/Learn/`;
+const webCssURL = `/${targetLocale}/docs/Web/CSS/`;
 
 export default {
   components: {
@@ -306,7 +307,7 @@ export default {
     },
     refSections() {
       const cssPages = this.pages.filter(
-        ({ path }) => path.indexOf('/en-US/docs/Web/CSS') >= 0
+        ({ path }) => path.indexOf(`/${targetLocale}/docs/Web/CSS`) >= 0
       );
       const standardPages = cssPages.filter(
         ({ tags }) => !tags.includes('Non-standard')

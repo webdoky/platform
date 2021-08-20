@@ -1,4 +1,5 @@
-const refBasePath = `/en-US/docs/Web/JavaScript/Reference/`;
+const locale = process.env.TARGET_LOCALE; // TODO: move this into initilizer
+const refBasePath = `/${locale}/docs/Web/JavaScript/Reference/`;
 const initialSlug = 'Global_Objects';
 const refContentSections = [
   'about',

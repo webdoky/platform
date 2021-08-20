@@ -18,7 +18,7 @@ module.exports = {
     localeName: 'en-US',
     nav: {
       links: [
-        { path: '/en-US/docs/web', title: 'Технології' },
+        { path: `/${process.env.TARGET_LOCALE}/docs/web`, title: 'Технології' },
         { path: '/docs/', title: 'Довідники та настанови' },
       ],
     },

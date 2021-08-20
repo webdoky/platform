@@ -115,6 +115,8 @@ import NavSubMenu from '@/components/NavSubMenu';
 import NavItem from '@/components/NavItem';
 import { inheritanceData, groupData, JSRefNavLabels } from '../../kuma';
 
+const targetLocale = process.env.GRIDSOME_TARGET_LOCALE;
+
 export default {
   components: {
     NavSubMenu,
@@ -187,13 +189,14 @@ export default {
       const result = {};
       const globalObjectsPages = this.pages.filter(
         ({ path }) =>
-          path.indexOf('/en-US/docs/Web/JavaScript/Reference/Global_Objects') >=
-          0
+          path.indexOf(
+            `/${targetLocale}/docs/Web/JavaScript/Reference/Global_Objects`
+          ) >= 0
       );
       source[objectName] = globalObjectsPages.filter(
         ({ path }) =>
           path.indexOf(
-            `/en-US/docs/Web/JavaScript/Reference/Global_Objects/${objectName}/`
+            `/${targetLocale}/docs/Web/JavaScript/Reference/Global_Objects/${objectName}/`
           ) >= 0
       );
       result[objectName] = {
@@ -205,7 +208,7 @@ export default {
         source['iFunction'] = globalObjectsPages.filter(
           ({ path }) =>
             path.indexOf(
-              '/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function'
+              `/${targetLocale}/docs/Web/JavaScript/Reference/Global_Objects/Function`
             ) >= 0
         );
         result['iFunction'] = {
@@ -218,7 +221,7 @@ export default {
         source['iObject'] = globalObjectsPages.filter(
           ({ path }) =>
             path.indexOf(
-              '/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object'
+              `/${targetLocale}/docs/Web/JavaScript/Reference/Global_Objects/Object`
             ) >= 0
         );
         result['iObject'] = {
