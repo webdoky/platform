@@ -19,7 +19,7 @@ module.exports = {
     nav: {
       links: [
         { path: `/${process.env.TARGET_LOCALE}/docs/web`, title: 'Технології' },
-        { path: '/docs/', title: 'Довідники та настанови' },
+        { path: '/docs/', title: 'Про проект' },
       ],
     },
     sidebar: [
@@ -27,17 +27,13 @@ module.exports = {
         name: 'docs',
         sections: [
           {
-            title: 'Getting Started',
+            title: 'Про проект',
             items: [
               '/docs/',
-              '/docs/installation/',
-              '/docs/writing-content/',
-              '/docs/deploying/',
+              '/docs/requirements/',
+              '/docs/review-procedure/',
+              '/docs/glossary/',
             ],
-          },
-          {
-            title: 'Configuration',
-            items: ['/docs/settings/', '/docs/sidebar/'],
           },
         ],
       },

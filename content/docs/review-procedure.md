@@ -1,7 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/requirements'
+prev: '/docs/requirements/'
+next: '/docs/glossary/'
 ---
 
 # Тут опис процедури перевірки pull request'ів

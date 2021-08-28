@@ -1,7 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/glossary'
+prev: '/docs/'
 next: '/docs/review-procedure/'
 ---
 
