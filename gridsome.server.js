@@ -181,12 +181,18 @@ module.exports = function (api) {
       `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/guide`
     );
 
+    const otherSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/`,
+      false
+    );
+
     const originalContentFilenames = [
       ...cssSourcePages,
       ...htmlSourcePages,
       ...javaScriptSourcePages,
       ...svgSourcePages,
       ...guideSourcePages,
+      ...otherSourcePages,
     ];
     // Displaying some general stats
     console.log('rendering pages...');
@@ -196,6 +202,7 @@ module.exports = function (api) {
       'JavaScript Pages': javaScriptSourcePages.length,
       'SVG Pages': svgSourcePages.length,
       Guides: guideSourcePages.length,
+      'Other Pages': otherSourcePages.length,
     });
 
     const mapOfOriginalContent = generateSlugToPathMap(
