@@ -3,6 +3,7 @@ const parseFrontMatter = require('gray-matter');
 const unified = require('unified');
 const rehypeParse = require('rehype-parse');
 const rehypeStringify = require('rehype-stringify');
+const rehypePrism = require('@mapbox/rehype-prism');
 const link = require('rehype-autolink-headings');
 const remarkHtml = require('remark-html');
 const remarkParse = require('remark-parse');
@@ -13,6 +14,7 @@ const kumaMacros = require('./kuma');
 
 const walk = require('./src/utils/walk');
 const findHeadings = require('./src/utils/find-headings');
+const { unescape } = require('./src/utils/html-encoding');
 
 // TODO: to config
 const pathToOriginalContent = process.env.PATH_TO_ORIGINAL_CONTENT;
@@ -24,7 +26,12 @@ const targetLocale = process.env.TARGET_LOCALE;
 
 const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
 const matchArgument = /(?:"([^"]+)")|(?:'([^']+)')|(\d+)|(''|"")/g;
-const parseArgs = (argumentString) => {
+const parseArgs = (initialArgumentString) => {
+  let argumentString = initialArgumentString;
+  if (argumentString[0] === '&') {
+    // Some macros are inside code sections, and their arguments are escaped... twice
+    argumentString = unescape(unescape(initialArgumentString));
+  }
   return [...argumentString.matchAll(matchArgument)].map(
     ([, str1, str2, num, emptyStr]) => {
       if (str1 || str2) {
@@ -51,6 +58,11 @@ const hasSidebar = ([name]) => {
 const processor = unified()
   .use(rehypeParse, { fragment: true })
   .use(link) // Wrap headings in links, so they became inteactive
+  .use(rehypeStringify);
+
+const mdHtmlProcessor = unified()
+  .use(rehypeParse, { fragment: true })
+  .use(rehypePrism) // Syntax highlighting in code blocks
   .use(rehypeStringify);
 
 const markdownProcessor = unified()
@@ -148,9 +160,44 @@ module.exports = function (api) {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
-    const originalContentFilenames = await walk(
-      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}`
-    ); // TODO: move this to a custom transformer
+    // TODO: move this to a custom transformer
+    const cssSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/css`
+    );
+
+    const htmlSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/html`
+    );
+
+    const javaScriptSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/javascript`
+    );
+
+    const svgSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/svg`
+    );
+
+    const guideSourcePages = await walk(
+      `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/guide`
+    );
+
+    const originalContentFilenames = [
+      ...cssSourcePages,
+      ...htmlSourcePages,
+      ...javaScriptSourcePages,
+      ...svgSourcePages,
+      ...guideSourcePages,
+    ];
+    // Displaying some general stats
+    console.log('rendering pages...');
+    console.table({
+      'CSS Pages': cssSourcePages.length,
+      'HTML Pages': htmlSourcePages.length,
+      'JavaScript Pages': javaScriptSourcePages.length,
+      'SVG Pages': svgSourcePages.length,
+      Guides: guideSourcePages.length,
+    });
+
     const mapOfOriginalContent = generateSlugToPathMap(
       originalContentFilenames,
       sourceLocale
@@ -167,6 +214,8 @@ module.exports = function (api) {
       typeName: 'MdnPage',
     });
 
+    let pageCounter = 0;
+
     const addNodeToCollection = (
       { content, headings, data, path },
       hasLocalizedContent = true
@@ -181,6 +230,10 @@ module.exports = function (api) {
         path,
         ...processedData,
       });
+      pageCounter += 1;
+      process.stdout.write(
+        `Processed ${pageCounter} of ${originalContentFilenames.length} pages\r`
+      );
     };
 
     // TODO move this into a custom transformer or smth
@@ -232,12 +285,16 @@ module.exports = function (api) {
         const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
 
         // TODO: Find a better way, I don't want to parse this thing twice
-        const ast = processor.parse(linkedContent);
+        const ast = mdHtmlProcessor.parse(linkedContent);
         const headings = findHeadings(ast);
+
+        const { contents: content } = await mdHtmlProcessor.process(
+          linkedContent
+        );
 
         addNodeToCollection(
           {
-            content: processor.stringify(ast),
+            content,
             headings,
             data: parsedInfo.data,
             path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,

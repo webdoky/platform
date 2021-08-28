@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'prism-themes/themes/prism-material-oceanic.css';
+@import 'prism-themes/themes/prism-material-light.css';
 
 .sidebar {
   @apply fixed bg-ui-background px-4 inset-x-0 bottom-0 w-full border-r border-ui-border overflow-y-auto transition-all z-40;
