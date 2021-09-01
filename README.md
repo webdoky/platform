@@ -1,13 +1,38 @@
-// TBD
+# WebDoky platform
 
-Couple words, just to make it usable for now.
+>> English version of this file should be behind this link (TBD)
 
-This is a cloned [Docc](https://gridsome.org/starters/docc/) template for [Gridsome](https://gridsome.org/), with some customizations.
+## Що це
 
-### How to
+Це генератор статичного вебстайту, побудований на базі [Gridsome](https://gridsome.org/), який відповідальний за функціонал, і зовнішній вигляд проекту WebDoky.
 
-1. Clone this repository somewhere
-2. Enter the project directory
-3. Run `npm i` to install packages
-4. Run `gridsome develop`, or `npx gridsome develop` to run dev server (assuming you may not have gridsome CLI installed globally). At this point it is ready to work with.
-5. Run `gridsome build` (or `npx gridsome build` respectively) to generate static build, which may be then deployed.
+За його вміст відповідає [ось цей](https://github.com/webdoky/content) репозиторій, а для коректної навігації ми користуємося оригінальним [репозиторієм MDN](https://github.com/mdn/content).
+
+## Як це запустити
+
+1. Склонуйте цей репозиторій в будь-яке зручне місце:
+    ```sh
+    git clone git@github.com:webdoky/platform.git webdoky-platform
+    # Або так, якщо ви хочете одразу підтягнути вміст репозиторіїв з текстом
+    git clone --recurse-submodules git@github.com:webdoky/platform.git webdoky-platform
+    ```
+2. Перейдіть всередину і встановіть необхідні залежності:
+    ```sh
+    cd webdoky-platform
+    yarn
+    ```
+3. Підтягніть вміст репозиторіїв з текстами (якщо ви іще не зробили цього раніше):
+    ```sh
+    git submodule update --init --recursive
+    ```
+4. Налаштуйте конфігурацію так, щоб вона вказувала на потрібні репозиторії з текстами. Тут уже робочий файл конфігурації, для початку роботи достатньо перейменувати його з `example-uk.env` у `.env`
+    ```sh
+    cp ./example-uk.env ./.env
+    ```
+5. Для збирання проекту і початку роботи запустіть таку команду
+    ```sh
+    yarn develop
+    # Збирання продуктової версії робиться командою
+    yarn build
+    ```
+6. Все. Gridsome має відрепортувати результат і запропонувати перейти за адресою [http://localhost:8080/](http://localhost:8080/), щоб побачити робочий проект
