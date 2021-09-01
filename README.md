@@ -1,6 +1,6 @@
 # WebDoky platform
 
->> English version of this file should be behind this link (TBD)
+> English version of this file should be behind this link (TBD)
 
 ## Що це
 
@@ -13,14 +13,16 @@
 1. Склонуйте цей репозиторій в будь-яке зручне місце:
     ```sh
     git clone git@github.com:webdoky/platform.git webdoky-platform
-    # Або так, якщо ви хочете одразу підтягнути вміст репозиторіїв з текстом
+    ```
+    Або так, якщо ви хочете одразу підтягнути вміст репозиторіїв з текстом
+    ```sh
     git clone --recurse-submodules git@github.com:webdoky/platform.git webdoky-platform
     ```
 2. Перейдіть всередину і встановіть необхідні залежності:
     ```sh
-    cd webdoky-platform
-    yarn
+    cd webdoky-platform & yarn
     ```
+    > Якщо ця команда викинула помилку &mdash; впевніться, що у вас встановлено NodeJs, NPM та Yarn
 3. Підтягніть вміст репозиторіїв з текстами (якщо ви іще не зробили цього раніше):
     ```sh
     git submodule update --init --recursive
@@ -32,7 +34,9 @@
 5. Для збирання проекту і початку роботи запустіть таку команду
     ```sh
     yarn develop
-    # Збирання продуктової версії робиться командою
+    ```
+    На випадок, якщо вам потрібна продуктова версія, скористайтеся командою
+    ```sh
     yarn build
     ```
 6. Все. Gridsome має відрепортувати результат і запропонувати перейти за адресою [http://localhost:8080/](http://localhost:8080/), щоб побачити робочий проект
