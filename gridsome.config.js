@@ -33,6 +33,7 @@ module.exports = {
               '/docs/requirements/',
               '/docs/review-procedure/',
               '/docs/glossary/',
+              '/docs/licensing/',
             ],
           },
         ],
