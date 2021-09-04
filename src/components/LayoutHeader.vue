@@ -46,36 +46,12 @@
 
         <div class="flex items-center justify-end px-2 sm:px-4">
           <a
-            v-if="settings.web"
-            :href="settings.web"
-            class="hidden ml-3 sm:block"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Website"
-            name="Website"
-          >
-            <GlobeIcon size="1.5x" />
-          </a>
-
-          <a
-            v-if="settings.twitter"
-            :href="settings.twitter"
-            class="hidden ml-3 sm:block"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Twitter"
-            name="Twitter"
-          >
-            <TwitterIcon size="1.5x" />
-          </a>
-
-          <a
             v-if="settings.github"
             :href="settings.github"
             class="sm:ml-3"
             target="_blank"
             rel="noopener noreferrer"
-            title="Github"
+            title="Ми на GitHub"
             name="Github"
           >
             <GithubIcon size="1.5x" />
@@ -115,13 +91,7 @@ query {
 <script>
 import ToggleDarkMode from '@/components/ToggleDarkMode';
 import Logo from '@/components/Logo';
-import {
-  SunIcon,
-  MoonIcon,
-  GlobeIcon,
-  GithubIcon,
-  TwitterIcon,
-} from 'vue-feather-icons';
+import { SunIcon, MoonIcon, GithubIcon } from 'vue-feather-icons';
 
 const Search = () =>
   import(/* webpackChunkName: "search" */ '@/components/Search').catch(
@@ -135,9 +105,7 @@ export default {
     ToggleDarkMode,
     SunIcon,
     MoonIcon,
-    GlobeIcon,
     GithubIcon,
-    TwitterIcon,
   },
 
   computed: {

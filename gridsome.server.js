@@ -224,7 +224,7 @@ module.exports = function (api) {
     let pageCounter = 0;
 
     const addNodeToCollection = (
-      { content, headings, data, path },
+      { content, headings, data, path, originalPath },
       hasLocalizedContent = true
     ) => {
       const { content: processedContent, data: processedData } =
@@ -235,6 +235,7 @@ module.exports = function (api) {
         headings,
         ...data,
         path,
+        originalPath,
         ...processedData,
       });
       pageCounter += 1;
@@ -252,6 +253,7 @@ module.exports = function (api) {
         let path = hasLocalizedContent
           ? mapOfLocalizedContent[key]
           : mapOfOriginalContent[key];
+        const originalFullPath = mapOfOriginalContent[key];
 
         const input = await fs.promises.readFile(path);
 
@@ -270,6 +272,7 @@ module.exports = function (api) {
             headings,
             data,
             path: `/${targetLocale}/docs/${data.slug}`,
+            originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
           },
           hasLocalizedContent
         );
@@ -283,6 +286,7 @@ module.exports = function (api) {
         let path = hasLocalizedContent
           ? mapOfLocalizedContent[key]
           : mapOfOriginalContent[key];
+        const originalFullPath = mapOfOriginalContent[key];
 
         const input = await fs.promises.readFile(path);
 
@@ -305,6 +309,7 @@ module.exports = function (api) {
             headings,
             data: parsedInfo.data,
             path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,
+            originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
           },
           hasLocalizedContent
         );

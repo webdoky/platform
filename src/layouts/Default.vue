@@ -1,21 +1,37 @@
 <template>
   <div class="font-sans antialiased text-ui-typo bg-ui-background">
     <div class="flex flex-col justify-start min-h-screen">
-
       <header
         ref="header"
-        class="sticky top-0 z-10 w-full border-b bg-ui-background border-ui-border"
+        class="
+          sticky
+          top-0
+          z-10
+          w-full
+          border-b
+          bg-ui-background
+          border-ui-border
+        "
         @resize="setHeaderHeight"
       >
         <LayoutHeader />
       </header>
 
-      <main class="container relative flex flex-wrap justify-start flex-1 w-full bg-ui-background">
-
+      <main
+        class="
+          container
+          relative
+          flex flex-wrap
+          justify-start
+          flex-1
+          w-full
+          bg-ui-background
+        "
+      >
         <aside
           v-if="hasSidebar"
           class="sidebar"
-          :class="{ 'open': sidebarOpen }"
+          :class="{ open: sidebarOpen }"
           :style="sidebarStyle"
         >
           <div class="w-full pb-16 bg-ui-background">
@@ -25,17 +41,29 @@
 
         <div
           class="w-full pb-24"
-          :class="{'pl-0 lg:pl-12 lg:w-3/4': hasSidebar}"
+          :class="{ 'pl-0 lg:pl-12 lg:w-3/4': hasSidebar }"
         >
           <slot />
         </div>
-
       </main>
 
+      <footer ref="footer" class="border-t border-ui-border">
+        <LayoutFooter />
+      </footer>
     </div>
 
     <div v-if="hasSidebar" class="fixed bottom-0 right-0 z-50 p-8 lg:hidden">
-      <button class="p-3 text-white rounded-full shadow-lg bg-ui-primary hover:text-white" @click="sidebarOpen = ! sidebarOpen">
+      <button
+        class="
+          p-3
+          text-white
+          rounded-full
+          shadow-lg
+          bg-ui-primary
+          hover:text-white
+        "
+        @click="sidebarOpen = !sidebarOpen"
+      >
         <XIcon v-if="sidebarOpen" />
         <MenuIcon v-else />
       </button>
@@ -52,48 +80,50 @@ query {
 </static-query>
 
 <script>
-import Sidebar from "@/components/Sidebar";
-import LayoutHeader from "@/components/LayoutHeader";
+import Sidebar from '@/components/Sidebar';
+import LayoutHeader from '@/components/LayoutHeader';
+import LayoutFooter from '@/components/LayoutFooter';
 import { MenuIcon, XIcon } from 'vue-feather-icons';
 
 export default {
   components: {
     Sidebar,
     LayoutHeader,
+    LayoutFooter,
     MenuIcon,
-    XIcon
+    XIcon,
   },
   data() {
     return {
       headerHeight: 0,
       sidebarOpen: false,
-    }
+    };
+  },
+  computed: {
+    sidebarStyle() {
+      return {
+        top: this.headerHeight + 'px',
+        height: `calc(100vh - ${this.headerHeight}px)`,
+      };
+    },
+    hasSidebar() {
+      return this.$page && this.headerHeight > 0;
+    },
   },
   watch: {
-    sidebarOpen: function(isOpen) {
+    sidebarOpen: function (isOpen) {
       document.body.classList.toggle('overflow-hidden', isOpen);
-    }
+    },
+  },
+  mounted() {
+    this.setHeaderHeight();
   },
   methods: {
     setHeaderHeight() {
       this.$nextTick(() => {
         this.headerHeight = this.$refs.header.offsetHeight;
       });
-    }
-  },
-  computed: {
-    sidebarStyle() {
-      return {
-        top: this.headerHeight + 'px',
-        height: `calc(100vh - ${this.headerHeight}px)`
-      }
     },
-    hasSidebar() {
-      return this.$page && this.headerHeight > 0;
-    }
-  },
-  mounted() {
-    this.setHeaderHeight();
   },
   metaInfo() {
     return {
@@ -118,9 +148,9 @@ export default {
           name: 'twitter:image',
           content: process.env.SITE_URL + '/logo.jpg',
         },
-      ]
-    }
-  }
+      ],
+    };
+  },
 };
 </script>
 
@@ -140,8 +170,8 @@ html[lights-out] {
   --color-ui-border: theme('colors.gray.800');
   --color-ui-primary: theme('colors.indigo.500');
 
-  pre[class*="language-"],
-  code[class*="language-"] {
+  pre[class*='language-'],
+  code[class*='language-'] {
     @apply bg-ui-border;
   }
 }
@@ -166,7 +196,7 @@ h4 {
 
   a {
     &::before {
-      content: "#";
+      content: '#';
       margin-left: -1em;
       padding-right: 1em;
       @apply text-ui-primary absolute opacity-0 float-left;
@@ -190,7 +220,9 @@ h4 {
   @apply text-lg;
 }
 
-a:not(.active):not(.text-ui-primary):not(.text-white) { @apply text-ui-typo }
+a:not(.active):not(.text-ui-primary):not(.text-white) {
+  @apply text-ui-typo;
+}
 
 p,
 ol,
@@ -206,10 +238,15 @@ blockquote {
     @apply text-ui-primary underline;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply -mt-12 pt-20;
   }
-    
+
   h2 + h3,
   h2 + h2,
   h3 + h3 {
@@ -263,14 +300,14 @@ code {
   @apply px-1 py-1 text-ui-typo bg-ui-sidebar font-mono border-b border-r border-ui-border text-sm rounded;
 }
 
-pre[class*="language-"] {
+pre[class*='language-'] {
   @apply max-w-full overflow-x-auto rounded;
 
   & + p {
     @apply mt-4;
   }
 
-  & > code[class*="language-"] {
+  & > code[class*='language-'] {
     @apply border-none leading-relaxed;
   }
 }
@@ -280,10 +317,17 @@ header {
   backdrop-filter: blur(4px);
 }
 
+footer {
+  a {
+    @apply text-ui-primary underline;
+  }
+}
+
 table {
   @apply text-left mb-6;
 
-  td, th {
+  td,
+  th {
     @apply py-3 px-4;
     &:first-child {
       @apply pl-0;
