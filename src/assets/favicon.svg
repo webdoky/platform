@@ -1,5 +1,4 @@
-<template>
-  <svg :width="getWidth" :height="getHeight" viewBox="0 0 264.58333 264.58334">
+<svg width="80" height="80" viewBox="0 0 264.58333 264.58334">
     <g transform="translate(0,-32.41665)">
       <g transform="matrix(2.4819787,0,0,2.4819787,-4114.7413,672.28013)">
         <path
@@ -16,7 +15,7 @@
             stroke-dashoffset: 0;
             stroke-opacity: 1;
           "
-          stroke="currentColor"
+          stroke="#4f46e5"
         />
         <path
           d="m 1669.7664,-205.51995 c -3.4831,-6e-5 -6.3067,3.45812 -6.3067,7.72402 0,4.2659 2.5563,7.18954 6.3067,7.72402 l 46.9069,10.30393 42.1444,-23.718"
@@ -32,7 +31,7 @@
             stroke-dashoffset: 0;
             stroke-opacity: 1;
           "
-          stroke="currentColor"
+          stroke="#4f46e5"
         />
         <path
           d="m 1669.7664,-220.96799 c -3.4831,-6e-5 -6.3067,3.45812 -6.3067,7.72402 0,4.2659 2.5563,7.18954 6.3067,7.72402 l 22.8809,5.02619 m 13.6936,3.00805 10.3324,2.26969 42.1444,-23.718"
@@ -48,7 +47,7 @@
             stroke-dashoffset: 0;
             stroke-opacity: 1;
           "
-          stroke="currentColor"
+          stroke="#4f46e5"
         />
         <path
           transform="scale(0.26458333)"
@@ -64,8 +63,8 @@
             stroke-dashoffset: 0;
             stroke-opacity: 1;
           "
-          stroke="currentColor"
-          fill="currentColor"
+          stroke="#4f46e5"
+          fill="#4f46e5"
         />
         <path
           d="m 1696.2626,-208.44866 v 15.68601 l 3.4963,-2.17336 3.8743,4.25223 v -16.53646 z"
@@ -77,31 +76,8 @@
             stroke-linejoin: miter;
             stroke-opacity: 1;
           "
-          fill="currentColor"
+          fill="#4f46e5"
         />
       </g>
     </g>
   </svg>
-</template>
-
-<script>
-export default {
-  props: {
-    width: {
-      type: Number,
-      default: 40,
-    },
-  },
-
-  computed: {
-    getWidth() {
-      return this.width;
-    },
-
-    getHeight() {
-      return Math.ceil((this.getWidth / 264.58333) * 264.58333);
-    },
-  },
-};
-</script>
-

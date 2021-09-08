@@ -1,5 +1,9 @@
 <template>
-  <button @click="handleClick" aria-label="Перемкнути темний режим" title="Перемкнути темний режим">
+  <button
+    aria-label="Перемкнути темний режим"
+    title="Перемкнути темний режим"
+    @click="handleClick"
+  >
     <slot :dark="isDarkMode" />
   </button>
 </template>
@@ -10,7 +14,15 @@ export const LIGHTS_OUT = 'lights-out';
 export default {
   data() {
     return {
-      isDarkMode: false
+      isDarkMode: false,
+    };
+  },
+
+  mounted() {
+    if (this.hasInStorage()) {
+      this.toggleDarkMode(this.getFromStorage());
+    } else if (process.isClient && window.matchMedia) {
+      this.toggleDarkMode(this.detectPrefered());
     }
   },
 
@@ -19,7 +31,7 @@ export default {
       const hasDarkMode = document.documentElement.hasAttribute(LIGHTS_OUT);
 
       // Toggle dark mode on click.
-      return this.toggleDarkMode(! hasDarkMode);
+      return this.toggleDarkMode(!hasDarkMode);
     },
 
     toggleDarkMode(shouldBeDark) {
@@ -48,22 +60,9 @@ export default {
 
     getFromStorage() {
       return localStorage.getItem(LIGHTS_OUT) === 'true' ? true : false;
-    }
+    },
   },
-
-  mounted() {
-    if (this.hasInStorage()) {
-      this.toggleDarkMode(
-        this.getFromStorage()
-      );
-    } else if (process.isClient && window.matchMedia) {
-      this.toggleDarkMode(
-        this.detectPrefered()
-      );
-    }
-  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
