@@ -18,7 +18,7 @@ module.exports = {
     localeName: 'en-US',
     nav: {
       links: [
-        { path: `/${process.env.TARGET_LOCALE}/docs/web`, title: 'Технології' },
+        { path: `/${process.env.TARGET_LOCALE}/docs/Web`, title: 'Технології' },
         { path: '/docs/', title: 'Про проект' },
       ],
     },
@@ -66,12 +66,12 @@ module.exports = {
       },
     },
 
-    {
-      use: '@gridsome/plugin-google-analytics',
-      options: {
-        id: process.env.GA_ID ? process.env.GA_ID : 'XX-999999999-9',
-      },
-    },
+    // {
+    //   use: '@gridsome/plugin-google-analytics',
+    //   options: {
+    //     id: process.env.GA_ID ? process.env.GA_ID : 'XX-999999999-9',
+    //   },
+    // },
 
     {
       use: '@gridsome/plugin-sitemap',

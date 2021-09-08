@@ -12,7 +12,7 @@
           Ресурси для розробників, від розробників
         </h1>
         <div class="flex justify-space-between">
-          <a :href="`/${targetLocale}/docs/web`">Веб-технології &#8594;</a>
+          <a :href="`/${targetLocale}/docs/Web`">Веб-технології &#8594;</a>
         </div>
       </div>
 
@@ -106,28 +106,20 @@
 
 <script>
 import Logo from '@/components/Logo';
-import {
-  ArrowRightCircleIcon,
-  ZapIcon,
-  CodeIcon,
-  MoonIcon,
-  SearchIcon,
-} from 'vue-feather-icons';
+import { ZapIcon, MoonIcon, SearchIcon } from 'vue-feather-icons';
 
 export default {
   components: {
     Logo,
-    ArrowRightCircleIcon,
     ZapIcon,
-    CodeIcon,
     MoonIcon,
     SearchIcon,
   },
 
   metaInfo() {
-    const title = 'Great Documentation starts here';
+    const title = 'Про веб, для вебу, у вебі';
     const description =
-      'DOCC is a starter theme with instant search and dark mode for writing great technical documentation. Based on Gridsome!';
+      'Проект Webdoky — це зібрання інформації про технології відкритого вебу. HTML, CSS, JavaScript, та API, як для вебсайтів, так і для прогресивних вебзастосунків';
 
     return {
       title: title,
