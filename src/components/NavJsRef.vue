@@ -137,7 +137,7 @@ export default {
           ({ slug }) =>
             slug === `Web/JavaScript/Reference/Global_Objects/${objectName}`
         ),
-      ];
+      ].filter(Boolean);
 
       return {
         items: generalPages,
