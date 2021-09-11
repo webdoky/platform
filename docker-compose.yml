@@ -1,9 +1,30 @@
 version: '3'
+
 services:
+  traefik:
+    image: traefik:v2.2
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 80:80
+      - 443:443 
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik.yml:/traefik.yml:ro
+
   webdoky.org:
     image: flashspys/nginx-static
+    restart: unless-stopped
     container_name: webdoky.org
-    ports:
-      - 8080:80
+    expose:
+      - 80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.<router>.rule=Host(`webdoky.org`)"
+      - "traefik.http.routers.<router>.entrypoints=<entrypoint>"
+      - "traefik.http.routers.<router>.tls.certresolver=<certresolver>"
     volumes: 
       - ./dist:/static
