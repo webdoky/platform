@@ -9,10 +9,25 @@
           </h2>
         </div>
         <h1 class="text-4xl text-center lg:text-5xl">
-          Ресурси для розробників, від розробників
+          Ресурси і документація. <br />
+          Від розробників — для розробників
         </h1>
-        <div class="flex justify-space-between">
-          <a :href="`/${targetLocale}/docs/Web`">Веб-технології &#8594;</a>
+        <div class="flex justify-space-between p-2">
+          <a
+            class="p-2 mx-5 border-b border-ui-border"
+            :href="`/${targetLocale}/docs/Web/JavaScript`"
+            >JavaScript &#8594;</a
+          >
+          <a
+            class="p-2 mx-5 border-b border-ui-border"
+            :href="`/${targetLocale}/docs/Web/CSS`"
+            >CSS &#8594;</a
+          >
+          <a
+            class="p-2 mx-5 border-b border-ui-border"
+            :href="`/${targetLocale}/docs/Web/HTML`"
+            >HTML &#8594;</a
+          >
         </div>
       </div>
 
@@ -37,12 +52,11 @@
             px-4
             mb-8
             text-center
-            md:w-1/3
+            md:w-2/3
           "
         >
-          <ZapIcon size="3x" class="mb-6 text-ui-primary" />
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
-            Incredibly Fast
+            Що нового
           </h3>
           <p class="text-lg text-left">
             Powered by Gridsome. Built on Vue. Outputs static files. It wont't
@@ -65,34 +79,8 @@
             md:w-1/3
           "
         >
-          <SearchIcon size="3x" class="mb-6 text-ui-primary" />
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
-            Instant Search
-          </h3>
-          <p class="text-lg text-left">
-            All headlines are indexed. Instant search powered by Fuse.js. Find
-            what you are looking for in the
-            <span
-              class="border-b border-dashed border-ui-primary text-ui-primary"
-              >blink of an eye</span
-            >.
-          </p>
-        </div>
-
-        <div
-          class="
-            flex flex-col
-            items-center
-            w-full
-            px-4
-            mb-8
-            text-center
-            md:w-1/3
-          "
-        >
-          <MoonIcon size="3x" class="mb-6 text-ui-primary" />
-          <h3 class="font-bold tracking-wide uppercase text-ui-primary">
-            Lights out
+            Долучитись
           </h3>
           <p class="text-lg text-left">
             Working late at night again? Enable dark mode with the click of a
@@ -117,7 +105,7 @@ export default {
   },
 
   metaInfo() {
-    const title = 'Про веб, для вебу, у вебі';
+    const title = 'Про веб, у вебі, для вебу';
     const description =
       'Проект Webdoky — це зібрання інформації про технології відкритого вебу. HTML, CSS, JavaScript, та API, як для вебсайтів, так і для прогресивних вебзастосунків';
 
