@@ -108,7 +108,9 @@ export default {
     },
     hasSidebar() {
       return (
-        (this.$page.markdownPage || this.$page.mdnPage) && this.headerHeight > 0
+        this.$page &&
+        (this.$page.markdownPage || this.$page.mdnPage) &&
+        this.headerHeight > 0
       );
     },
   },

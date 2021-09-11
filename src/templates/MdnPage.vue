@@ -175,6 +175,7 @@ export default {
   metaInfo() {
     const title = this.$page.mdnPage.title;
     const description = '';
+    const robots = this.$page.mdnPage.content ? 'all' : 'noindex,nofollow';
 
     return {
       title: title,
@@ -202,6 +203,11 @@ export default {
           key: 'twitter:description',
           name: 'twitter:description',
           content: description,
+        },
+        {
+          key: 'robots',
+          name: 'robots',
+          content: robots,
         },
       ],
     };
