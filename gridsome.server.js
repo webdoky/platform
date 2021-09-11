@@ -11,7 +11,9 @@ const remarkSlug = require('remark-slug');
 const remarkExternalLinks = require('remark-external-links');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
 const kumaMacros = require('./kuma');
+const path = require('path');
 
+const externalLinks = require('./src/utils/plugins/external-links');
 const walk = require('./src/utils/walk');
 const findHeadings = require('./src/utils/find-headings');
 const { unescape } = require('./src/utils/html-encoding');
@@ -58,6 +60,10 @@ const hasSidebar = ([name]) => {
 const processor = unified()
   .use(rehypeParse, { fragment: true })
   .use(link) // Wrap headings in links, so they became inteactive
+  .use(externalLinks, {
+    target: '_blank',
+    rel: ['noopener', 'noreferrer'],
+  })
   .use(rehypeStringify);
 
 const mdHtmlProcessor = unified()
@@ -89,6 +95,19 @@ const markdownProcessor = unified()
         linkProperties: {
           'aria-hidden': 'true',
         },
+      },
+    ],
+  ])
+  .use(remarkHtml);
+
+const changelogProcessor = unified()
+  .use(remarkParse)
+  .use([
+    [
+      remarkExternalLinks,
+      {
+        target: '_blank',
+        rel: ['noopener', 'noreferrer'],
       },
     ],
   ])
@@ -315,7 +334,40 @@ module.exports = function (api) {
         );
       });
 
-    await Promise.all([...htmlPages, ...mdPages]);
+    const changelogResolver = async () => {
+      const changeLogPath = path.resolve(
+        `${pathToLocalizedContent}/../CHANGELOG.md`
+      );
+      const input = await fs.promises.readFile(changeLogPath);
+
+      const ast = await changelogProcessor.parse(input);
+
+      const headingIndex = ast.children.findIndex(
+        ({ type, depth }) => type === 'heading' && depth === 2
+      );
+
+      ast.children = ast.children
+        .filter(
+          (_a, index) => index === headingIndex || index === headingIndex + 1
+        )
+        .map((node) => ({ ...node, depth: 4 }));
+
+      const content = changelogProcessor.stringify(ast);
+
+      const { contents: contentWithProcessedLinks } = await processor.process(
+        content
+      );
+
+      const changelogCollection = addCollection({
+        typeName: 'changelog',
+      });
+
+      changelogCollection.addNode({
+        content: contentWithProcessedLinks,
+      });
+    };
+
+    await Promise.all([...htmlPages, ...mdPages, changelogResolver()]);
   });
 
   api.createPages(async ({ createPage, graphql }) => {

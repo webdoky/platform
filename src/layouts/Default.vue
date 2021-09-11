@@ -107,7 +107,9 @@ export default {
       };
     },
     hasSidebar() {
-      return this.$page && this.headerHeight > 0;
+      return (
+        (this.$page.markdownPage || this.$page.mdnPage) && this.headerHeight > 0
+      );
     },
   },
   watch: {

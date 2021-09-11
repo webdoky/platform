@@ -43,48 +43,39 @@
         "
       ></div>
 
-      <div class="flex flex-wrap justify-center -mx-4">
-        <div
-          class="
-            flex flex-col
-            items-center
-            w-full
-            px-4
-            mb-8
-            text-center
-            md:w-2/3
-          "
-        >
-          <h3 class="font-bold tracking-wide uppercase text-ui-primary">
+      <div class="section-info flex flex-wrap justify-center -mx-4">
+        <div class="flex flex-col w-full px-4 mb-8 md:w-2/3">
+          <h3 class="font-bold tracking-wide uppercase mb-0 text-ui-primary">
             Що нового
           </h3>
-          <p class="text-lg text-left">
-            Powered by Gridsome. Built on Vue. Outputs static files. It wont't
-            get any faster than this.
-            <span
-              class="border-b border-dashed border-ui-primary text-ui-primary"
-              >No seriously</span
-            >.
+          <p class="mb-0">
+            Найсвіжіші оновлення з нашого
+            <a
+              href="https://github.com/webdoky/content/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >репозиторію</a
+            >
           </p>
+          <div class="border-ui-border w-1/4 border-b mb-5 mt-1"></div>
+
+          <div
+            v-for="(edge, index) in $page.allChangelog.edges"
+            :key="index"
+            class="changelog"
+            v-html="edge.node.content"
+          />
         </div>
 
-        <div
-          class="
-            flex flex-col
-            items-center
-            w-full
-            px-4
-            mb-8
-            text-center
-            md:w-1/3
-          "
-        >
+        <div class="flex flex-col w-full px-4 mb-8 md:w-1/3">
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
             Долучитись
           </h3>
           <p class="text-lg text-left">
-            Working late at night again? Enable dark mode with the click of a
-            button.
+            WebDoky — це відкритий проект, і будь-хто може долучитися і
+            допомогти нам робити вебдокументацію доступною для україномовних
+            читачів.
+            <a href="/docs/">Докладніше — в розділі "Про проект"</a>
           </p>
         </div>
       </div>
@@ -92,16 +83,24 @@
   </Layout>
 </template>
 
+<page-query>
+query {
+  allChangelog {
+    edges {
+      node {
+        content
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
 import Logo from '@/components/Logo';
-import { ZapIcon, MoonIcon, SearchIcon } from 'vue-feather-icons';
 
 export default {
   components: {
     Logo,
-    ZapIcon,
-    MoonIcon,
-    SearchIcon,
   },
 
   metaInfo() {
@@ -150,5 +149,11 @@ export default {
 <style>
 .home-links a {
   margin-right: 1rem;
+}
+.section-info a {
+  text-decoration: underline;
+}
+.changelog li {
+  margin-bottom: 0.5em;
 }
 </style>
