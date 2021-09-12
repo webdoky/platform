@@ -17,7 +17,7 @@
           <p class="mb-0.5 text-sm">
             За авторством
             <a
-              href="https://github.com/webdoky"
+              href="https://github.com/webdoky/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -53,7 +53,7 @@
           <p class="mb-0.5 text-sm">
             Перекладено і адаптовано
             <a
-              href="https://github.com/webdoky"
+              href="https://github.com/webdoky/"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -91,6 +91,12 @@ export default {
           content: description,
         },
       ],
+      link: [
+        {
+          rel: 'canonical',
+          href: `${process.env.GRIDSOME_BASE_PATH}${this.$page.markdownPage.path}`,
+        },
+      ],
     };
   },
 };

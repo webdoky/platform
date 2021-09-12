@@ -210,6 +210,12 @@ export default {
           content: robots,
         },
       ],
+      link: [
+        {
+          rel: 'canonical',
+          href: `${process.env.GRIDSOME_BASE_PATH}${this.$page.mdnPage.path}/`,
+        },
+      ],
     };
   },
 };

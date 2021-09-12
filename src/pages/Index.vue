@@ -15,17 +15,17 @@
         <div class="flex justify-space-between p-2">
           <a
             class="p-2 mx-5 border-b border-ui-border"
-            :href="`/${targetLocale}/docs/Web/JavaScript`"
+            :href="`/${targetLocale}/docs/Web/JavaScript/`"
             >JavaScript &#8594;</a
           >
           <a
             class="p-2 mx-5 border-b border-ui-border"
-            :href="`/${targetLocale}/docs/Web/CSS`"
+            :href="`/${targetLocale}/docs/Web/CSS/`"
             >CSS &#8594;</a
           >
           <a
             class="p-2 mx-5 border-b border-ui-border"
-            :href="`/${targetLocale}/docs/Web/HTML`"
+            :href="`/${targetLocale}/docs/Web/HTML/`"
             >HTML &#8594;</a
           >
         </div>
@@ -134,6 +134,12 @@ export default {
           key: 'twitter:description',
           name: 'twitter:description',
           content: description,
+        },
+      ],
+      link: [
+        {
+          rel: 'canonical',
+          href: `${process.env.GRIDSOME_BASE_PATH}/`,
         },
       ],
     };

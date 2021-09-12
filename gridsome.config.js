@@ -10,7 +10,9 @@ module.exports = {
     favicon: './src/assets/favicon.png',
     touchicon: './src/assets/favicon.png',
   },
-  siteUrl: process.env.SITE_URL ? process.env.SITE_URL : 'https://example.com',
+  siteUrl: process.env.GRIDSOME_BASE_PATH
+    ? process.env.GRIDSOME_BASE_PATH
+    : 'https://example.com',
   settings: {
     web: process.env.URL_WEB || false,
     twitter: process.env.URL_TWITTER || false,
@@ -18,7 +20,10 @@ module.exports = {
     localeName: 'en-US',
     nav: {
       links: [
-        { path: `/${process.env.TARGET_LOCALE}/docs/Web`, title: 'Технології' },
+        {
+          path: `/${process.env.TARGET_LOCALE}/docs/Web/`,
+          title: 'Технології',
+        },
         { path: '/docs/', title: 'Про проект' },
       ],
     },
@@ -66,12 +71,14 @@ module.exports = {
       },
     },
 
-    // {
-    //   use: '@gridsome/plugin-google-analytics',
-    //   options: {
-    //     id: process.env.GA_ID ? process.env.GA_ID : 'XX-999999999-9',
-    //   },
-    // },
+    process.env.GOOGLE_ANALYTICS_ID && {
+      use: 'gridsome-plugin-gtag',
+      options: {
+        config: {
+          id: process.env.GOOGLE_ANALYTICS_ID,
+        },
+      },
+    },
 
     {
       use: '@gridsome/plugin-sitemap',

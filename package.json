@@ -11,6 +11,7 @@
     "autoprefixer": "^9",
     "extend": "^3.0.2",
     "gridsome": "^0.7.0",
+    "gridsome-plugin-gtag": "^0.1.10",
     "is-absolute-url": "^3.0.3",
     "postcss": "^7",
     "rehype-autolink-headings": "^5.1.0",
@@ -20,7 +21,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "devDependencies": {
-    "@gridsome/plugin-google-analytics": "^0.1.0",
     "@gridsome/plugin-sitemap": "^0.2.3",
     "@gridsome/remark-prismjs": "^0.3.0",
     "@gridsome/source-filesystem": "^0.6.2",
