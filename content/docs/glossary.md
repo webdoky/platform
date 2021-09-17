@@ -1,7 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/review-procedure/'
+prev: '/docs/translation/'
+next: '/docs/licensing/'
 ---
 
 # Глосарій

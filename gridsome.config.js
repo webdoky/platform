@@ -35,8 +35,7 @@ module.exports = {
             title: 'Про проект',
             items: [
               '/docs/',
-              '/docs/requirements/',
-              '/docs/review-procedure/',
+              '/docs/translation/',
               '/docs/glossary/',
               '/docs/licensing/',
             ],

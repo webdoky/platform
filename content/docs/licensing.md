@@ -1,8 +1,8 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/'
-next: '/docs/review-procedure/'
+prev: '/docs/glossary/'
+next: '/docs/'
 ---
 
 # Ліцензії на вміст WebDoky

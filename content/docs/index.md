@@ -1,7 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-next: '/docs/requirements/'
+next: '/docs/translation/'
 ---
 
 # Пара слів про нас
