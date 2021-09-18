@@ -31,9 +31,9 @@ git clone git@github.com:%ваш_акаунт%/content.git webdoky-content
 
 ## Переклад
 
-> **Перед початком:** слід розуміти, що файлова структура репозиторію з текстами повністю відповідає структурі навігації. Наприклад, текст статті, яка доступна за посиланням `/uk/docs/Web/JavaScript/Reference/Global_Objects/Array`, буде знаходитись тут [https://github.com/webdoky/content/blob/master/files/uk/web/javascript/reference/global_objects/array/index.md](https://github.com/webdoky/content/blob/master/files/uk/web/javascript/reference/global_objects/array/index.md). Це, в свою чергу, повністю відповідає структурі репозиторію MDN, тобто оригінал статті знаходиться тут [https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/index.md](https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/index.md)
+> **Перед початком:** слід розуміти, що файлова структура репозиторію з текстами повністю відповідає структурі навігації. Наприклад, текст статті, яка доступна за посиланням `/uk/docs/Web/JavaScript/Reference/Global_Objects/Array`, буде знаходитись тут [https://github.com/webdoky/content/blob/master/files/uk/web/javascript/reference/global_objects/array/index.md](https://github.com/webdoky/content/blob/master/files/uk/web/javascript/reference/global_objects/array/index.md). Це, своєю чергою, повністю відповідає структурі репозиторію MDN, тобто оригінал статті знаходиться тут [https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/index.md](https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/index.md)
 
-1. Виберіть текст, який ви хочете перекласти. Оберіть файл з репозиторію з оригінальним текстом [https://github.com/mdn/content/](https://github.com/mdn/content/), і створіть його відповідник всередині раніше склонованого нашого репозиторію [https://github.com/webdoky/content](https://github.com/webdoky/content). За потреби створіть необхідні проміжні каталоги. Якщо фай вже існує — просто перейдіть до кроку 2.
+1. Виберіть текст, який ви хочете перекласти. Оберіть файл з репозиторію з оригінальним текстом [https://github.com/mdn/content/](https://github.com/mdn/content/), і створіть його відповідник всередині раніше клонованого нашого репозиторію [https://github.com/webdoky/content](https://github.com/webdoky/content). За потреби створіть необхідні проміжні каталоги. Якщо файл вже існує — просто перейдіть до кроку 2.
 
 > **Зауваження:** Спільнота MDN WebDocs зараз у процесі міграції статей з HTML формату у markdown. Бажано підтримувати цю тенденцію.
 
@@ -43,7 +43,7 @@ git clone git@github.com:%ваш_акаунт%/content.git webdoky-content
 	- З коду перекладаються коментарі (назви змінних чи функцій перекладати не потрібно)
 	- Під час перекладу посилань слід враховувати, що локаль `en-US` в тілі посилання також міняється на `uk`
 
-> **Зауваження:** в тілі статті будуть траплятися вставки коду, як от `{{jsxref("Array.prototype.concat()")}}`. Це вказівник на вміст, який буде вставлено в це місце статті на етапі збирання проекту, окремі частини яких також потрібно перекладати. В разі виникнення запитань щодо цього можна задати запитання в нашому робочому чаті.
+> **Зауваження:** в тілі статті будуть траплятися вставки коду, як от `{{jsxref("Array.prototype.concat()")}}`. Це вказівник на вміст, який буде вставлено в це місце статті на етапі збирання проєкту, окремі частини яких також потрібно перекладати. В разі виникнення запитань зверніться до нашого робочого чату.
 
 ## Фіналізація
 

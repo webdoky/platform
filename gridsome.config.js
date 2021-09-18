@@ -24,7 +24,7 @@ module.exports = {
           path: `/${process.env.TARGET_LOCALE}/docs/Web/`,
           title: 'Технології',
         },
-        { path: '/docs/', title: 'Про проект' },
+        { path: '/docs/', title: 'Про проєкт' },
       ],
     },
     sidebar: [
@@ -32,7 +32,7 @@ module.exports = {
         name: 'docs',
         sections: [
           {
-            title: 'Про проект',
+            title: 'Про проєкт',
             items: [
               '/docs/',
               '/docs/translation/',

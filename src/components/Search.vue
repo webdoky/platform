@@ -123,6 +123,22 @@ query Search {
       }
     }
   }
+  allMdnPage {
+    edges {
+      node {
+        path
+        slug
+        tags
+        title
+        content
+        headings {
+          depth
+          value
+          anchor
+        }
+      }
+    }
+  }
 }
 </static-query>
 
@@ -154,12 +170,16 @@ export default {
     },
     headings() {
       let result = [];
-      const allPages = this.$static.allMarkdownPage.edges.map(
+      const allDocPages = this.$static.allMarkdownPage.edges.map(
         (edge) => edge.node
       );
 
+      const allMdnPages = this.$static.allMdnPage.edges
+        .map((edge) => edge.node)
+        .filter((node) => node.content); // filter out pages, that are not translated yet
+
       // Create the array of all headings of all pages.
-      allPages.forEach((page) => {
+      [...allDocPages, ...allMdnPages].forEach((page) => {
         page.headings.forEach((heading) => {
           result.push({
             ...heading,

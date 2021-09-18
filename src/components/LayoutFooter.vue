@@ -51,7 +51,7 @@
             >).
           </p>
           <p class="mb-0.5 text-sm">
-            Перекладено і адаптовано
+            Перекладено й адаптовано
             <a
               href="https://github.com/webdoky/"
               target="_blank"
