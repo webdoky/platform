@@ -1,6 +1,7 @@
 <template>
   <WebdocPageLayout>
     <main
+      ref="mainContent"
       class="
         container
         relative
@@ -13,7 +14,13 @@
     >
       <aside
         v-if="$page.mdnPage.hasSidebar"
-        class="sidebar"
+        class="
+          sidebar
+          border-t
+          max-h-full
+          border-ui-border
+          lg:border-t-0 lg:max-h-auto
+        "
         :class="{ open: sidebarOpen }"
         :style="sidebarStyle"
       >
@@ -150,6 +157,7 @@ export default {
   data() {
     return {
       sidebarOpen: false,
+      headerHeight: 0,
     };
   },
   computed: {
@@ -169,6 +177,16 @@ export default {
   watch: {
     sidebarOpen: function (isOpen) {
       document.body.classList.toggle('overflow-hidden', isOpen);
+    },
+  },
+  mounted() {
+    this.setHeaderHeight();
+  },
+  methods: {
+    setHeaderHeight() {
+      this.$nextTick(() => {
+        this.headerHeight = this.$refs.mainContent.offsetTop;
+      });
     },
   },
 

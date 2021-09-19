@@ -230,6 +230,7 @@ code {
 }
 
 pre[class*='language-'] {
+  z-index: 0;
   @apply max-w-full overflow-x-auto rounded;
 
   & + p {
