@@ -69,9 +69,14 @@
               </div>
             </div>
 
-            <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border">
-              <!-- <NextPrevLinks /> -->
-            </div>
+            <!-- <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border"> -->
+            <!-- <NextPrevLinks /> -->
+            <!-- </div> -->
+
+            <EditOnGithub
+              v-if="$page.mdnPage.content"
+              :current-page="$page.mdnPage"
+            />
           </div>
         </div>
       </div>
@@ -144,6 +149,7 @@ import NextPrevLinks from '@/components/NextPrevLinks.vue';
 import { MenuIcon, XIcon } from 'vue-feather-icons';
 import WebdocNav from '@/components/WebdocNav.vue';
 import LayoutFooter from '@/components/LayoutFooter.vue';
+import EditOnGithub from '@/components/EditOnGithub.vue';
 
 export default {
   components: {
@@ -153,6 +159,7 @@ export default {
     WebdocNav,
     MenuIcon,
     XIcon,
+    EditOnGithub,
   },
   data() {
     return {

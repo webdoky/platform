@@ -158,13 +158,17 @@ export default {
 };
 </script>
 
+
 <style lang="scss">
+// TODO: deduplicate this (we have the same styles in WebdocPage.vue)
 :root {
   --color-ui-background: theme('colors.white');
   --color-ui-typo: theme('colors.gray.700');
   --color-ui-sidebar: theme('colors.gray.200');
   --color-ui-border: theme('colors.gray.300');
   --color-ui-primary: theme('colors.indigo.600');
+  --color-ui-primary-lighter-1: theme('colors.indigo.200');
+  --color-ui-primary-lighter-2: theme('colors.indigo.100');
 }
 
 html[lights-out] {

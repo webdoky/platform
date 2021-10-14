@@ -86,15 +86,19 @@ export default {
   --color-ui-background: theme('colors.white');
   --color-ui-typo: theme('colors.gray.700');
   --color-ui-sidebar: theme('colors.gray.200');
+  --color-ui-sidebar-lighter-1: theme('colors.gray.50');
   --color-ui-border: theme('colors.gray.300');
   --color-ui-primary: theme('colors.indigo.600');
   --color-ui-footer: theme('colors.gray.100');
+  --color-ui-primary-lighter-1: theme('colors.indigo.300');
 }
 
 html[lights-out] {
   --color-ui-background: theme('colors.gray.900');
   --color-ui-typo: theme('colors.gray.100');
   --color-ui-sidebar: theme('colors.gray.800');
+  --color-ui-sidebar-lighter-1: theme('colors.gray.700');
+  --color-ui-primary-lighter-1: theme('colors.indigo.300');
   --color-ui-border: theme('colors.gray.800');
   --color-ui-primary: theme('colors.indigo.500');
   --color-ui-footer: theme('colors.gray.700');
