@@ -9,11 +9,14 @@ export default function (Vue, { router, head, isClient }) {
   Vue.component('WebdocPageLayout', WebdocPageLayout);
 
   router.beforeEach((to, _from, next) => {
-    head.meta.push({
-      key: 'og:url',
-      name: 'og:url',
-      content: process.env.GRIDSOME_BASE_PATH + to.path,
-    });
+    // TODO: MOST of og:url links are broken atm
+    if (to.path !== '/404/') {
+      head.meta.push({
+        key: 'og:url',
+        name: 'og:url',
+        content: process.env.GRIDSOME_BASE_PATH + to.path,
+      });
+    }
     next();
   });
 }
