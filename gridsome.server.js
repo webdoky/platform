@@ -263,75 +263,92 @@ module.exports = function (api) {
       );
     };
 
-    // TODO move this into a custom transformer or smth
-    const htmlPages = Object.keys(mapOfOriginalContent)
-      .filter((path) => /\.html/.test(path)) // TODO: we'll need images here
+    const pages = Object.keys(mapOfOriginalContent)
+      .filter((path) => /\.md/.test(path) || /\.html/.test(path)) // TODO: we'll need images here
       .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
       .map(async (key) => {
-        const hasLocalizedContent = mapOfLocalizedContent[key] || false;
-        let path = hasLocalizedContent
-          ? mapOfLocalizedContent[key]
-          : mapOfOriginalContent[key];
-        const originalFullPath = mapOfOriginalContent[key];
+        let path;
+        let hasLocalizedContent;
+        let mdKey;
+        let htmlKey;
 
-        const input = await fs.promises.readFile(path);
+        if (key.slice(-3) === '.md') {
+          mdKey = key;
+          htmlKey = `${key.slice(0, -3)}.html`;
+        } else if (key.slice(-5) === '.html') {
+          mdKey = `${key.slice(0, -5)}.md`;
+          htmlKey = key;
+        }
 
-        const parsedInfo = parseFrontMatter(input);
-        const { content: htmlContent, data } = parsedInfo;
+        hasLocalizedContent =
+          mapOfLocalizedContent[htmlKey] ||
+          mapOfLocalizedContent[mdKey] ||
+          false;
 
-        const linkedContent = await processor.process(htmlContent); // wrap headings in links
+        if (hasLocalizedContent) {
+          path = mapOfLocalizedContent[htmlKey] || mapOfLocalizedContent[mdKey];
+        } else {
+          path = mapOfOriginalContent[htmlKey] || mapOfOriginalContent[mdKey];
+        }
 
-        // TODO: Find a better way, I don't want to parse this thing twice
-        const ast = processor.parse(linkedContent.contents);
-        const headings = findHeadings(ast);
+        const originalFullPath =
+          mapOfOriginalContent[htmlKey] || mapOfOriginalContent[mdKey];
 
-        addNodeToCollection(
-          {
-            content: processor.stringify(ast),
-            headings,
-            data,
-            path: `/${targetLocale}/docs/${data.slug}`,
-            originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
-          },
-          hasLocalizedContent
-        );
-      });
+        if (path.slice(-3) === '.md') {
+          const input = await fs.promises.readFile(path);
 
-    const mdPages = Object.keys(mapOfOriginalContent)
-      .filter((path) => /\.md/.test(path)) // TODO: we'll need images here
-      .filter((path) => !/\(/.test(path)) // TODO: fix vue router giving me an error on such paths
-      .map(async (key) => {
-        const hasLocalizedContent = mapOfLocalizedContent[key] || false;
-        let path = hasLocalizedContent
-          ? mapOfLocalizedContent[key]
-          : mapOfOriginalContent[key];
-        const originalFullPath = mapOfOriginalContent[key];
+          const parsedInfo = parseFrontMatter(input);
+          const { content: mdContent } = parsedInfo;
 
-        const input = await fs.promises.readFile(path);
+          const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
 
-        const parsedInfo = parseFrontMatter(input);
-        const { content: mdContent } = parsedInfo;
+          // TODO: Find a better way, I don't want to parse this thing twice
+          const ast = mdHtmlProcessor.parse(linkedContent);
+          const headings = findHeadings(ast);
 
-        const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
+          const { contents: content } = await mdHtmlProcessor.process(
+            linkedContent
+          );
 
-        // TODO: Find a better way, I don't want to parse this thing twice
-        const ast = mdHtmlProcessor.parse(linkedContent);
-        const headings = findHeadings(ast);
+          addNodeToCollection(
+            {
+              content,
+              headings,
+              data: parsedInfo.data,
+              path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,
+              originalPath: originalFullPath.split(
+                sourceLocale.toLowerCase()
+              )[1],
+            },
+            hasLocalizedContent
+          );
+        } else if (path.slice(-5) === '.html') {
+          const input = await fs.promises.readFile(path);
 
-        const { contents: content } = await mdHtmlProcessor.process(
-          linkedContent
-        );
+          const parsedInfo = parseFrontMatter(input);
+          const { content: htmlContent, data } = parsedInfo;
 
-        addNodeToCollection(
-          {
-            content,
-            headings,
-            data: parsedInfo.data,
-            path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,
-            originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
-          },
-          hasLocalizedContent
-        );
+          const linkedContent = await processor.process(htmlContent); // wrap headings in links
+
+          // TODO: Find a better way, I don't want to parse this thing twice
+          const ast = processor.parse(linkedContent.contents);
+          const headings = findHeadings(ast);
+
+          addNodeToCollection(
+            {
+              content: processor.stringify(ast),
+              headings,
+              data,
+              path: `/${targetLocale}/docs/${data.slug}`,
+              originalPath: originalFullPath.split(
+                sourceLocale.toLowerCase()
+              )[1],
+            },
+            hasLocalizedContent
+          );
+        } else {
+          throw new Error('Given input is neither html nor md');
+        }
       });
 
     const changelogResolver = async () => {
@@ -367,7 +384,7 @@ module.exports = function (api) {
       });
     };
 
-    await Promise.all([...htmlPages, ...mdPages, changelogResolver()]);
+    await Promise.all([...pages, changelogResolver()]);
   });
 
   api.createPages(async ({ createPage, graphql }) => {
