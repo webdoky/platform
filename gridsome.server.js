@@ -167,6 +167,14 @@ const generateSlugToPathMap = (paths, locale) => {
   return map;
 };
 
+const sectionPaths = {
+  '/web/css': 'css',
+  '/web/html': 'html',
+  '/web/javascript': 'javascript',
+  '/web/svg': 'svg',
+  '/web/guide': 'guide',
+};
+
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
@@ -243,7 +251,7 @@ module.exports = function (api) {
     let pageCounter = 0;
 
     const addNodeToCollection = (
-      { content, headings, data, path, originalPath },
+      { content, headings, data, path, section, originalPath },
       hasLocalizedContent = true
     ) => {
       const { content: processedContent, data: processedData } =
@@ -255,6 +263,9 @@ module.exports = function (api) {
         ...data,
         path,
         originalPath,
+        section,
+        sourceLastUpdatetAt: 0,
+        translationLastUpdatedAt: 0,
         ...processedData,
       });
       pageCounter += 1;
@@ -294,61 +305,56 @@ module.exports = function (api) {
         const originalFullPath =
           mapOfOriginalContent[htmlKey] || mapOfOriginalContent[mdKey];
 
+        const sectionPath = Object.keys(sectionPaths).find(
+          (pathPrefix) => key.indexOf(pathPrefix) >= 0
+        );
+        const section = sectionPath ? sectionPaths[sectionPath] : '';
+
+        let headings;
+        let content;
+        let data;
+
         if (path.slice(-3) === '.md') {
           const input = await fs.promises.readFile(path);
 
           const parsedInfo = parseFrontMatter(input);
+          data = parsedInfo.data;
           const { content: mdContent } = parsedInfo;
 
           const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
 
           // TODO: Find a better way, I don't want to parse this thing twice
           const ast = mdHtmlProcessor.parse(linkedContent);
-          const headings = findHeadings(ast);
+          headings = findHeadings(ast);
 
-          const { contents: content } = await mdHtmlProcessor.process(
-            linkedContent
-          );
-
-          addNodeToCollection(
-            {
-              content,
-              headings,
-              data: parsedInfo.data,
-              path: `/${targetLocale}/docs/${parsedInfo.data.slug}`,
-              originalPath: originalFullPath.split(
-                sourceLocale.toLowerCase()
-              )[1],
-            },
-            hasLocalizedContent
-          );
+          const { contents } = await mdHtmlProcessor.process(linkedContent);
+          content = contents;
         } else if (path.slice(-5) === '.html') {
           const input = await fs.promises.readFile(path);
 
           const parsedInfo = parseFrontMatter(input);
-          const { content: htmlContent, data } = parsedInfo;
+          const { content: htmlContent } = parsedInfo;
+          data = parsedInfo.data;
 
           const linkedContent = await processor.process(htmlContent); // wrap headings in links
 
           // TODO: Find a better way, I don't want to parse this thing twice
           const ast = processor.parse(linkedContent.contents);
-          const headings = findHeadings(ast);
-
-          addNodeToCollection(
-            {
-              content: processor.stringify(ast),
-              headings,
-              data,
-              path: `/${targetLocale}/docs/${data.slug}`,
-              originalPath: originalFullPath.split(
-                sourceLocale.toLowerCase()
-              )[1],
-            },
-            hasLocalizedContent
-          );
-        } else {
-          throw new Error('Given input is neither html nor md');
+          headings = findHeadings(ast);
+          content = processor.stringify(ast);
         }
+
+        addNodeToCollection(
+          {
+            content,
+            headings,
+            data,
+            path: `/${targetLocale}/docs/${data.slug}`,
+            section,
+            originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
+          },
+          hasLocalizedContent
+        );
       });
 
     const changelogResolver = async () => {

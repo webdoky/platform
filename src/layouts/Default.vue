@@ -169,6 +169,10 @@ export default {
   --color-ui-primary: theme('colors.indigo.600');
   --color-ui-primary-lighter-1: theme('colors.indigo.200');
   --color-ui-primary-lighter-2: theme('colors.indigo.100');
+  // translation status
+  --color-intl-status-not-translated: theme('colors.red.100');
+  --color-intl-status-out-of-date: theme('colors.yellow.100');
+  --color-intl-status-up-to-date: theme('colors.green.100');
 }
 
 html[lights-out] {

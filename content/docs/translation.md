@@ -63,3 +63,4 @@ git commit
 
 ## Корисні посилання
  - [Правила зміни у - в та і - й](https://zbruc.eu/node/41947)
+ - [Стан цієї документації](/translation-status)
