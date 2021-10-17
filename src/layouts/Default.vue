@@ -170,9 +170,9 @@ export default {
   --color-ui-primary-lighter-1: theme('colors.indigo.200');
   --color-ui-primary-lighter-2: theme('colors.indigo.100');
   // translation status
-  --color-intl-status-not-translated: theme('colors.red.100');
-  --color-intl-status-out-of-date: theme('colors.yellow.100');
-  --color-intl-status-up-to-date: theme('colors.green.100');
+  --color-intl-status-not-translated: rgba(252, 115, 115, 0.3);
+  --color-intl-status-out-of-date: rgba(251, 191, 26, 0.3);
+  --color-intl-status-up-to-date: rgba(16, 195, 109, 0.3);
 }
 
 html[lights-out] {
@@ -181,6 +181,10 @@ html[lights-out] {
   --color-ui-sidebar: theme('colors.gray.800');
   --color-ui-border: theme('colors.gray.800');
   --color-ui-primary: theme('colors.indigo.500');
+  // translation status
+  --color-intl-status-not-translated: rgba(252, 85, 85, 0.4);
+  --color-intl-status-out-of-date: rgba(251, 211, 36, 0.45);
+  --color-intl-status-up-to-date: rgba(16, 195, 109, 0.45);
 
   pre[class*='language-'],
   code[class*='language-'] {
