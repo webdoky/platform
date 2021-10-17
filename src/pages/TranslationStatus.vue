@@ -170,6 +170,11 @@ export default {
           name: 'twitter:description',
           content: description,
         },
+        {
+          key: 'robots',
+          name: 'robots',
+          content: 'noindex,nofollow',
+        },
       ],
       link: [
         {
