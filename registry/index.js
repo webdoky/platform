@@ -1,70 +1,21 @@
-const remarkSlug = require('remark-slug');
-const remarkAutolinkHeadings = require('remark-autolink-headings');
 const parseFrontMatter = require('gray-matter');
-const rehypePrism = require('@mapbox/rehype-prism');
-const unified = require('unified');
 const fs = require('fs');
 
-const rehypeParse = require('rehype-parse');
-const rehypeStringify = require('rehype-stringify');
-const link = require('rehype-autolink-headings');
-const remarkHtml = require('remark-html');
-const remarkParse = require('remark-parse');
-const remarkExternalLinks = require('remark-external-links');
-
-const externalLinks = require('./utils/plugins/external-links');
 const walk = require('./utils/walk');
 const findHeadings = require('./utils/find-headings');
 const { runMacros } = require('./macros-runner');
+const {
+  mdParseAndProcess,
+  htmlParseAndProcess,
+  mdToRehype,
+  htmlProcess,
+} = require('./contentProcessors');
 const {
   sourceLocale,
   pathToOriginalContent,
   targetLocale,
   pathToLocalizedContent,
 } = require('./config');
-
-const processor = unified()
-  .use(rehypeParse, { fragment: true })
-  .use(link) // Wrap headings in links, so they became inteactive
-  .use(externalLinks, {
-    target: '_blank',
-    rel: ['noopener', 'noreferrer'],
-  })
-  .use(rehypeStringify);
-
-const mdHtmlProcessor = unified()
-  .use(rehypeParse, { fragment: true })
-  .use(rehypePrism) // Syntax highlighting in code blocks
-  .use(rehypeStringify);
-
-const markdownProcessor = unified()
-  .use(remarkParse)
-  .use([
-    remarkSlug,
-    [
-      remarkExternalLinks,
-      {
-        target: '_blank',
-        rel: ['noopener', 'noreferrer'],
-      },
-    ],
-    [
-      remarkAutolinkHeadings,
-      {
-        content: {
-          type: 'element',
-          tagName: 'span',
-          properties: {
-            className: 'icon icon-link',
-          },
-        },
-        linkProperties: {
-          'aria-hidden': 'true',
-        },
-      },
-    ],
-  ])
-  .use(remarkHtml);
 
 const generateSlugToPathMap = (paths, locale) => {
   const map = new Map();
@@ -252,13 +203,14 @@ const registry = {
 
     const { data, content: mdContent } = parseFrontMatter(input);
 
-    const linkedContent = await markdownProcessor.process(mdContent); // wrap headings in links
+    const parsedInput = mdParseAndProcess.parse(mdContent);
 
-    // TODO: Find a better way, I don't want to parse this thing twice
-    const ast = mdHtmlProcessor.parse(linkedContent);
-    const headings = findHeadings(ast);
+    const linkedContentAst = await mdParseAndProcess.run(parsedInput);
+    const rehypeAst = await mdToRehype.run(linkedContentAst);
+    const processedRehypeAst = await htmlProcess.run(rehypeAst);
 
-    const { contents: content } = await mdHtmlProcessor.process(linkedContent);
+    const content = htmlProcess.stringify(processedRehypeAst);
+    const headings = findHeadings(rehypeAst);
 
     return {
       content,
@@ -272,12 +224,12 @@ const registry = {
 
     const { content: htmlContent, data } = parseFrontMatter(input);
 
-    const linkedContent = await processor.process(htmlContent); // wrap headings in links
+    const parsedInputAst = htmlParseAndProcess.parse(htmlContent);
+    const linkedContentAst = await htmlParseAndProcess.run(parsedInputAst);
+    const processedHtmlAst = await htmlProcess.run(linkedContentAst);
 
-    // TODO: Find a better way, I don't want to parse this thing twice
-    const ast = processor.parse(linkedContent.contents);
-    const headings = findHeadings(ast);
-    const content = processor.stringify(ast);
+    const content = htmlProcess.stringify(processedHtmlAst);
+    const headings = findHeadings(linkedContentAst);
 
     return {
       content,
