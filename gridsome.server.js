@@ -14,6 +14,9 @@ const path = require('path');
 const externalLinks = require('./registry/utils/plugins/external-links');
 const { registry } = require('./registry');
 
+const popularitiesJson = require('@mdn/yari/popularities.json');
+const { sourceLocale, targetLocale } = require('./registry/config');
+
 // TODO: to config
 const pathToLocalizedContent = process.env.PATH_TO_LOCALIZED_CONTENT;
 
@@ -55,6 +58,7 @@ module.exports = function (api) {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
+    // Loading registry with content pages
     await registry.init();
 
     perfMon.markAndMeasure(
@@ -88,6 +92,7 @@ module.exports = function (api) {
       });
     }
 
+    // Loading changelog
     const changelogCollection = addCollection({
       typeName: 'changelog',
     });
@@ -122,6 +127,22 @@ module.exports = function (api) {
     };
 
     await Promise.all([changelogResolver()]);
+
+    // Popularities
+    const popularitiesCollection = addCollection({
+      typeName: 'popularity',
+    });
+    const popularities = popularitiesJson;
+
+    Object.keys(popularitiesJson)
+      .filter((key) => key.includes(sourceLocale))
+      .forEach((key) => {
+        popularitiesCollection.addNode({
+          link: key.replace(`/${sourceLocale}/`, `/${targetLocale}/`),
+          popularity: popularities[key],
+        });
+      });
+
     perfMon.markAndMeasure(
       'Added Pages To GrapQL registry:',
       'startProcessingPages',

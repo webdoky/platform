@@ -1,5 +1,8 @@
 <template>
   <tr>
+    <td v-if="includePopularity">
+      {{ page.popularity }}
+    </td>
     <td
       :class="{
         'doc-status--not-translated': !page.content,
@@ -79,6 +82,10 @@ export default {
     page: {
       type: Object,
       default: () => {},
+    },
+    includePopularity: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

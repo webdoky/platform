@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.7.0",
+    "@mdn/yari": "^0.4.804",
     "autoprefixer": "^9",
     "extend": "^3.0.2",
     "gridsome": "^0.7.0",

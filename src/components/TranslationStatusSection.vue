@@ -2,6 +2,7 @@
   <table class="table table-bordered w-full doc-status__table">
     <thead>
       <tr>
+        <th v-if="includePopularity">Рейтинг</th>
         <th>Сторінка</th>
         <th>Оригінал</th>
         <th>Дії</th>
@@ -13,6 +14,7 @@
         :id="page.path"
         :key="page.path"
         :page="page"
+        :include-popularity="includePopularity"
       />
     </tbody>
   </table>
@@ -29,6 +31,10 @@ export default {
     pages: {
       type: Array,
       default: () => {},
+    },
+    includePopularity: {
+      type: Boolean,
+      default: false,
     },
   },
 };
