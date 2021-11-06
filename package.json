@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.7.0",
-    "@mdn/yari": "^0.4.804",
+    "@webdoky/yari-ports": "^1.0.0",
     "autoprefixer": "^9",
     "extend": "^3.0.2",
     "gridsome": "^0.7.0",
@@ -20,6 +20,7 @@
     "rehype-raw": "5.1.0",
     "rehype-stringify": "^8.0.0",
     "remark-rehype": "^8.1.0",
+    "mdast-util-to-hast": "^10.2.0",
     "space-separated-tokens": "^1.1.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue-copy-to-clipboard": "^1.0.3"
@@ -35,7 +36,7 @@
     "eslint-plugin-prettier-vue": "^3.1.0",
     "eslint-plugin-vue": "^7.15.1",
     "fuse.js": "^3.4.6",
-    "gridsome-plugin-tailwindcss": "^3.0.1",
+    "gridsome-plugin-tailwindcss": "3.0.1",
     "gridsome-plugin-typescript": "^0.4.0",
     "node-sass": "^4.13.1",
     "prettier": "^2.3.2",

@@ -219,6 +219,10 @@ blockquote {
       }
     }
   }
+
+  dl dd {
+    margin: 0 1.5em;
+  }
 }
 
 blockquote {

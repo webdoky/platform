@@ -14,7 +14,7 @@ const path = require('path');
 const externalLinks = require('./registry/utils/plugins/external-links');
 const { registry } = require('./registry');
 
-const popularitiesJson = require('@mdn/yari/popularities.json');
+const { popularitiesJson } = require('@webdoky/yari-ports');
 const { sourceLocale, targetLocale } = require('./registry/config');
 
 // TODO: to config

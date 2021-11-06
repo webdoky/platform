@@ -2039,6 +2039,13 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@webdoky/yari-ports@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-1.0.0.tgz#469704b2eb3109c872fbd50bec75fc3361eb0cd2"
+  integrity sha512-kZYT8rovFCHqukaufg/22LBqD0t5TBJmcoHRkufVW/xLD08LXjXyXe4XO/XQyNaALbGTbs8Agj/0FyqFidJfRA==
+  dependencies:
+    "@mdn/yari" "^0.4.804"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -6053,7 +6060,7 @@ gridsome-plugin-gtag@^0.1.10:
   dependencies:
     vue-gtag "^1.10.0"
 
-gridsome-plugin-tailwindcss@^3.0.1:
+gridsome-plugin-tailwindcss@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/gridsome-plugin-tailwindcss/-/gridsome-plugin-tailwindcss-3.0.1.tgz#7e61df27334a7ab3ab75d55d40e12b1acfd34d83"
   integrity sha512-t2ZzQzPSfXGM2z5KLBeGqtb6s7CL7lGMTY5uELz4gY7AaChn7vtarPLAP3/E2mS67agGBFs8p6YG7U/QtBCYMA==

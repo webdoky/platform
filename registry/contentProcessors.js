@@ -9,6 +9,10 @@ const rehypeStringify = require('rehype-stringify');
 const link = require('rehype-autolink-headings');
 const remarkParse = require('remark-parse');
 const remarkExternalLinks = require('remark-external-links');
+const {
+  markdown: { isDefinitionList, asDefinitionList },
+} = require('@webdoky/yari-ports');
+const defaultListHandler = require('mdast-util-to-hast/lib/handlers/list');
 
 const externalLinks = require('./utils/plugins/external-links');
 
@@ -49,7 +53,18 @@ const mdParseAndProcess = unified()
   ]);
 
 const mdToRehype = unified()
-  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(remarkRehype, {
+    handlers: {
+      list(h, node) {
+        if (isDefinitionList(node)) {
+          return asDefinitionList(h, node);
+        }
+
+        return defaultListHandler(h, node);
+      },
+    },
+    allowDangerousHtml: true,
+  })
   .use(rehypeRaw);
 
 const htmlProcess = unified()
