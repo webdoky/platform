@@ -155,6 +155,7 @@ query {
         path
         section
         originalPath
+        updatesInOriginalRepo
         content
         sourceLastUpdatetAt
         translationLastUpdatedAt

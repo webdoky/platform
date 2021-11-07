@@ -78,7 +78,15 @@ module.exports = function (api) {
     );
 
     for (page of registry.getPagesData()) {
-      const { content, headings, data, path, section, originalPath } = page;
+      const {
+        content,
+        headings,
+        data,
+        path,
+        section,
+        updatesInOriginalRepo,
+        originalPath,
+      } = page;
 
       collection.addNode({
         content,
@@ -86,6 +94,7 @@ module.exports = function (api) {
         ...data,
         path,
         originalPath,
+        updatesInOriginalRepo,
         section,
         sourceLastUpdatetAt: 0,
         translationLastUpdatedAt: 0,

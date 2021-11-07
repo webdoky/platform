@@ -7,19 +7,36 @@
       :class="{
         'doc-status--not-translated': !page.content,
         'doc-status--translated': page.content,
-        'doc-status--up-to-date':
-          page.sourceLastUpdatetAt < page.translationLastUpdatedAt,
+        'doc-status--up-to-date': !page.updatesInOriginalRepo.length,
       }"
     >
       <div class="flex flex-row justify-between">
-        <a
-          class="underline pl-4"
-          :href="page.path"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ page.title }}</a
-        >
+        <p :class="`mb-0 ${includePopularity ? '' : 'pl-4'}`">
+          <a
+            class="underline"
+            :href="page.path"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ page.title }}</a
+          >
+          <span v-if="page.updatesInOriginalRepo.length"
+            >, (нові зміни:
+            <a
+              v-for="(commit, index) in page.updatesInOriginalRepo"
+              :key="commit"
+              :href="`https://github.com/mdn/content/commit/${
+                commit.split(' - ')[0]
+              }`"
+            >
+              {{
+                `${commit.slice(0, 7)}${
+                  page.updatesInOriginalRepo.length - 1 > index ? ',' : ''
+                }`
+              }} </a
+            >)
+          </span>
+        </p>
         <a
           v-if="page.content"
           class="underline px-2"

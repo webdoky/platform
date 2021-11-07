@@ -130,6 +130,7 @@ query {
         section
         originalPath
         content
+        updatesInOriginalRepo
         sourceLastUpdatetAt
         translationLastUpdatedAt
       }

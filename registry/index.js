@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const walk = require('./utils/walk');
 const findHeadings = require('./utils/find-headings');
+const { getNewCommits } = require('./utils/git-commit-data');
 const { runMacros } = require('./macros-runner');
 const {
   mdParseAndProcess,
@@ -168,6 +169,9 @@ const registry = {
     } = await this.processContentPage(path);
 
     const { content, data: processedData } = this.postProcessPage(rawContent);
+    const commitInformation = hasLocalizedContent
+      ? await getNewCommits(path)
+      : [];
 
     this.contentPages.set(data.slug, {
       content: hasLocalizedContent ? content : '',
@@ -177,6 +181,7 @@ const registry = {
         ...processedData,
       },
       path: `/${targetLocale}/docs/${data.slug}`,
+      updatesInOriginalRepo: commitInformation,
       section: sectionName,
       originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
     });

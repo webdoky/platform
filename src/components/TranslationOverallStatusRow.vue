@@ -8,10 +8,7 @@
     <td class="doc-status--translated">
       {{ translatedPageCount }} ({{ translatedPagePercent }}%)
     </td>
-    <td
-      class="doc-status--translated doc-status--up-to-date line-through"
-      title="Наразі числа в цій колонці не відповідають дійсності"
-    >
+    <td class="doc-status--translated doc-status--up-to-date">
       {{ translationsUpToDateCount }} ({{ translationsUpToDatePercent }}%)
     </td>
     <td class="doc-status--not-translated">
@@ -49,9 +46,12 @@ export default {
       return ((this.translatedPageCount / this.allPageCount) * 100).toFixed(2);
     },
     translationsUpToDateCount() {
-      return this.allPages.filter(
-        (node) => node.sourceLastUpdatetAt < node.translationLastUpdatedAt
+      const { translatedPageCount } = this;
+      const obsoletePages = this.allPages.filter(
+        (node) => node.updatesInOriginalRepo.length
       ).length;
+
+      return translatedPageCount - obsoletePages;
     },
     translationsUpToDatePercent() {
       return (
