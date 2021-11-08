@@ -16,10 +16,14 @@ next: '/docs/licensing/'
 ### A
 #### Application
 Застосунок
+#### Assignment (operator)
+Присвоєння (оператор)
 ### B
 
 #### Back-end
 Бекенд (іноді серверна частина)
+#### Border
+Межа
 ### C
 #### Chaining
 Зв'язування (у послідовність), пов'язані
@@ -30,6 +34,8 @@ next: '/docs/licensing/'
 Оголосити, оголошення
 <!-- ### E -->
 ### F
+#### Flattening
+Сплощенням (результат виклику `Array.flat()` над масивом)
 #### Fullstack
 Повностекові, повного стеку
 #### Front-end
@@ -40,9 +46,11 @@ next: '/docs/licensing/'
 Настанови
 
 <!-- ### E
-### H
+### H -->
 ### I
-### J
+#### Iterables
+Ітеровані (об'єкти)
+<!-- ### J
 ### K -->
 ### L
 #### Layout
@@ -54,12 +62,18 @@ next: '/docs/licensing/'
 #### Overriding (OOP)
 Заміщення
 ### P
+#### Progressbar
+Індикатор виконання
 #### Promise
 Проміс
 <!-- ### Q -->
 ### R
 ### Realm
 Область
+### Render
+Рендер
+### Return value
+Повернене значення
 #### Reference
 Довідка (в сенсі reference doc), або посилання (в сенсі by reference)
 ### S
