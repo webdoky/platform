@@ -156,7 +156,7 @@ query {
         section
         originalPath
         updatesInOriginalRepo
-        content
+        hasContent
         sourceLastUpdatetAt
         translationLastUpdatedAt
       }

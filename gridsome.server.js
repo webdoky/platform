@@ -90,6 +90,7 @@ module.exports = function (api) {
 
       collection.addNode({
         content,
+        hasContent: !!content,
         headings,
         ...data,
         path,

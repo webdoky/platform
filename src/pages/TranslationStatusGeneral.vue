@@ -129,7 +129,7 @@ query {
         path
         section
         originalPath
-        content
+        hasContent
         updatesInOriginalRepo
         sourceLastUpdatetAt
         translationLastUpdatedAt

@@ -40,7 +40,7 @@ export default {
       return this.allPages.length;
     },
     translatedPageCount() {
-      return this.allPages.filter((node) => node.content).length;
+      return this.allPages.filter((node) => node.hasContent).length;
     },
     translatedPagePercent() {
       return ((this.translatedPageCount / this.allPageCount) * 100).toFixed(2);

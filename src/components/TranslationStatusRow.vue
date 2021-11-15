@@ -5,8 +5,8 @@
     </td>
     <td
       :class="{
-        'doc-status--not-translated': !page.content,
-        'doc-status--translated': page.content,
+        'doc-status--not-translated': !page.hasContent,
+        'doc-status--translated': page.hasContent,
         'doc-status--up-to-date': !page.updatesInOriginalRepo.length,
       }"
     >
@@ -38,7 +38,7 @@
           </span>
         </p>
         <a
-          v-if="page.content"
+          v-if="page.hasContent"
           class="underline px-2"
           title="Переглянути сирці перекладеної сторінки на GitHub"
           :href="`https://github.com/webdoky/content/tree/master/files/uk${page.originalPath}`"
@@ -72,7 +72,7 @@
     </td>
     <td>
       <CopyToClipboard
-        v-if="!page.content"
+        v-if="!page.hasContent"
         :text="bashCommand"
         :classes="'px-2'"
         :title="'Скопіювати bash скрипт для ініціалізації файлу перекладу (скопіювати і виконати в корені репозиторію)'"
