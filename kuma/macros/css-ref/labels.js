@@ -1,5 +1,7 @@
-const labels = {
+module.exports = {
   Learn_CSS: 'Вивчення CSS',
+  Reference: 'Довідник',
+  Guides: 'Настанови',
   CSS_first_steps: 'Перші кроки у CSS',
   CSS_first_steps_overview: 'Перші кроки у CSS — огляд',
   What_is_CSS: 'Що таке CSS?',
@@ -159,7 +161,11 @@ const labels = {
   Pagination: 'Розбиття на сторінки',
   Card: 'Картка',
   'Grid wrapper': 'Обгортка сітки',
+  Modules: 'Модулі',
+  Properties: 'Властивості',
+  Selectors: 'Селектори',
+  'Pseudo-classes': 'Псевдокласи',
+  'Pseudo-elements': 'Псевдоелементи',
+  'At-rules': 'Анотації',
+  Types: 'Типи',
 };
-
-module.exports.navLabels = labels;
-module.exports.default = () => '';

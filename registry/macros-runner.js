@@ -1,4 +1,4 @@
-const kumaMacros = require('../kuma');
+const KumaMacros = require('../kuma');
 const { unescape } = require('./utils/html-encoding');
 
 const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
@@ -24,24 +24,15 @@ const parseArgs = (initialArgumentString) => {
   );
 };
 
-const hasSidebar = ([name]) => {
-  const functionNames = {
-    cssref: 'CSSRef',
-    jssidebar: 'JsSidebar',
-    jsref: 'JSRef',
-  };
-  return functionNames[name.toLowerCase()];
-};
-
-const lookupMacro = (name) => {
-  const lowercaseName = name.toLowerCase();
-  return kumaMacros[lowercaseName] || undefined;
-};
-
-const runMacros = (content) => {
+const runMacros = (content, context) => {
   let resultContent = content;
   const recognizedMacros = [...content.matchAll(matchMacro)];
-  const data = {};
+  const data = {
+    macros: [],
+  };
+
+  const macrosRegistry = new KumaMacros(context);
+  const lookupMacro = macrosRegistry.lookupMacro;
 
   recognizedMacros.map((expression) => {
     const [match, functionName, args] = expression;
@@ -54,15 +45,19 @@ const runMacros = (content) => {
         result = macroFunction();
       }
     }
+    if (typeof result !== 'string') {
+      // if the output is not a string, then we have to additionaly process it in the app
+      // so put it into data layer instead
+      data.macros.push({
+        macro: functionName.toLowerCase(),
+        result: JSON.stringify(result),
+      });
+
+      result = '';
+    }
     if (result !== match) {
       // don't spend processor cycles on replacing the same strings
       resultContent = resultContent.replace(match, result);
-    }
-
-    // add additional data for nav components
-    const sidebarType = hasSidebar([functionName, args]);
-    if (sidebarType) {
-      data.hasSidebar = sidebarType;
     }
   });
 

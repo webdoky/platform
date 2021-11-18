@@ -1,4 +1,4 @@
-const labels = {
+module.exports = {
   JavaScript: 'JavaScript',
   Overview: 'Огляд JavaScript-технологій',
   Tutorials: 'Посібники:',
@@ -54,6 +54,3 @@ const labels = {
   Template_strings: 'Літерали шаблону',
   Deprecated_features: 'Застарілий функціонал',
 };
-
-module.exports.navLabels = labels;
-module.exports.default = () => '';

@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3
+      v-if="showHeader"
       class="pt-0 mt-0 mb-1 text-sm tracking-tight uppercase border-none"
       @click="isExpanded = !isExpanded"
     >
@@ -11,7 +12,7 @@
       <slot name="header" />
     </h3>
     <div
-      class="pl-3 overflow-hidden"
+      class="pl-4 overflow-hidden"
       :class="{ 'max-h-full': isExpanded, 'max-h-0': !isExpanded }"
     >
       <slot />
@@ -27,7 +28,16 @@ export default {
     ChevronRightIcon,
     ChevronDownIcon,
   },
-  props: ['expanded'],
+  props: {
+    expanded: {
+      type: Boolean,
+      required: true,
+    },
+    showHeader: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       isExpanded: this.expanded ?? false,

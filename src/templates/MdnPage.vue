@@ -13,7 +13,7 @@
       "
     >
       <aside
-        v-if="$page.mdnPage.hasSidebar"
+        v-if="hasSidebar"
         class="
           sidebar
           border-t
@@ -26,8 +26,7 @@
       >
         <div class="w-full pb-16 bg-ui-background">
           <WebdocNav
-            :show-sidebar="$page.mdnPage.hasSidebar"
-            :all-pages="$page.allMdnPage.edges"
+            :sidebar="$page.mdnPage.macros"
             :current-page="$page.mdnPage"
             @navigate="sidebarOpen = false"
           />
@@ -36,7 +35,7 @@
 
       <div
         class="w-full pb-4"
-        :class="{ 'pl-0 lg:pl-12 lg:w-3/4': $page.mdnPage.hasSidebar }"
+        :class="{ 'pl-0 lg:pl-12 lg:w-3/4': hasSidebar }"
       >
         <div class="flex flex-wrap items-start justify-start">
           <div
@@ -69,10 +68,6 @@
               </div>
             </div>
 
-            <!-- <div class="mt-8 pt-8 lg:mt-12 lg:pt-12 border-t border-ui-border"> -->
-            <!-- <NextPrevLinks /> -->
-            <!-- </div> -->
-
             <EditOnGithub
               v-if="$page.mdnPage.content"
               :current-page="$page.mdnPage"
@@ -81,10 +76,7 @@
         </div>
       </div>
 
-      <div
-        v-if="$page.mdnPage.hasSidebar"
-        class="fixed bottom-0 right-0 z-50 p-8 lg:hidden"
-      >
+      <div v-if="hasSidebar" class="fixed bottom-0 right-0 z-50 p-8 lg:hidden">
         <button
           class="
             p-3
@@ -127,25 +119,17 @@ query ($id: ID!) {
       anchor
     }
     content
-    hasSidebar
-    browser_compat
-  }
-  allMdnPage {
-    edges {
-      node {
-        path
-        slug
-        tags
-        title
-      }
+    macros {
+      macro
+      result
     }
+    browser_compat
   }
 }
 </page-query>
 
 <script>
 import MdnOnThisPage from '@/components/MdnOnThisPage.vue';
-import NextPrevLinks from '@/components/NextPrevLinks.vue';
 import { MenuIcon, XIcon } from 'vue-feather-icons';
 import WebdocNav from '@/components/WebdocNav.vue';
 import LayoutFooter from '@/components/LayoutFooter.vue';
@@ -155,7 +139,6 @@ export default {
   components: {
     MdnOnThisPage,
     LayoutFooter,
-    NextPrevLinks,
     WebdocNav,
     MenuIcon,
     XIcon,
@@ -175,7 +158,7 @@ export default {
       };
     },
     hasSidebar() {
-      return this.$page && this.headerHeight > 0;
+      return this.$page.mdnPage.macros?.length;
     },
     mdnUrlPrefix() {
       return 'https://developer.mozilla.org/en-US/docs/';
@@ -192,7 +175,9 @@ export default {
   methods: {
     setHeaderHeight() {
       this.$nextTick(() => {
-        this.headerHeight = this.$refs.mainContent.offsetTop;
+        if (this.$refs.mainContent) {
+          this.headerHeight = this.$refs.mainContent.offsetTop;
+        }
       });
     },
   },

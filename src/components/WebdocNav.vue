@@ -1,34 +1,43 @@
 <template>
-  <div v-if="showSidebar" ref="sidebar" class="px-4 pt-8 lg:pt-12">
-    <nav-css
-      v-if="showSidebar === 'CSSRef'"
-      :all-pages="allPages"
-      :current-page="currentPage"
-    />
-    <nav-js
-      v-if="showSidebar === 'JsSidebar'"
-      :all-pages="allPages"
-      :current-page="currentPage"
-    />
-    <nav-js-ref
-      v-if="showSidebar === 'JSRef'"
-      :all-pages="allPages"
-      :current-page="currentPage"
-    />
+  <div v-if="sidebar.length" class="px-4 pt-8 lg:pt-12">
+    <div
+      v-for="(supSection, i) in navigationStructure"
+      :key="`${i}_${supSection.title}`"
+    >
+      <WdNavMenu v-if="!supSection.groupItems" :sup-section="supSection" />
+      <div v-if="supSection.groupItems" class="pt-1">
+        <h2 class="text-base tracking-tight mt-2">{{ supSection.title }}:</h2>
+        <WdNavMenu
+          v-for="(subGroup, j) in supSection.groupItems"
+          :key="`${j}_${subGroup.title}`"
+          :sup-section="subGroup"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import NavCss from '@/components/NavCss.vue';
-import NavJs from '@/components/NavJs.vue';
-import NavJsRef from './NavJsRef.vue';
+import WdNavMenu from '@/components/WdNavMenu';
 
 export default {
   components: {
-    NavCss,
-    NavJs,
-    NavJsRef,
+    WdNavMenu,
   },
-  props: ['showSidebar', 'allPages', 'currentPage'],
+  props: {
+    sidebar: {
+      type: Array,
+      required: true,
+    },
+    currentPage: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    navigationStructure() {
+      return JSON.parse(this.currentPage.macros[0].result || '[]');
+    },
+  },
 };
 </script>

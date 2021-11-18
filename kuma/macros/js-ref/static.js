@@ -1,8 +1,3 @@
-const labels = {
-  properties: 'Властивості',
-  methods: 'Методи',
-};
-
 const inheritanceData = {
   Math: ['Object'],
   Date: ['Object'],
@@ -66,7 +61,7 @@ const groupData = {
   ],
 };
 
-module.exports.navLabels = labels;
-module.exports.inheritanceData = inheritanceData;
-module.exports.groupData = groupData;
-module.exports.default = () => '';
+module.exports = {
+  inheritanceData,
+  groupData,
+};

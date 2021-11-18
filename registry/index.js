@@ -36,6 +36,9 @@ const generateSlugToPathMap = (paths, locale) => {
 const registry = {
   localizedContentMap: undefined,
   contentPages: new Map(),
+
+  // counters for visual notifications
+  pagePostProcessedAmount: 0,
   estimatedContentPagesAmount: 0,
 
   getPagesData() {
@@ -114,6 +117,43 @@ const registry = {
     ];
     this.estimatedContentPagesAmount = aggregatedTasks.length;
     await Promise.all(aggregatedTasks);
+
+    //
+    console.log('Initial registry is ready, expanding macros:');
+
+    for ([slug, pageData] of this.contentPages) {
+      const {
+        hasLocalizedContent,
+        content: rawContent,
+        data,
+        path,
+        ...otherPageData
+      } = pageData;
+      const { content, data: processedData } = runMacros(rawContent, {
+        path,
+        slug,
+        registry: this,
+        targetLocale,
+      });
+
+      this.contentPages.set(data.slug, {
+        content: hasLocalizedContent ? content : '',
+        hasLocalizedContent,
+        data: {
+          ...data,
+          ...processedData,
+        },
+        path,
+        ...otherPageData,
+      });
+
+      process.stdout.write(
+        `${++this.pagePostProcessedAmount} of ${
+          this.estimatedContentPagesAmount
+        } pages\r`
+      );
+    }
+    console.log(`Done with macros, ${this.pagePostProcessedAmount} processed`);
   },
 
   async processSection(originalPaths, sectionName) {
@@ -162,24 +202,17 @@ const registry = {
       path = originalFullPath;
     }
 
-    const {
-      content: rawContent,
-      headings,
-      data,
-    } = await this.processContentPage(path);
+    const { content, headings, data } = await this.processContentPage(path);
 
-    const { content, data: processedData } = this.postProcessPage(rawContent);
     const commitInformation = hasLocalizedContent
       ? await getNewCommits(path)
       : [];
 
     this.contentPages.set(data.slug, {
-      content: hasLocalizedContent ? content : '',
+      content,
+      hasLocalizedContent,
       headings,
-      data: {
-        ...data,
-        ...processedData,
-      },
+      data,
       path: `/${targetLocale}/docs/${data.slug}`,
       updatesInOriginalRepo: commitInformation,
       section: sectionName,
@@ -188,11 +221,6 @@ const registry = {
     process.stdout.write(
       `Processed ${this.contentPages.size} of ${this.estimatedContentPagesAmount} pages\r`
     );
-  },
-
-  postProcessPage(rawContent) {
-    const { content, data } = runMacros(rawContent);
-    return { content, data };
   },
 
   async processContentPage(path) {
