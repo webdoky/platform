@@ -1,7 +1,7 @@
 ---
 description: ''
 sidebar: 'docs'
-prev: '/docs/translation/'
+prev: '/docs/git-naming-conventions/'
 next: '/docs/licensing/'
 ---
 

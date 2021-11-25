@@ -36,6 +36,8 @@ module.exports = {
             items: [
               '/docs/',
               '/docs/translation/',
+              '/docs/translating-in-github/',
+              '/docs/git-naming-conventions/',
               '/docs/glossary/',
               '/docs/licensing/',
             ],
