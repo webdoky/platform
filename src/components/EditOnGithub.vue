@@ -28,7 +28,7 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        Завести issue на GitHub стосовно вмісту цієї сторінки</a
+        Почати обговорення на GitHub стосовно вмісту цієї сторінки</a
       >.
     </p>
   </div>
@@ -56,7 +56,7 @@ export default {
       const params = {
         body: bodySections.join('\n\n'),
         labels: ['needs-triage', 'content'],
-        title: `Проблема з сторінкою ${this.currentPage.title}: <короткий опис проблеми тут>`,
+        title: `Проблема зі сторінкою ${this.currentPage.title}: <короткий опис проблеми тут>`,
       };
 
       Object.entries(params).map(([param, value]) =>
