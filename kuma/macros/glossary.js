@@ -1,8 +1,10 @@
-const locale = process.env.TARGET_LOCALE; // TODO: move this into initilizer
-const basePath = `/${locale}/docs/Glossary/`;
+function glossary(termName, displayName) {
+  const { targetLocale } = this;
+  const basePath = `/${targetLocale}/docs/Glossary/`;
 
-module.exports.default = (termName, displayName) => {
   const subPath = termName.replace(/\s+/g, '_');
 
   return `<a href="${basePath + subPath}">${displayName || termName}</a>`;
-};
+}
+
+module.exports.default = glossary;

@@ -1,5 +1,3 @@
-const locale = process.env.TARGET_LOCALE; // TODO: move this into initilizer
-const refBasePath = `/${locale}/docs/Web/JavaScript/Reference/`;
 const initialSlug = 'Global_Objects';
 const refContentSections = [
   'about',
@@ -17,12 +15,9 @@ const refContentSections = [
   'trailing_commas',
 ];
 
-module.exports.default = (
-  termName,
-  displayName,
-  anchor = '',
-  dontWrapInCode = false
-) => {
+function jsxref(termName, displayName, anchor = '', dontWrapInCode = false) {
+  const { targetLocale } = this;
+  const refBasePath = `/${targetLocale}/docs/Web/JavaScript/Reference/`;
   let basePath = refBasePath;
   let slug;
 
@@ -55,4 +50,6 @@ module.exports.default = (
   }
 
   return `<a href="${basePath + encodedAnchor}">${content}</a>`;
-};
+}
+
+module.exports.default = jsxref;
