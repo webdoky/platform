@@ -2039,10 +2039,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@webdoky/yari-ports@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-1.0.0.tgz#469704b2eb3109c872fbd50bec75fc3361eb0cd2"
-  integrity sha512-kZYT8rovFCHqukaufg/22LBqD0t5TBJmcoHRkufVW/xLD08LXjXyXe4XO/XQyNaALbGTbs8Agj/0FyqFidJfRA==
+"@webdoky/yari-ports@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-1.1.0.tgz#78d3ee3bd0957f46fdb146d3366f1edabf11cb6f"
+  integrity sha512-tprnP47US4FaZflmr2RiWgpPNYmNRw90YXHCTOXnIUS7+IJykaOdJ4bctXfAZNXm0vAxX3sdCxUZg95G7cj+4A==
   dependencies:
     "@mdn/yari" "^0.4.804"
 

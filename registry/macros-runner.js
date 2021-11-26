@@ -1,4 +1,4 @@
-const KumaMacros = require('../kuma');
+const { kuma: KumaMacros } = require('@webdoky/yari-ports');
 const { unescape } = require('./utils/html-encoding');
 
 const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
