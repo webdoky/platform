@@ -6,7 +6,7 @@
     @keydown.enter="go"
   >
     <label class="relative block">
-      <span class="sr-only">Search Documentation</span>
+      <span class="sr-only">Пошук в документації</span>
       <div
         class="
           absolute
@@ -39,7 +39,7 @@
           focus:bg-ui-background
         "
         :class="{ 'rounded-b-none': showResult }"
-        placeholder="Search Documentation..."
+        placeholder="Пошук в документації..."
         @focus="focused = true"
         @blur="focused = false"
         @input="
@@ -69,14 +69,14 @@
     >
       <ul class="px-4 py-2 m-0">
         <li v-if="results.length === 0" class="px-2">
-          No results for <span class="font-bold">{{ query }}</span
+          Немає результату для запиту <span class="font-bold">{{ query }}</span
           >.
         </li>
 
         <li
           v-for="(result, index) in results"
           v-else
-          :key="result.path + result.anchor"
+          :key="result.path"
           class="border-ui-sidebar"
           :class="{
             'border-b': index + 1 !== results.length,
@@ -85,20 +85,16 @@
           @mousedown="go"
         >
           <g-link
-            :to="result.path + result.anchor"
+            :to="result.path"
             class="block p-2 -mx-2 text-base font-bold rounded-lg"
             :class="{
               'bg-ui-sidebar text-ui-primary': focusIndex === index,
             }"
           >
-            <span v-if="result.value === result.title">
-              {{ result.value }}
-            </span>
-
-            <span v-else class="flex items-center">
+            <span class="flex items-center">
               {{ result.title }}
               <ChevronRightIcon size="1x" class="mx-1" />
-              <span class="font-normal opacity-75">{{ result.value }}</span>
+              <span class="font-normal opacity-75">{{ result.path }}</span>
             </span>
           </g-link>
         </li>
@@ -112,14 +108,8 @@ query Search {
   allMarkdownPage {
     edges {
       node {
-        id
         path
         title
-        headings {
-          depth
-          value
-          anchor
-        }
       }
     }
   }
@@ -127,15 +117,8 @@ query Search {
     edges {
       node {
         path
-        slug
-        tags
         title
-        content
-        headings {
-          depth
-          value
-          anchor
-        }
+        hasContent
       }
     }
   }
@@ -162,7 +145,7 @@ export default {
   computed: {
     results() {
       const fuse = new Fuse(this.headings, {
-        keys: ['value'],
+        keys: ['title', 'path'],
         threshold: 0.25,
       });
 
@@ -176,16 +159,13 @@ export default {
 
       const allMdnPages = this.$static.allMdnPage.edges
         .map((edge) => edge.node)
-        .filter((node) => node.content); // filter out pages, that are not translated yet
+        .filter((node) => node.hasContent); // filter out pages, that are not translated yet
 
       // Create the array of all headings of all pages.
       [...allDocPages, ...allMdnPages].forEach((page) => {
-        page.headings.forEach((heading) => {
-          result.push({
-            ...heading,
-            path: page.path,
-            title: page.title,
-          });
+        result.push({
+          path: page.path,
+          title: page.title,
         });
       });
 
@@ -222,7 +202,7 @@ export default {
         result = this.results[this.focusIndex];
       }
 
-      this.$router.push(result.path + result.anchor);
+      this.$router.push(result.path);
 
       // Unfocus the input and reset the query.
       this.$refs.input.blur();
