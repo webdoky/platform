@@ -16,6 +16,7 @@ const { registry } = require('./registry');
 
 const { popularitiesJson } = require('@webdoky/yari-ports');
 const { sourceLocale, targetLocale } = require('./registry/config');
+const graphqlSchemaTypes = require('./types');
 
 // TODO: to config
 const pathToLocalizedContent = process.env.PATH_TO_LOCALIZED_CONTENT;
@@ -53,7 +54,7 @@ perfMon.markAndMeasure('Dependencies loaded', 'timerStart', 'depLoad');
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = function (api) {
-  api.loadSource(async ({ addCollection, addMetadata }) => {
+  api.loadSource(async ({ addCollection, addSchemaTypes, addMetadata }) => {
     perfMon.mark('loadingSourcesStart');
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
@@ -66,6 +67,8 @@ module.exports = function (api) {
       'loadingSourcesStart',
       'loadingSourcesEnd'
     );
+
+    addSchemaTypes(graphqlSchemaTypes);
 
     const collection = addCollection({
       typeName: 'MdnPage',
