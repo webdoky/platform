@@ -65,6 +65,14 @@
             class="changelog"
             v-html="edge.node.content"
           />
+
+          <div class="border-ui-border w-1/4 border-b mb-3 mt-4"></div>
+          <a
+            href="https://github.com/webdoky/content/blob/master/CHANGELOG.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Вся історія версій</a
+          >
         </div>
 
         <div class="flex flex-col w-full px-4 mb-8 md:w-1/3">

@@ -124,7 +124,7 @@ module.exports = function (api) {
 
       ast.children = ast.children
         .filter(
-          (_a, index) => index === headingIndex || index === headingIndex + 1
+          (_a, index) => index >= headingIndex && index < headingIndex + 4 // two latest versions
         )
         .map((node) => ({ ...node, depth: 4 }));
 
