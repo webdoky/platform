@@ -283,6 +283,15 @@ table {
   }
 }
 
+.badge__inline svg {
+  @apply inline mr-1;
+}
+
+.badge__inline.badge__readonly,
+.badge__inline.badge__optional {
+  @apply px-1 py-1 bg-ui-sidebar border-b border-r border-ui-border text-sm rounded font-bold italic;
+}
+
 .sidebar {
   @apply fixed bg-ui-background px-4 inset-x-0 bottom-0 w-full border-r border-ui-border overflow-y-auto transition-all z-40;
   transform: translateX(-100%);
