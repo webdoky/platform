@@ -1,46 +1,23 @@
-const { kuma: KumaMacros } = require('@webdoky/yari-ports');
-const { unescape } = require('./utils/html-encoding');
-
-const matchMacro = /\{\{(\w+)(?:\(([^{]+)\))?\}\}/g;
-const matchArgument = /(?:"([^"]+)")|(?:'([^']+)')|(\d+)|(''|"")/g;
-
-const parseArgs = (initialArgumentString) => {
-  let argumentString = initialArgumentString;
-  if (argumentString[0] === '&') {
-    // Some macros are inside code sections, and their arguments are escaped... twice
-    argumentString = unescape(unescape(initialArgumentString));
-  }
-  return [...argumentString.matchAll(matchArgument)].map(
-    ([, str1, str2, num, emptyStr]) => {
-      if (str1 || str2) {
-        return str1 || str2;
-      } else if (num) {
-        return parseInt(num);
-      } else if (emptyStr) {
-        return '';
-      }
-      return undefined;
-    }
-  );
-};
+const {
+  kuma: { macros: Macros, parseMacroArgs, extractMacros },
+} = require('@webdoky/yari-ports');
 
 const runMacros = (content, context) => {
   let resultContent = content;
-  const recognizedMacros = [...content.matchAll(matchMacro)];
+  const recognizedMacros = extractMacros(content);
   const data = {
     macros: [],
   };
 
-  const macrosRegistry = new KumaMacros(context);
-  const lookupMacro = macrosRegistry.lookupMacro;
+  const macrosRegistry = new Macros(context);
 
   recognizedMacros.map((expression) => {
-    const [match, functionName, args] = expression;
+    const { match, functionName, args } = expression;
     let result = match; // uninterpolated macros will be visible by default
-    const macroFunction = lookupMacro(functionName);
+    const macroFunction = macrosRegistry.lookup(functionName);
     if (macroFunction) {
       if (args) {
-        result = macroFunction(...parseArgs(args));
+        result = macroFunction(...parseMacroArgs(args));
       } else {
         result = macroFunction();
       }
