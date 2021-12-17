@@ -38,6 +38,8 @@ const registry = {
   contentPages: new Map(),
 
   // counters for visual notifications
+  expandedMacrosFor: 0,
+  estimatedMacrosExpansionAmount: 0,
   pagePostProcessedAmount: 0,
   estimatedContentPagesAmount: 0,
 
@@ -116,19 +118,14 @@ const registry = {
       ...otherPagesProcessingTasks,
     ];
     this.estimatedContentPagesAmount = aggregatedTasks.length;
+    this.estimatedMacrosExpansionAmount = aggregatedTasks.length;
     await Promise.all(aggregatedTasks);
 
     //
     console.log('Initial registry is ready, expanding macros:');
 
     for ([slug, pageData] of this.contentPages) {
-      const {
-        hasLocalizedContent,
-        content: rawContent,
-        data,
-        path,
-        ...otherPageData
-      } = pageData;
+      const { content: rawContent, data, path, ...otherPageData } = pageData;
       const { content, data: processedData } = runMacros(rawContent, {
         path,
         slug,
@@ -137,8 +134,7 @@ const registry = {
       });
 
       this.contentPages.set(data.slug, {
-        content: hasLocalizedContent ? content : '',
-        hasLocalizedContent,
+        content,
         data: {
           ...data,
           ...processedData,
@@ -148,12 +144,43 @@ const registry = {
       });
 
       process.stdout.write(
+        `${++this.expandedMacrosFor} of ${
+          this.estimatedMacrosExpansionAmount
+        } pages\r`
+      );
+    }
+    console.log(
+      `Done with macros, ${this.expandedMacrosFor} processed.\nRendering pages:`
+    );
+
+    for ([slug, pageData] of this.contentPages) {
+      const {
+        hasLocalizedContent,
+        content: rawContent,
+        sourceType,
+        ...otherPageData
+      } = pageData;
+      const sourceProcessor =
+        sourceType === 'html' ? this.processHtmlPage : this.processMdPage;
+      const { content, headings } = await sourceProcessor(rawContent);
+
+      this.contentPages.set(slug, {
+        content: hasLocalizedContent ? content : '',
+        hasLocalizedContent,
+        headings,
+        ...otherPageData,
+      });
+
+      process.stdout.write(
         `${++this.pagePostProcessedAmount} of ${
           this.estimatedContentPagesAmount
         } pages\r`
       );
     }
-    console.log(`Done with macros, ${this.pagePostProcessedAmount} processed`);
+
+    console.log(
+      `Content has been rendered, ${this.pagePostProcessedAmount} processed`
+    );
   },
 
   async processSection(originalPaths, sectionName) {
@@ -202,7 +229,7 @@ const registry = {
       path = originalFullPath;
     }
 
-    const { content, headings, data } = await this.processContentPage(path);
+    const { content, data, sourceType } = await this.readContentPage(path);
 
     const commitInformation = hasLocalizedContent
       ? await getNewCommits(path)
@@ -211,31 +238,31 @@ const registry = {
     this.contentPages.set(data.slug, {
       content,
       hasLocalizedContent,
-      headings,
       data,
       path: `/${targetLocale}/docs/${data.slug}`,
       updatesInOriginalRepo: commitInformation,
       section: sectionName,
       originalPath: originalFullPath.split(sourceLocale.toLowerCase())[1],
+      sourceType,
     });
     process.stdout.write(
       `Processed ${this.contentPages.size} of ${this.estimatedContentPagesAmount} pages\r`
     );
   },
 
-  async processContentPage(path) {
-    if (path.slice(-3) === '.md') {
-      return await this.processMdPage(path);
-    } else {
-      return await this.processHtmlPage(path);
-    }
-  },
-
-  async processMdPage(path) {
+  async readContentPage(path) {
     const input = await fs.promises.readFile(path);
 
-    const { data, content: mdContent } = parseFrontMatter(input);
+    const { data, content } = parseFrontMatter(input);
 
+    return {
+      content,
+      data,
+      sourceType: path.slice(-3) === '.md' ? 'md' : 'html',
+    };
+  },
+
+  async processMdPage(mdContent) {
     const parsedInput = mdParseAndProcess.parse(mdContent);
 
     const linkedContentAst = await mdParseAndProcess.run(parsedInput);
@@ -248,15 +275,10 @@ const registry = {
     return {
       content,
       headings,
-      data,
     };
   },
 
-  async processHtmlPage(path) {
-    const input = await fs.promises.readFile(path);
-
-    const { content: htmlContent, data } = parseFrontMatter(input);
-
+  async processHtmlPage(htmlContent) {
     const parsedInputAst = htmlParseAndProcess.parse(htmlContent);
     const linkedContentAst = await htmlParseAndProcess.run(parsedInputAst);
     const processedHtmlAst = await htmlProcess.run(linkedContentAst);
@@ -267,7 +289,6 @@ const registry = {
     return {
       content,
       headings,
-      data,
     };
   },
 };

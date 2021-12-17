@@ -91,6 +91,9 @@ export default {
   --color-ui-primary: theme('colors.indigo.600');
   --color-ui-footer: theme('colors.gray.100');
   --color-ui-primary-lighter-1: theme('colors.indigo.300');
+
+  --color-ui-warning: theme('colors.yellow.100');
+  --color-ui-warning-border: theme('colors.yellow.500');
 }
 
 html[lights-out] {
@@ -102,6 +105,9 @@ html[lights-out] {
   --color-ui-border: theme('colors.gray.800');
   --color-ui-primary: theme('colors.indigo.500');
   --color-ui-footer: theme('colors.gray.700');
+
+  --color-ui-warning: theme('colors.yellow.900');
+  --color-ui-warning-border: theme('colors.yellow.600');
 
   pre[class*='language-'],
   code[class*='language-'] {
@@ -227,6 +233,17 @@ blockquote {
 
 blockquote {
   @apply border-l-4 border-ui-border py-2 pl-4;
+
+  p:last-child {
+    @apply mb-0;
+  }
+}
+
+.notecard__warning {
+  @apply border-l-4 py-2 pl-4 pr-4 mb-4;
+
+  background: var(--color-ui-warning);
+  border-color: var(--color-ui-warning-border);
 
   p:last-child {
     @apply mb-0;
