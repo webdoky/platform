@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.7.0",
-    "@webdoky/yari-ports": "^2.6.2",
+    "@webdoky/yari-ports": "^2.8.0",
     "autoprefixer": "^9",
     "extend": "^3.0.2",
     "gridsome": "^0.7.0",

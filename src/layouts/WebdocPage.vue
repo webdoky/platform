@@ -94,6 +94,8 @@ export default {
 
   --color-ui-warning: theme('colors.yellow.100');
   --color-ui-warning-border: theme('colors.yellow.500');
+  --color-ui-note: theme('colors.indigo.100');
+  --color-ui-note-border: theme('colors.indigo.500');
 }
 
 html[lights-out] {
@@ -108,6 +110,8 @@ html[lights-out] {
 
   --color-ui-warning: theme('colors.yellow.900');
   --color-ui-warning-border: theme('colors.yellow.600');
+  --color-ui-note: theme('colors.indigo.900');
+  --color-ui-note-border: theme('colors.indigo.600');
 
   pre[class*='language-'],
   code[class*='language-'] {
@@ -239,15 +243,23 @@ blockquote {
   }
 }
 
-.notecard__warning {
+.notecard__warning,
+.notecard__note {
   @apply border-l-4 py-2 pl-4 pr-4 mb-4;
-
-  background: var(--color-ui-warning);
-  border-color: var(--color-ui-warning-border);
 
   p:last-child {
     @apply mb-0;
   }
+}
+
+.notecard__warning {
+  background: var(--color-ui-warning);
+  border-color: var(--color-ui-warning-border);
+}
+
+.notecard__note {
+  background: var(--color-ui-note);
+  border-color: var(--color-ui-note-border);
 }
 
 code {
