@@ -47,6 +47,13 @@ const registry = {
     return this.contentPages.values();
   },
 
+  getPageBySlug(slug) {
+    if (slug.endsWith('shape')) {
+      console.log(slug, 'trying to get to a page');
+    }
+    return this.contentPages.get(slug);
+  },
+
   async init() {
     const cssSourcePages = await walk(
       `${pathToOriginalContent}/${sourceLocale.toLowerCase()}/web/css`
@@ -229,7 +236,16 @@ const registry = {
       path = originalFullPath;
     }
 
-    const { content, data, sourceType } = await this.readContentPage(path);
+    const {
+      content,
+      data,
+      sourceType,
+      data: { tags = [] },
+    } = await this.readContentPage(path);
+
+    if (data.slug.endsWith('shape')) {
+      console.log(data.slug, 'writing a page');
+    }
 
     const commitInformation = hasLocalizedContent
       ? await getNewCommits(path)
@@ -239,6 +255,7 @@ const registry = {
       content,
       hasLocalizedContent,
       data,
+      tags,
       path: `/${targetLocale}/docs/${data.slug}`,
       updatesInOriginalRepo: commitInformation,
       section: sectionName,
