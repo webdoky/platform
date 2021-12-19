@@ -48,9 +48,6 @@ const registry = {
   },
 
   getPageBySlug(slug) {
-    if (slug.endsWith('shape')) {
-      console.log(slug, 'trying to get to a page');
-    }
     return this.contentPages.get(slug);
   },
 
@@ -242,10 +239,6 @@ const registry = {
       sourceType,
       data: { tags = [] },
     } = await this.readContentPage(path);
-
-    if (data.slug.endsWith('shape')) {
-      console.log(data.slug, 'writing a page');
-    }
 
     const commitInformation = hasLocalizedContent
       ? await getNewCommits(path)

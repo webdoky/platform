@@ -96,6 +96,8 @@ export default {
   --color-ui-warning-border: theme('colors.yellow.500');
   --color-ui-note: theme('colors.indigo.100');
   --color-ui-note-border: theme('colors.indigo.500');
+  --color-ui-deprecated: theme('colors.red.100');
+  --color-ui-deprecated-border: theme('colors.red.500');
 }
 
 html[lights-out] {
@@ -112,6 +114,8 @@ html[lights-out] {
   --color-ui-warning-border: theme('colors.yellow.600');
   --color-ui-note: theme('colors.indigo.900');
   --color-ui-note-border: theme('colors.indigo.600');
+  --color-ui-deprecated: theme('colors.red.900');
+  --color-ui-deprecated-border: theme('colors.red.600');
 
   pre[class*='language-'],
   code[class*='language-'] {
@@ -244,12 +248,18 @@ blockquote {
 }
 
 .notecard__warning,
-.notecard__note {
+.notecard__note,
+.notecard__deprecated {
   @apply border-l-4 py-2 pl-4 pr-4 mb-4;
 
   p:last-child {
     @apply mb-0;
   }
+}
+
+.notecard__deprecated {
+  background: var(--color-ui-deprecated);
+  border-color: var(--color-ui-deprecated-border);
 }
 
 .notecard__warning {
