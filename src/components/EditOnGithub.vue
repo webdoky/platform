@@ -1,5 +1,8 @@
 <template>
-  <div class="highlight-block mt-8 pt-5 pb-5 pl-5 pr-5 mb-8 rounded">
+  <div
+    id="on-github"
+    class="highlight-block mt-8 pt-5 pb-5 pl-5 pr-5 mb-8 rounded"
+  >
     <h3>Помітили помилку на цій сторінці?</h3>
     <p>
       <a

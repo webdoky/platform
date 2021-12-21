@@ -322,6 +322,25 @@ table {
   }
 }
 
+.table--standard {
+  @apply text-left mb-6 w-full;
+  background: var(--color-ui-sidebar-lighter-1);
+
+  td,
+  th {
+    &:first-child {
+      @apply pl-2;
+    }
+    &:last-child {
+      @apply pr-2;
+    }
+  }
+
+  tbody tr {
+    @apply border-t border-ui-border;
+  }
+}
+
 .badge__inline svg {
   @apply inline mr-1;
 }

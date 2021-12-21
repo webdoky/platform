@@ -1334,6 +1334,11 @@
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-4.0.7.tgz#d49658ed8662908a742dac7b0082cbe5c4e13487"
   integrity sha512-rWwBWRpA34dKdF3qNKancAZ9ZpPx3Dk/bByKONQm+vK92JVGeydHt0lTHNpAkDfB+eqbU8Dz0FXTO5dLw7zIbg==
 
+"@mdn/browser-compat-data@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-4.1.2.tgz#3d33b0ccb96deb766b82aea8b60fed759884776c"
+  integrity sha512-IzFTNGGMx+2fUPO2Gne9l9AiiRKIAAr+gsQNWmHzEnExhSbEmXX8BEfmR6ZW/6wu9mACWWmhMWtvjGf/lwcpog==
+
 "@mdn/yari@^0.4.804":
   version "0.4.804"
   resolved "https://registry.yarnpkg.com/@mdn/yari/-/yari-0.4.804.tgz#ff09344cefc48b2124331353440f21e25b6b91a6"
@@ -2051,13 +2056,15 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@webdoky/yari-ports@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-2.10.0.tgz#e1ca902884b388e5478d050d739b40c29b64d4e3"
-  integrity sha512-CH95VO8NZTwA2Ai5YFBV0qsnCg14cun7LvbnZNx+cZ6Bqp0djqSWwlHncXG6fR0x6XhDD+Y7mWGHDytfxI7hqA==
+"@webdoky/yari-ports@^2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-2.11.2.tgz#aa1954f9a5e80dd52b180065cf5abbbaef1e46a3"
+  integrity sha512-xTO48D0inOkShY+9v/tVuRs6lU7eBQajzn1a7pVpYlQG0nCyDNi1ehpD1SnVGty47OePkHOdxbYVzW1vcva5jQ==
   dependencies:
+    "@mdn/browser-compat-data" "^4.1.2"
     "@mdn/yari" "^0.4.804"
     ava "^3.15.0"
+    browser-specs "^2.19.3"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -2857,6 +2864,11 @@ browser-specs@^2.15.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/browser-specs/-/browser-specs-2.15.1.tgz#ec00b60519abf1e116c6fadd2acb3bb28a32a7f1"
   integrity sha512-z6OwXRUCYpjm4BKQjzvIm+WFrouWkvIKWYx4YJx/MCRKpacW19Mp0q6GVCGKdDNYInjq5gSspeTb9aNHGghnSA==
+
+browser-specs@^2.19.3:
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/browser-specs/-/browser-specs-2.19.3.tgz#d4bab1bef1e61b4537052f51ee4cbff2a8afa72d"
+  integrity sha512-5+HbEfJcsn91kUWguMts8c3O8aagvPMIzdTXS1pHpQtGVu+jrFUtDlo2w6kABBg8xVTvBX2bQnFH4iMLGAO1Uw==
 
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.2.0"

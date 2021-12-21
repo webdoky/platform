@@ -129,13 +129,25 @@ const registry = {
     console.log('Initial registry is ready, expanding macros:');
 
     for ([slug, pageData] of this.contentPages) {
-      const { content: rawContent, data, path, ...otherPageData } = pageData;
-      const { content, data: processedData } = runMacros(rawContent, {
+      const {
+        content: rawContent,
+        data,
+        data: { 'browser-compat': browserCompat },
         path,
-        slug,
-        registry: this,
-        targetLocale,
-      });
+        hasLocalizedContent,
+        ...otherPageData
+      } = pageData;
+      const { content, data: processedData } = runMacros(
+        rawContent,
+        {
+          path,
+          slug,
+          registry: this,
+          targetLocale,
+          browserCompat,
+        },
+        !hasLocalizedContent // Don't run macros for non-localized pages
+      );
 
       this.contentPages.set(data.slug, {
         content,
@@ -144,6 +156,7 @@ const registry = {
           ...processedData,
         },
         path,
+        hasLocalizedContent,
         ...otherPageData,
       });
 
