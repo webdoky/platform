@@ -373,6 +373,11 @@ table {
 }
 
 // compatibility table
+.bc__table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 .bc__table {
   background: var(--color-ui-sidebar-lighter-1);
 
