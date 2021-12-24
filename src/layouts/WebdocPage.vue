@@ -98,6 +98,7 @@ export default {
   --color-ui-note-border: theme('colors.indigo.500');
   --color-ui-deprecated: theme('colors.red.100');
   --color-ui-deprecated-border: theme('colors.red.500');
+  --color-ui-supported: rgba(16, 195, 109, 0.2);
 }
 
 html[lights-out] {
@@ -116,6 +117,7 @@ html[lights-out] {
   --color-ui-note-border: theme('colors.indigo.600');
   --color-ui-deprecated: theme('colors.red.900');
   --color-ui-deprecated-border: theme('colors.red.600');
+  --color-ui-supported: rgba(16, 195, 109, 0.45);
 
   pre[class*='language-'],
   code[class*='language-'] {
@@ -247,31 +249,6 @@ blockquote {
   }
 }
 
-.notecard__warning,
-.notecard__note,
-.notecard__deprecated {
-  @apply border-l-4 py-2 pl-4 pr-4 mb-4;
-
-  p:last-child {
-    @apply mb-0;
-  }
-}
-
-.notecard__deprecated {
-  background: var(--color-ui-deprecated);
-  border-color: var(--color-ui-deprecated-border);
-}
-
-.notecard__warning {
-  background: var(--color-ui-warning);
-  border-color: var(--color-ui-warning-border);
-}
-
-.notecard__note {
-  background: var(--color-ui-note);
-  border-color: var(--color-ui-note-border);
-}
-
 code {
   @apply px-1 py-1 text-ui-typo bg-ui-sidebar font-mono border-b border-r border-ui-border text-sm rounded;
 }
@@ -322,25 +299,6 @@ table {
   }
 }
 
-.table--standard {
-  @apply text-left mb-6 w-full;
-  background: var(--color-ui-sidebar-lighter-1);
-
-  td,
-  th {
-    &:first-child {
-      @apply pl-2;
-    }
-    &:last-child {
-      @apply pr-2;
-    }
-  }
-
-  tbody tr {
-    @apply border-t border-ui-border;
-  }
-}
-
 .badge__inline svg {
   @apply inline mr-1;
 }
@@ -361,6 +319,192 @@ table {
   @screen lg {
     @apply w-1/4 px-0 bg-transparent top-0 bottom-auto inset-x-auto sticky z-0;
     transform: translateX(0);
+  }
+}
+
+// notecards
+.notecard__warning,
+.notecard__note,
+.notecard__deprecated {
+  @apply border-l-4 py-2 pl-4 pr-4 mb-4;
+
+  h4 {
+    @apply pt-0 mt-0 mb-1;
+  }
+
+  p:last-child {
+    @apply mb-0;
+  }
+}
+
+.notecard__deprecated {
+  background: var(--color-ui-deprecated);
+  border-color: var(--color-ui-deprecated-border);
+}
+
+.notecard__warning {
+  background: var(--color-ui-warning);
+  border-color: var(--color-ui-warning-border);
+}
+
+.notecard__note {
+  background: var(--color-ui-note);
+  border-color: var(--color-ui-note-border);
+}
+
+// spec table
+.table--standard {
+  @apply text-left mb-6 w-full;
+  background: var(--color-ui-sidebar-lighter-1);
+
+  td,
+  th {
+    &:first-child {
+      @apply pl-2;
+    }
+    &:last-child {
+      @apply pr-2;
+    }
+  }
+
+  tbody tr {
+    @apply border-t border-ui-border;
+  }
+}
+
+// compatibility table
+.bc__table {
+  background: var(--color-ui-sidebar-lighter-1);
+
+  td,
+  th {
+    @apply py-2 px-2;
+    font-weight: normal;
+
+    &:nth-child(n + 2) {
+      @apply border-l border-ui-border;
+    }
+
+    &:first-child {
+      @apply pl-2;
+    }
+    &:last-child {
+      @apply pr-2;
+    }
+  }
+
+  .bc-platforms {
+    span {
+      @apply invisible inline-block w-0 h-0 overflow-hidden absolute;
+    }
+
+    th {
+      text-align: center;
+    }
+
+    .bc-platform-desktop::after,
+    .bc-platform-mobile::after {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
+
+    .bc-platform-desktop::after {
+      background: url('/icons/computer-line.svg');
+    }
+
+    .bc-platform-mobile::after {
+      background: url('/icons/smartphone-line.svg');
+    }
+  }
+
+  .bc-browsers {
+    span {
+      @apply invisible inline-block w-0 h-0 overflow-hidden absolute;
+    }
+
+    th {
+      text-align: center;
+    }
+
+    th::after {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
+    .bc-browser-chrome::after,
+    .bc-browser-chrome_android::after {
+      background: url('/icons/chrome-line.svg');
+    }
+    .bc-browser-edge::after {
+      background: url('/icons/edge-line.svg');
+    }
+    .bc-browser-firefox::after,
+    .bc-browser-firefox_android::after {
+      background: url('/icons/firefox-line.svg');
+    }
+    .bc-browser-ie::after {
+      background: url('/icons/ie-fill.svg');
+    }
+    .bc-browser-opera::after,
+    .bc-browser-opera_android::after {
+      background: url('/icons/opera-fill.svg');
+    }
+    .bc-browser-safari::after,
+    .bc-browser-safari_ios::after {
+      background: url('/icons/ie-fill.svg');
+    }
+    .bc-browser-webview_android::after {
+      background: url('/icons/android-line.svg');
+    }
+    .bc-browser-samsunginternet_android::after {
+      background: url('/icons/samsung-internet.svg');
+    }
+  }
+
+  tbody tr {
+    @apply border-t border-ui-border;
+
+    td {
+      text-align: center;
+
+      abbr {
+        @apply invisible inline-block w-0 h-0 overflow-hidden absolute;
+      }
+    }
+  }
+
+  .bc-icons {
+    @apply flex px-1 py-2;
+  }
+
+  .bc-icons span {
+    @apply invisible inline-block w-0 h-0 overflow-hidden absolute;
+  }
+
+  .bc-browser-name {
+    @apply invisible inline-block w-0 h-0 overflow-hidden absolute;
+  }
+
+  .bc-supports-yes {
+    background: var(--color-ui-supported);
+  }
+  .bc-supports-no {
+    background: var(--color-ui-deprecated);
+  }
+  .bc-supports-partial {
+    background: var(--color-ui-deprecated);
+    background: repeating-linear-gradient(
+      130deg,
+      var(--color-ui-deprecated),
+      var(--color-ui-deprecated) 8px,
+      var(--color-ui-supported) 8px,
+      var(--color-ui-supported) 16px
+    );
   }
 }
 </style>
