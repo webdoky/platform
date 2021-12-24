@@ -74,17 +74,21 @@ next: '/docs/licensing/'
 ### R
 ### Realm
 Область
-### Render
-Рендер
-### Return value
-Повернене значення
 #### Reference
 Довідка (в сенсі reference doc), або посилання (в сенсі by reference)
+### Render
+Рендер
+### Replaced elements
+Елементи, що заміщуються
+### Return value
+Повернене значення
 ### S
 #### Snapshot
 Знімок
 #### Statement
 Інструкція
+#### Superclass
+Надклас
 ### T
 #### Tag
 Тег
