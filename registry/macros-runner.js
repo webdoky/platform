@@ -18,7 +18,10 @@ const runMacros = (content, context, navigationOnly = false) => {
   recognizedMacros.map((expression) => {
     const { match, functionName, args } = expression;
 
-    if (!navigationOnly || navigationalMacros.includes(functionName)) {
+    if (
+      !navigationOnly ||
+      navigationalMacros.includes(functionName.toLowerCase())
+    ) {
       let result = match; // uninterpolated macros will be visible by default
       const macroFunction = macrosRegistry.lookup(functionName);
       if (macroFunction) {
