@@ -24,10 +24,20 @@ next: '/docs/licensing/'
 Бекенд (іноді серверна частина)
 #### Border
 Межа
+### Box
+Рамки
+### Box model
+Блокова модель
 ### C
 #### Chaining
 Зв'язування (у послідовність), пов'язані
+#### Collapse
+Перекриватись
+#### Containing block
+Контейнерний блок
 ### D
+#### Debugging
+Зневадження
 #### Default (i.e by default)
 Усталені, як усталено
 #### Define
@@ -40,6 +50,9 @@ next: '/docs/licensing/'
 Прапорець (булева змінна, яка зазвичай відповідає за збереження простого стану, як-от "увімкнено-вимкнено")
 #### Flattening
 Сплощенням (результат виклику `Array.flat()` над масивом)
+#### Flow
+* Потік
+* Плин
 #### Fullstack
 Повностекові, повного стеку
 #### Front-end
@@ -52,19 +65,31 @@ next: '/docs/licensing/'
 <!-- ### E
 ### H -->
 ### I
+#### Inline
+Рядковий
 #### Iterables
 Ітеровані (об'єкти)
 <!-- ### J
 ### K -->
 ### L
 #### Layout
-Верстка (іноді розкладка)
+* Верстка
+* Верстання
+* Розкладка
+* Компонування
+#### Layout model
+Модель компонування
+#### Legacy
+Застарілий
 ### M
 #### Management (i.e memory management)
 Керування (керування пам'яттю)
+#### Mashup
+Мешап
 ### O
-#### Overriding (OOP)
-Заміщення
+#### Override
+* Заміщати
+* Зневажати
 ### P
 #### Progressbar
 Індикатор виконання
@@ -77,14 +102,20 @@ next: '/docs/licensing/'
 #### Reference
 Довідка (в сенсі reference doc), або посилання (в сенсі by reference)
 ### Render
-Рендер
-### Replaced elements
-Елементи, що заміщуються
+* Рендер
+* Візуалізувати
+* Наносити
+### Replaced element
+Заміщений елемент
 ### Return value
 Повернене значення
 ### S
 #### Snapshot
 Знімок
+#### Sprite
+Марево
+#### Stacking
+Нагромадження
 #### Statement
 Інструкція
 #### Superclass
@@ -92,6 +123,8 @@ next: '/docs/licensing/'
 ### T
 #### Tag
 Тег
+#### Typeface
+Гарнітура
 <!-- ### U
 ### V -->
 ### W
@@ -99,6 +132,8 @@ next: '/docs/licensing/'
 Вебзастосунок
 #### Website
 Вебсайт
+#### Writing mode
+Режим письма
 <!-- ### X
 ### Y
 ### Z -->
