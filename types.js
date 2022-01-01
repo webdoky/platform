@@ -14,6 +14,7 @@ type MdnPage implements Node {
   slug: String
   tags: [String]
   macros: [PageMacro]
+  description: String
   content: String
   hasContent: Boolean
   headings: [PageHeadings]

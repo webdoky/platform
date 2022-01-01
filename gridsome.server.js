@@ -83,6 +83,7 @@ module.exports = function (api) {
     for (page of registry.getPagesData()) {
       const {
         content,
+        description,
         headings,
         data,
         path,
@@ -93,6 +94,7 @@ module.exports = function (api) {
 
       collection.addNode({
         content,
+        description,
         hasContent: !!content,
         headings,
         ...data,

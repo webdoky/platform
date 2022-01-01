@@ -112,6 +112,7 @@ query ($id: ID!) {
     slug
     tags
     path
+    description
     originalPath
     headings {
       depth
@@ -184,7 +185,7 @@ export default {
 
   metaInfo() {
     const title = this.$page.mdnPage.title;
-    const description = '';
+    const description = this.$page.mdnPage.description;
     const robots = this.$page.mdnPage.content ? 'all' : 'noindex,nofollow';
 
     return {

@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const walk = require('./utils/walk');
 const findHeadings = require('./utils/find-headings');
+const extractDescription = require('./utils/extract-description');
 const { getNewCommits } = require('./utils/git-commit-data');
 const { runMacros } = require('./macros-runner');
 const {
@@ -177,14 +178,35 @@ const registry = {
         sourceType,
         ...otherPageData
       } = pageData;
+      const {
+        path,
+        data: { 'browser-compat': browserCompat },
+      } = pageData;
       const sourceProcessor =
         sourceType === 'html' ? this.processHtmlPage : this.processMdPage;
-      const { content, headings } = await sourceProcessor(rawContent);
+      const {
+        content,
+        headings,
+        description: rawDescription,
+      } = await sourceProcessor(rawContent);
+
+      const { content: processedDescription } = runMacros(
+        rawDescription,
+        {
+          path,
+          slug,
+          registry: this,
+          targetLocale,
+          browserCompat,
+        },
+        !hasLocalizedContent // Don't run macros for non-localized pages
+      );
 
       this.contentPages.set(slug, {
         content: hasLocalizedContent ? content : '',
         hasLocalizedContent,
         headings,
+        description: processedDescription,
         ...otherPageData,
       });
 
@@ -294,10 +316,12 @@ const registry = {
 
     const content = htmlProcess.stringify(processedRehypeAst);
     const headings = findHeadings(rehypeAst);
+    const description = extractDescription(rehypeAst);
 
     return {
       content,
       headings,
+      description,
     };
   },
 
@@ -308,10 +332,12 @@ const registry = {
 
     const content = htmlProcess.stringify(processedHtmlAst);
     const headings = findHeadings(linkedContentAst);
+    const description = extractDescription(rehypeAst);
 
     return {
       content,
       headings,
+      description,
     };
   },
 };

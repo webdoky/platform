@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Інформація про проект ВебДоки'
 sidebar: 'docs'
 next: '/docs/translation/'
 ---

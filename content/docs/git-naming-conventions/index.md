@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Прийняті патерни і правила іменування гілок та коміт-повідомлень в репозиторіях проекту ВебДоки'
 sidebar: 'docs'
 prev: '/docs/translating-in-github/'
 next: '/docs/glossary/'

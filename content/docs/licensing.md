@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Докладна інформація про ліцензії на тексти і код вмісту цього вебсайту'
 sidebar: 'docs'
 prev: '/docs/glossary/'
 next: '/docs/'

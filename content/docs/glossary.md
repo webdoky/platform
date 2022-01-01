@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Алфавітний покажчик термінів та їхніх прийнятих перекладів'
 sidebar: 'docs'
 prev: '/docs/git-naming-conventions/'
 next: '/docs/licensing/'
@@ -85,6 +85,8 @@ next: '/docs/licensing/'
 ### S
 #### Snapshot
 Знімок
+#### Stacking context
+Контекст нагромадження
 #### Statement
 Інструкція
 #### Superclass
