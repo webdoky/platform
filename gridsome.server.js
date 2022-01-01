@@ -17,6 +17,7 @@ const { registry } = require('./registry');
 const { popularitiesJson } = require('@webdoky/yari-ports');
 const { sourceLocale, targetLocale } = require('./registry/config');
 const graphqlSchemaTypes = require('./types');
+const excludedUrls = require('./noindex-urls');
 
 // TODO: to config
 const pathToLocalizedContent = process.env.PATH_TO_LOCALIZED_CONTENT;
@@ -91,6 +92,15 @@ module.exports = function (api) {
         updatesInOriginalRepo,
         originalPath,
       } = page;
+
+      const pageUrl = `${path}/`;
+
+      if (content && excludedUrls.includes(pageUrl)) {
+        console.log(
+          '\x1b[33mwarn\x1b[0m',
+          `- content page is excluded from sitemap: ${path}`
+        );
+      }
 
       collection.addNode({
         content,
