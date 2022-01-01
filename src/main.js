@@ -10,6 +10,7 @@ export default function (Vue, { router, head, isClient }) {
 
   router.beforeEach((to, _from, next) => {
     // TODO: MOST of og:url links are broken atm
+    head.htmlAttrs = { lang: 'uk-UA' };
     if (to.path !== '/404/') {
       head.meta.push({
         key: 'og:url',

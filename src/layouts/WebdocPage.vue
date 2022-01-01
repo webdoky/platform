@@ -61,6 +61,11 @@ export default {
           content: 'website',
         },
         {
+          key: 'og:locale',
+          property: 'og:locale',
+          content: 'uk-UA',
+        },
+        {
           key: 'twitter:card',
           name: 'twitter:card',
           content: 'summary_large_image',
