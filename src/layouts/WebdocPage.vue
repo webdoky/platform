@@ -104,6 +104,20 @@ export default {
   --color-ui-deprecated: theme('colors.red.100');
   --color-ui-deprecated-border: theme('colors.red.500');
   --color-ui-supported: rgba(16, 195, 109, 0.2);
+
+  --icon-platform-desktop: url('/icons/computer-line.svg');
+  --icon-platform-mobile: url('/icons/smartphone-line.svg');
+  --icon-platform-server: url('/icons/server-line.svg');
+  --icon-browser-chrome: url('/icons/chrome-line.svg');
+  --icon-browser-edge: url('/icons/edge-fill.svg');
+  --icon-browser-firefox: url('/icons/firefox-line.svg');
+  --icon-browser-ie: url('/icons/ie-fill.svg');
+  --icon-browser-opera: url('/icons/opera-fill.svg');
+  --icon-browser-safari: url('/icons/safari-line.svg');
+  --icon-browser-android: url('/icons/android-line.svg');
+  --icon-browser-samsung-internet: url('/icons/samsung-internet.svg');
+  --icon-browser-deno: url('/icons/deno-fill.svg');
+  --icon-browser-nodejs: url('/icons/nodejs-line.svg');
 }
 
 html[lights-out] {
@@ -123,6 +137,20 @@ html[lights-out] {
   --color-ui-deprecated: theme('colors.red.900');
   --color-ui-deprecated-border: theme('colors.red.600');
   --color-ui-supported: rgba(16, 195, 109, 0.45);
+
+  --icon-platform-desktop: url('/icons-dark/computer-line.svg');
+  --icon-platform-mobile: url('/icons-dark/smartphone-line.svg');
+  --icon-platform-server: url('/icons-dark/server-line.svg');
+  --icon-browser-chrome: url('/icons-dark/chrome-line.svg');
+  --icon-browser-edge: url('/icons-dark/edge-fill.svg');
+  --icon-browser-firefox: url('/icons-dark/firefox-line.svg');
+  --icon-browser-ie: url('/icons-dark/ie-fill.svg');
+  --icon-browser-opera: url('/icons-dark/opera-fill.svg');
+  --icon-browser-safari: url('/icons-dark/safari-line.svg');
+  --icon-browser-android: url('/icons-dark/android-line.svg');
+  --icon-browser-samsung-internet: url('/icons-dark/samsung-internet.svg');
+  --icon-browser-deno: url('/icons-dark/deno-fill.svg');
+  --icon-browser-nodejs: url('/icons-dark/nodejs-line.svg');
 
   pre[class*='language-'],
   code[class*='language-'] {
@@ -423,15 +451,15 @@ table {
     }
 
     .bc-platform-desktop::after {
-      background: url('/icons/computer-line.svg');
+      background: var(--icon-platform-desktop);
     }
 
     .bc-platform-mobile::after {
-      background: url('/icons/smartphone-line.svg');
+      background: var(--icon-platform-mobile);
     }
 
     .bc-platform-server::after {
-      background: url('/icons/server-line.svg');
+      background: var(--icon-platform-server);
     }
   }
 
@@ -453,37 +481,37 @@ table {
     }
     .bc-browser-chrome::after,
     .bc-browser-chrome_android::after {
-      background: url('/icons/chrome-line.svg');
+      background: var(--icon-browser-chrome);
     }
     .bc-browser-edge::after {
-      background: url('/icons/edge-fill.svg');
+      background: var(--icon-browser-edge);
     }
     .bc-browser-firefox::after,
     .bc-browser-firefox_android::after {
-      background: url('/icons/firefox-line.svg');
+      background: var(--icon-browser-firefox);
     }
     .bc-browser-ie::after {
-      background: url('/icons/ie-fill.svg');
+      background: var(--icon-browser-ie);
     }
     .bc-browser-opera::after,
     .bc-browser-opera_android::after {
-      background: url('/icons/opera-fill.svg');
+      background: var(--icon-browser-opera);
     }
     .bc-browser-safari::after,
     .bc-browser-safari_ios::after {
-      background: url('/icons/safari-line.svg');
+      background: var(--icon-browser-safari);
     }
     .bc-browser-webview_android::after {
-      background: url('/icons/android-line.svg');
+      background: var(--icon-browser-android);
     }
     .bc-browser-samsunginternet_android::after {
-      background: url('/icons/samsung-internet.svg');
+      background: var(--icon-browser-samsung-internet);
     }
     .bc-browser-deno::after {
-      background: url('/icons/deno-fill.svg');
+      background: var(--icon-browser-deno);
     }
     .bc-browser-nodejs::after {
-      background: url('/icons/nodejs-line.svg');
+      background: var(--icon-browser-nodejs);
     }
   }
 
