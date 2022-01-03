@@ -413,7 +413,8 @@ table {
     }
 
     .bc-platform-desktop::after,
-    .bc-platform-mobile::after {
+    .bc-platform-mobile::after,
+    .bc-platform-server::after {
       content: '';
       display: inline-block;
       width: 24px;
@@ -427,6 +428,10 @@ table {
 
     .bc-platform-mobile::after {
       background: url('/icons/smartphone-line.svg');
+    }
+
+    .bc-platform-server::after {
+      background: url('/icons/server-line.svg');
     }
   }
 
@@ -451,7 +456,7 @@ table {
       background: url('/icons/chrome-line.svg');
     }
     .bc-browser-edge::after {
-      background: url('/icons/edge-line.svg');
+      background: url('/icons/edge-fill.svg');
     }
     .bc-browser-firefox::after,
     .bc-browser-firefox_android::after {
@@ -466,13 +471,19 @@ table {
     }
     .bc-browser-safari::after,
     .bc-browser-safari_ios::after {
-      background: url('/icons/ie-fill.svg');
+      background: url('/icons/safari-line.svg');
     }
     .bc-browser-webview_android::after {
       background: url('/icons/android-line.svg');
     }
     .bc-browser-samsunginternet_android::after {
       background: url('/icons/samsung-internet.svg');
+    }
+    .bc-browser-deno::after {
+      background: url('/icons/deno-fill.svg');
+    }
+    .bc-browser-nodejs::after {
+      background: url('/icons/nodejs-line.svg');
     }
   }
 
