@@ -46,9 +46,18 @@
               <tr>
                 <th>Розділ</th>
                 <th>Сторінки</th>
-                <th>З них перекладено</th>
-                <th>З них актуально</th>
-                <th>Очікує на переклад</th>
+                <th>
+                  <input v-model="showTranslated" type="checkbox" />
+                  З них перекладено
+                </th>
+                <th>
+                  <input v-model="showUpToDate" type="checkbox" />
+                  З них актуально
+                </th>
+                <th>
+                  <input v-model="showNotTranslated" type="checkbox" />
+                  Очікує на переклад
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -95,7 +104,7 @@
             >CSS
           </h3>
           <TranslationStatusSection
-            :pages="sections.css"
+            :pages="sections.css | filterPages(filterData)"
             :include-popularity="true"
           />
 
@@ -105,7 +114,7 @@
             >HTML
           </h3>
           <TranslationStatusSection
-            :pages="sections.html"
+            :pages="sections.html | filterPages(filterData)"
             :include-popularity="true"
           />
 
@@ -115,7 +124,7 @@
             >JavaScript
           </h3>
           <TranslationStatusSection
-            :pages="sections.javascript"
+            :pages="sections.javascript | filterPages(filterData)"
             :include-popularity="true"
           />
 
@@ -125,7 +134,7 @@
             >SVG
           </h3>
           <TranslationStatusSection
-            :pages="sections.svg"
+            :pages="sections.svg | filterPages(filterData)"
             :include-popularity="true"
           />
 
@@ -135,7 +144,7 @@
             >Посібники
           </h3>
           <TranslationStatusSection
-            :pages="sections.guide"
+            :pages="sections.guide | filterPages(filterData)"
             :include-popularity="true"
           />
         </div>
@@ -185,6 +194,30 @@ export default {
     TranslationOverallStatusRow,
   },
 
+  filters: {
+    filterPages: (pages, data) => {
+      const { showNotTranslated, showUpToDate, showTranslated } = data;
+      return pages.filter(
+        (page) =>
+          (showNotTranslated && !page.hasContent) ||
+          (showUpToDate &&
+            page.hasContent &&
+            !page.updatesInOriginalRepo.length) ||
+          (showTranslated &&
+            page.hasContent &&
+            page.updatesInOriginalRepo.length)
+      );
+    },
+  },
+
+  data: function () {
+    return {
+      showTranslated: true,
+      showUpToDate: true,
+      showNotTranslated: true,
+    };
+  },
+
   metaInfo() {
     const title = 'Про веб, у вебі, для вебу';
     const description =
@@ -232,6 +265,10 @@ export default {
     };
   },
   computed: {
+    filterData() {
+      const { showNotTranslated, showUpToDate, showTranslated } = this;
+      return { showTranslated, showUpToDate, showNotTranslated };
+    },
     allPages() {
       return this.$page.allMdnPage.edges.map((node) => node.node);
     },
