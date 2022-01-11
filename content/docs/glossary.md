@@ -22,6 +22,9 @@ next: '/docs/licensing/'
 
 #### Back-end
 Бекенд (іноді серверна частина)
+
+#### Basic Multilingual Plane (BMP)
+Базовий багатомовний план (ББП)
 #### Border
 Межа
 ### C
