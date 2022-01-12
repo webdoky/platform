@@ -18,6 +18,8 @@ next: '/docs/licensing/'
 Застосунок
 #### Assignment (operator)
 Присвоєння (оператор)
+#### At-rule
+Директива
 ### B
 
 #### Back-end
@@ -46,7 +48,9 @@ next: '/docs/licensing/'
 #### Default (i.e by default)
 Усталені, як усталено
 #### Define
-Оголосити, оголошення
+Оголосити
+#### Definition
+Визначення
 #### Display box (of the element)
 Візуальні рамки (елемента)
 <!-- ### E -->
@@ -61,11 +65,15 @@ next: '/docs/licensing/'
 #### Flow
 * Потік
 * Плин
-#### Fullstack
-Повностекові, повного стеку
+#### Font family
+Сімейство шрифту
 #### Front-end
 фронтенд (іноді клієнтська частина)
+#### Fullstack
+Повностекові, повного стеку
 ### G
+#### Glyph
+Гліф
 
 #### Guide
 Настанови
@@ -78,8 +86,8 @@ next: '/docs/licensing/'
 * Рядковий
 #### Invalid
 Недійсний
-#### Iterables
-Ітеровані (об'єкти)
+#### Iterable
+Ітерований (об'єкт)
 <!-- ### J
 ### K -->
 ### L
@@ -122,7 +130,12 @@ next: '/docs/licensing/'
 Повернене значення
 ### S
 #### Snapshot
-Знімок
+* Знімок
+* Зліпок
+#### Sprite
+Спрайт
+#### Stacking
+Нагромадження
 #### Stacking context
 Контекст нагромадження
 #### Statement
@@ -133,11 +146,13 @@ next: '/docs/licensing/'
 ### T
 #### Tag
 Тег
+#### Tutorial
+Настанови
 #### Typeface
 Гарнітура
 ### U
 #### User agent
-Користувацький фактор
+Користувацький агент
 ### V
 #### Valid
 * Чинний
