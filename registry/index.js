@@ -38,9 +38,14 @@ const generateSlugToPathMap = (paths, locale) => {
 
 const normalizeReference = (ref = '', pagePath = '') => {
   if (ref.startsWith('#')) {
+    // just anchor
     return `${pagePath}/${ref}`;
   } else if (!ref.includes('#') && !ref.endsWith('/')) {
+    // add trailing slash to plain links
     return `${ref}/`;
+  } else if (ref.includes('#') && !ref.includes('/#')) {
+    // add slash before hash (just to simplify search for broken links)
+    return ref.replace('#', '/#');
   }
   return ref;
 };
@@ -48,6 +53,7 @@ const normalizeReference = (ref = '', pagePath = '') => {
 const registry = {
   localizedContentMap: undefined,
   contentPages: new Map(),
+  existingInternalDestinations: new Set(),
   internalLinkDestinations: new Set(),
 
   // counters for visual notifications
@@ -173,6 +179,10 @@ const registry = {
         ...otherPageData,
       });
 
+      if (hasLocalizedContent) {
+        this.existingInternalDestinations.add(path);
+      }
+
       process.stdout.write(
         `${++this.expandedMacrosFor} of ${
           this.estimatedMacrosExpansionAmount
@@ -226,7 +236,20 @@ const registry = {
         hasLocalizedContent,
         headings,
         references: hasLocalizedContent
-          ? Array.from(references).map((item) => normalizeReference(item, path))
+          ? Array.from(references)
+              .filter((item) => item !== '#on-github') // this is an external widget, unavailable in content
+              .map((item) => normalizeReference(item, path))
+              .filter((ref) => {
+                if (ref.startsWith('http://') || ref.startsWith('http://')) {
+                  return true;
+                }
+
+                let [path] = ref.split('#');
+                if (path.endsWith('/')) {
+                  path = path.slice(0, path.length - 1);
+                }
+                return this.existingInternalDestinations.has(path);
+              })
           : [],
         description: processedDescription,
         ...otherPageData,
