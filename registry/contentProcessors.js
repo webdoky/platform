@@ -1,4 +1,3 @@
-const remarkSlug = require('remark-slug');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
 const rehypePrism = require('@mapbox/rehype-prism');
 const unified = require('unified');
@@ -15,6 +14,7 @@ const {
 const defaultListHandler = require('mdast-util-to-hast/lib/handlers/list');
 
 const externalLinks = require('./utils/plugins/external-links');
+const mdSlugify = require('./utils/plugins/md-slugify');
 
 const htmlParseAndProcess = unified()
   .use(rehypeParse, { fragment: true })
@@ -27,7 +27,7 @@ const htmlParseAndProcess = unified()
 const mdParseAndProcess = unified()
   .use(remarkParse)
   .use([
-    remarkSlug,
+    mdSlugify,
     [
       remarkExternalLinks,
       {

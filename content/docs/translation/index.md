@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Опис того, як відбувається переклад — з точки зору веб-розробника чи просто людини із досвідом роботи з Git та інтерфейсом командного рядка'
 sidebar: 'docs'
 prev: '/docs/'
 next: '/docs/translating-in-github/'

@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Алфавітний покажчик термінів та їхніх прийнятих перекладів'
 sidebar: 'docs'
 prev: '/docs/git-naming-conventions/'
 next: '/docs/licensing/'
@@ -22,6 +22,9 @@ next: '/docs/licensing/'
 
 #### Back-end
 Бекенд (іноді серверна частина)
+
+#### Basic Multilingual Plane (BMP)
+Базовий багатомовний план (ББП)
 #### Border
 Межа
 ### Box
@@ -120,10 +123,8 @@ next: '/docs/licensing/'
 ### S
 #### Snapshot
 Знімок
-#### Sprite
-Марево
-#### Stacking
-Нагромадження
+#### Stacking context
+Контекст нагромадження
 #### Statement
 * Інструкція
 * Виказ

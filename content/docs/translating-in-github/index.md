@@ -1,5 +1,5 @@
 ---
-description: ''
+description: 'Опис того, як можна перекладати тексти просто з інтерфейсу GitHub, без роботи з локальним репозиторієм взагалі'
 sidebar: 'docs'
 prev: '/docs/translation/'
 next: '/docs/git-naming-conventions/'

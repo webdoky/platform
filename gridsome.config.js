@@ -1,3 +1,4 @@
+const excludedUrls = require('./noindex-urls');
 // This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
@@ -83,7 +84,9 @@ module.exports = {
 
     {
       use: '@gridsome/plugin-sitemap',
-      options: {},
+      options: {
+        exclude: excludedUrls,
+      },
     },
 
     {

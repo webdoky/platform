@@ -3,6 +3,9 @@ const fs = require('fs');
 
 const walk = require('./utils/walk');
 const findHeadings = require('./utils/find-headings');
+const findFragments = require('./utils/find-fragments');
+const findReferences = require('./utils/find-references');
+const extractDescription = require('./utils/extract-description');
 const { getNewCommits } = require('./utils/git-commit-data');
 const { runMacros } = require('./macros-runner');
 const {
@@ -33,9 +36,19 @@ const generateSlugToPathMap = (paths, locale) => {
   return map;
 };
 
+const normalizeReference = (ref = '', pagePath = '') => {
+  if (ref.startsWith('#')) {
+    return `${pagePath}/${ref}`;
+  } else if (!ref.includes('#') && !ref.endsWith('/')) {
+    return `${ref}/`;
+  }
+  return ref;
+};
+
 const registry = {
   localizedContentMap: undefined,
   contentPages: new Map(),
+  internalLinkDestinations: new Set(),
 
   // counters for visual notifications
   expandedMacrosFor: 0,
@@ -177,14 +190,45 @@ const registry = {
         sourceType,
         ...otherPageData
       } = pageData;
+      const {
+        path,
+        data: { 'browser-compat': browserCompat },
+      } = pageData;
       const sourceProcessor =
         sourceType === 'html' ? this.processHtmlPage : this.processMdPage;
-      const { content, headings } = await sourceProcessor(rawContent);
+      const {
+        content,
+        headings,
+        fragments = new Set(),
+        references = new Set(),
+        description: rawDescription,
+      } = await sourceProcessor(rawContent);
+
+      const { content: processedDescription } = runMacros(
+        rawDescription,
+        {
+          path,
+          slug,
+          registry: this,
+          targetLocale,
+          browserCompat,
+        },
+        !hasLocalizedContent // Don't run macros for non-localized pages
+      );
+
+      this.internalLinkDestinations.add(`${path}/`);
+      fragments.forEach((id) => {
+        this.internalLinkDestinations.add(`${path}/#${id}`);
+      });
 
       this.contentPages.set(slug, {
         content: hasLocalizedContent ? content : '',
         hasLocalizedContent,
         headings,
+        references: hasLocalizedContent
+          ? Array.from(references).map((item) => normalizeReference(item, path))
+          : [],
+        description: processedDescription,
         ...otherPageData,
       });
 
@@ -294,10 +338,16 @@ const registry = {
 
     const content = htmlProcess.stringify(processedRehypeAst);
     const headings = findHeadings(rehypeAst);
+    const fragments = findFragments(rehypeAst);
+    const references = findReferences(rehypeAst);
+    const description = extractDescription(rehypeAst);
 
     return {
       content,
       headings,
+      fragments,
+      references,
+      description,
     };
   },
 
@@ -308,10 +358,16 @@ const registry = {
 
     const content = htmlProcess.stringify(processedHtmlAst);
     const headings = findHeadings(linkedContentAst);
+    const fragments = findFragments(linkedContentAst);
+    const references = findReferences(linkedContentAst);
+    const description = extractDescription(rehypeAst);
 
     return {
       content,
       headings,
+      fragments,
+      references,
+      description,
     };
   },
 };

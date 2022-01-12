@@ -35,9 +35,18 @@
               <tr>
                 <th>Розділ</th>
                 <th>Сторінки</th>
-                <th>З них перекладено</th>
-                <th>З них актуально</th>
-                <th>Очікує на переклад</th>
+                <th>
+                  <input v-model="showTranslated" type="checkbox" />
+                  З них перекладено
+                </th>
+                <th>
+                  <input v-model="showUpToDate" type="checkbox" />
+                  З них актуально
+                </th>
+                <th>
+                  <input v-model="showNotTranslated" type="checkbox" />
+                  Очікує на переклад
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -83,35 +92,45 @@
               ><span class="icon icon-link"></span></a
             >CSS
           </h3>
-          <TranslationStatusSection :pages="sections.css" />
+          <TranslationStatusSection
+            :pages="sections.css | filterPages(filterData)"
+          />
 
           <h3 id="HTML">
             <a href="#HTML" aria-hidden="true"
               ><span class="icon icon-link"></span></a
             >HTML
           </h3>
-          <TranslationStatusSection :pages="sections.html" />
+          <TranslationStatusSection
+            :pages="sections.html | filterPages(filterData)"
+          />
 
           <h3 id="JavaScript">
             <a href="#JavaScript" aria-hidden="true"
               ><span class="icon icon-link"></span></a
             >JavaScript
           </h3>
-          <TranslationStatusSection :pages="sections.javascript" />
+          <TranslationStatusSection
+            :pages="sections.javascript | filterPages(filterData)"
+          />
 
           <h3 id="SVG">
             <a href="#SVG" aria-hidden="true"
               ><span class="icon icon-link"></span></a
             >SVG
           </h3>
-          <TranslationStatusSection :pages="sections.svg" />
+          <TranslationStatusSection
+            :pages="sections.svg | filterPages(filterData)"
+          />
 
           <h3 id="Посібники">
             <a href="#Посібники" aria-hidden="true"
               ><span class="icon icon-link"></span></a
             >Посібники
           </h3>
-          <TranslationStatusSection :pages="sections.guide" />
+          <TranslationStatusSection
+            :pages="sections.guide | filterPages(filterData)"
+          />
         </div>
       </div>
     </div>
@@ -147,6 +166,30 @@ export default {
   components: {
     TranslationStatusSection,
     TranslationOverallStatusRow,
+  },
+
+  filters: {
+    filterPages: (pages, data) => {
+      const { showNotTranslated, showUpToDate, showTranslated } = data;
+      return pages.filter(
+        (page) =>
+          (showNotTranslated && !page.hasContent) ||
+          (showUpToDate &&
+            page.hasContent &&
+            !page.updatesInOriginalRepo.length) ||
+          (showTranslated &&
+            page.hasContent &&
+            page.updatesInOriginalRepo.length)
+      );
+    },
+  },
+
+  data: function () {
+    return {
+      showTranslated: true,
+      showUpToDate: true,
+      showNotTranslated: true,
+    };
   },
 
   metaInfo() {
@@ -196,6 +239,10 @@ export default {
     };
   },
   computed: {
+    filterData() {
+      const { showNotTranslated, showUpToDate, showTranslated } = this;
+      return { showTranslated, showUpToDate, showNotTranslated };
+    },
     allPages() {
       return this.$page.allMdnPage.edges.map((node) => node.node);
     },

@@ -17,9 +17,13 @@ const { registry } = require('./registry');
 const { popularitiesJson } = require('@webdoky/yari-ports');
 const { sourceLocale, targetLocale } = require('./registry/config');
 const graphqlSchemaTypes = require('./types');
+const excludedUrls = require('./noindex-urls');
 
 // TODO: to config
 const pathToLocalizedContent = process.env.PATH_TO_LOCALIZED_CONTENT;
+
+const isExternalLink = (ref) =>
+  ref.startsWith('http://') || ref.startsWith('https://');
 
 // Prepare HTML parser with necessary plugins
 const processor = unified()
@@ -56,6 +60,7 @@ perfMon.markAndMeasure('Dependencies loaded', 'timerStart', 'depLoad');
 module.exports = function (api) {
   api.loadSource(async ({ addCollection, addSchemaTypes, addMetadata }) => {
     perfMon.mark('loadingSourcesStart');
+    let orphanedLinksCount = 0;
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
@@ -83,16 +88,45 @@ module.exports = function (api) {
     for (page of registry.getPagesData()) {
       const {
         content,
+        description,
         headings,
         data,
         path,
         section,
+        references,
         updatesInOriginalRepo,
         originalPath,
       } = page;
 
+      // Perform some additional validation on the content before starting generating website structure
+      const pageUrl = `${path}/`;
+
+      // Check if the page is excluded from sitemap
+      if (content && excludedUrls.includes(pageUrl)) {
+        console.warn(
+          '\x1b[33mwarn\x1b[0m',
+          `- content page is excluded from sitemap: ${path}`
+        );
+      }
+
+      // Check if links in the content lead to sensible destinations
+      const { internalLinkDestinations } = registry;
+      references.forEach((refItem) => {
+        if (
+          !isExternalLink(refItem) &&
+          !internalLinkDestinations.has(refItem)
+        ) {
+          orphanedLinksCount++;
+          console.warn(
+            '\x1b[33mwarn\x1b[0m',
+            `- found orphaned reference: ${refItem} on page ${path}`
+          );
+        }
+      });
+
       collection.addNode({
         content,
+        description,
         hasContent: !!content,
         headings,
         ...data,
@@ -103,6 +137,14 @@ module.exports = function (api) {
         sourceLastUpdatetAt: 0,
         translationLastUpdatedAt: 0,
       });
+    }
+
+    if (orphanedLinksCount > 0) {
+      console.warn(
+        `\x1b[33mfound ${orphanedLinksCount} orphaned reference${
+          orphanedLinksCount > 1 ? 's' : ''
+        }\x1b[0m`
+      );
     }
 
     // Loading changelog
