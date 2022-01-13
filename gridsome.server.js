@@ -61,6 +61,7 @@ module.exports = function (api) {
   api.loadSource(async ({ addCollection, addSchemaTypes, addMetadata }) => {
     perfMon.mark('loadingSourcesStart');
     let orphanedLinksCount = 0;
+    let contentExcludedFromSitemap = 0;
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     addMetadata('settings', require('./gridsome.config').settings);
 
@@ -103,6 +104,7 @@ module.exports = function (api) {
 
       // Check if the page is excluded from sitemap
       if (content && excludedUrls.includes(pageUrl)) {
+        contentExcludedFromSitemap++;
         console.warn(
           '\x1b[33mwarn\x1b[0m',
           `- content page is excluded from sitemap: ${path}`
@@ -144,6 +146,13 @@ module.exports = function (api) {
         `\x1b[33mfound ${orphanedLinksCount} orphaned reference${
           orphanedLinksCount > 1 ? 's' : ''
         }\x1b[0m`
+      );
+    }
+    if (contentExcludedFromSitemap > 0) {
+      console.warn(
+        `\x1b[33m${contentExcludedFromSitemap} page${
+          contentExcludedFromSitemap > 1 ? 's' : ''
+        } excluded from sitemap\x1b[0m`
       );
     }
 
