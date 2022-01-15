@@ -1,4 +1,9 @@
 module.exports = [
+  // Special inner pages
+  '/translation-status-priority/',
+  '/translation-status-general/',
+
+  // Pages, not translated yet
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter/Segments/containing/',
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter/Segments/@@iterator/',
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/weekInfo/',
@@ -1448,7 +1453,6 @@ module.exports = [
   '/uk/docs/Web/CSS/CSS_Conditional_Rules/Using_Feature_Queries/',
   '/uk/docs/Web/CSS/CSS_Counter_Styles/Using_CSS_counters/',
   '/uk/docs/Web/CSS/CSS_Flexible_Box_Layout/Backwards_Compatibility_of_Flexbox/',
-  '/uk/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox/',
   '/uk/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax/',
   '/uk/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items/',
   '/uk/docs/Web/CSS/CSS_Flexible_Box_Layout/Ordering_Flex_Items/',
@@ -1501,7 +1505,6 @@ module.exports = [
   '/uk/docs/Web/CSS/Layout_cookbook/Sticky_footers/',
   '/uk/docs/Web/CSS/Media_Queries/Testing_media_queries/',
   '/uk/docs/Web/CSS/Media_Queries/Using_Media_Queries_for_Accessibility/',
-  '/uk/docs/Web/CSS/Media_Queries/Using_media_queries/',
   '/uk/docs/Web/Guide/AJAX/Community/',
   '/uk/docs/Web/Guide/AJAX/Getting_Started/',
   '/uk/docs/Web/Guide/AJAX/WAI_ARIA_Live_Regions_API_Support/',
@@ -1852,7 +1855,6 @@ module.exports = [
   '/uk/docs/Web/CSS/flex-grow/',
   '/uk/docs/Web/CSS/flex-shrink/',
   '/uk/docs/Web/CSS/flex-wrap/',
-  '/uk/docs/Web/CSS/font-family/',
   '/uk/docs/Web/CSS/font-kerning/',
   '/uk/docs/Web/CSS/font-smooth/',
   '/uk/docs/Web/CSS/font-stretch/',
@@ -1987,7 +1989,6 @@ module.exports = [
   '/uk/docs/Web/CSS/box-lines/',
   '/uk/docs/Web/CSS/box-orient/',
   '/uk/docs/Web/CSS/box-pack/',
-  '/uk/docs/Web/CSS/box-sizing/',
   '/uk/docs/Web/CSS/break-after/',
   '/uk/docs/Web/CSS/break-before/',
   '/uk/docs/Web/CSS/break-inside/',
