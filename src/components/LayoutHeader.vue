@@ -54,13 +54,13 @@
             title="Ми на GitHub"
             name="Github"
           >
-            <GithubIcon size="1.5x" />
+            <GithubIcon size="1.7" />
           </a>
 
           <ToggleDarkMode class="ml-2 sm:ml-8">
             <template slot="default" slot-scope="{ dark }">
-              <MoonIcon v-if="dark" size="1.5x" />
-              <SunIcon v-else size="1.5x" />
+              <MoonIcon v-if="dark" size="1.7" />
+              <SunIcon v-else size="1.7" />
             </template>
           </ToggleDarkMode>
         </div>
@@ -91,7 +91,9 @@ query {
 <script>
 import ToggleDarkMode from '@/components/ToggleDarkMode';
 import Logo from '@/components/Logo';
-import { SunIcon, MoonIcon, GithubIcon } from 'vue-feather-icons';
+import GithubIcon from '@/components/icons/Github';
+import SunIcon from '@/components/icons/Sun';
+import MoonIcon from '@/components/icons/Moon';
 
 const Search = () =>
   import(/* webpackChunkName: "search" */ '@/components/Search').catch(

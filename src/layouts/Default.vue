@@ -64,8 +64,8 @@
         "
         @click="sidebarOpen = !sidebarOpen"
       >
-        <XIcon v-if="sidebarOpen" />
-        <MenuIcon v-else />
+        <XIcon v-if="sidebarOpen" size="1.5" />
+        <MenuIcon v-else size="1.5" />
       </button>
     </div>
   </div>
@@ -83,7 +83,8 @@ query {
 import Sidebar from '@/components/Sidebar';
 import LayoutHeader from '@/components/LayoutHeader';
 import LayoutFooter from '@/components/LayoutFooter';
-import { MenuIcon, XIcon } from 'vue-feather-icons';
+import MenuIcon from '@/components/icons/Menu';
+import XIcon from '@/components/icons/X';
 
 export default {
   components: {

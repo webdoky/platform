@@ -88,8 +88,8 @@
           "
           @click="sidebarOpen = !sidebarOpen"
         >
-          <XIcon v-if="sidebarOpen" />
-          <MenuIcon v-else />
+          <XIcon v-if="sidebarOpen" size="1.5" />
+          <MenuIcon v-else size="1.5" />
         </button>
       </div>
     </main>
@@ -131,7 +131,8 @@ query ($id: ID!) {
 
 <script>
 import MdnOnThisPage from '@/components/MdnOnThisPage.vue';
-import { MenuIcon, XIcon } from 'vue-feather-icons';
+import MenuIcon from '@/components/icons/Menu';
+import XIcon from '@/components/icons/X';
 import WebdocNav from '@/components/WebdocNav.vue';
 import LayoutFooter from '@/components/LayoutFooter.vue';
 import EditOnGithub from '@/components/EditOnGithub.vue';

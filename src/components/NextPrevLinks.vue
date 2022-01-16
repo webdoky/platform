@@ -20,7 +20,7 @@
           transition-colors
         "
       >
-        <ArrowLeftIcon class="mr-2" size="1x" />
+        <ArrowLeftIcon class="mr-2" size="1.3" />
         {{ prev.title }}
       </g-link>
 
@@ -42,14 +42,15 @@
         "
       >
         {{ next.title }}
-        <ArrowRightIcon class="ml-2" size="1x" />
+        <ArrowRightIcon class="ml-2" size="1.3" />
       </g-link>
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowLeftIcon, ArrowRightIcon } from 'vue-feather-icons';
+import ArrowLeftIcon from '@/components/icons/ArrowLeft';
+import ArrowRightIcon from '@/components/icons/ArrowRight';
 
 export default {
   components: {

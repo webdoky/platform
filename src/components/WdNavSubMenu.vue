@@ -6,8 +6,8 @@
       @click="isExpanded = !isExpanded"
     >
       <div class="inline-block align-middle">
-        <ChevronDownIcon v-if="isExpanded" size="1.35x" />
-        <ChevronRightIcon v-else size="1.35x" />
+        <ChevronDownIcon v-if="isExpanded" size="1.5" />
+        <ChevronRightIcon v-else size="1.5" />
       </div>
       <slot name="header" />
     </h3>
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { ChevronRightIcon, ChevronDownIcon } from 'vue-feather-icons';
+import ChevronRightIcon from '@/components/icons/ChevronRight';
+import ChevronDownIcon from '@/components/icons/ChevronDown';
 
 export default {
   components: {

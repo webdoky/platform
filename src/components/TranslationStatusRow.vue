@@ -45,7 +45,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubIcon size="1.5x"
+          <GithubIcon size="1.7"
         /></a>
       </div>
     </td>
@@ -58,7 +58,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GlobeIcon size="1.5x" /></a
+          <GlobeIcon size="1.7" /></a
         ><a
           class="underline px-2"
           title="Переглянути сирці оригінальної статті на GitHub"
@@ -66,7 +66,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubIcon size="1.5x" />
+          <GithubIcon size="1.7" />
         </a>
       </div>
     </td>
@@ -77,14 +77,16 @@
         :classes="'px-2'"
         :title="'Скопіювати bash скрипт для ініціалізації файлу перекладу (скопіювати і виконати в корені репозиторію)'"
       >
-        <TerminalIcon size="1.5x" />
+        <TerminalIcon size="1.7" />
       </CopyToClipboard>
     </td>
   </tr>
 </template>
 
 <script>
-import { GithubIcon, TerminalIcon, GlobeIcon } from 'vue-feather-icons';
+import GlobeIcon from '@/components/icons/Globe';
+import GithubIcon from '@/components/icons/Github';
+import TerminalIcon from '@/components/icons/Terminal';
 import CopyToClipboard from '@/components/CopyToClipboard.vue';
 
 export default {

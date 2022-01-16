@@ -83,7 +83,7 @@
             name="originalLink"
           >
             <span>Оригінал статті</span>
-            <GlobeIcon size="1.5x" class="m-1" />
+            <GlobeIcon size="1.7" class="m-1" />
           </a>
         </div>
       </div>
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { GlobeIcon } from 'vue-feather-icons';
+import GlobeIcon from '@/components/icons/Globe';
 
 export default {
   components: {

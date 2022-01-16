@@ -20,7 +20,7 @@
           opacity-50
         "
       >
-        <SearchIcon size="1.25x" class="text-ui-typo" />
+        <SearchIcon size="1.4" class="text-ui-typo" />
       </div>
       <input
         ref="input"
@@ -93,7 +93,7 @@
           >
             <span class="flex items-center">
               {{ result.title }}
-              <ChevronRightIcon size="1x" class="mx-1" />
+              <ChevronRightIcon size="1.3" class="mx-1" />
               <span class="font-normal opacity-75">{{ result.path }}</span>
             </span>
           </g-link>
@@ -127,7 +127,8 @@ query Search {
 
 <script>
 import Fuse from 'fuse.js';
-import { ChevronRightIcon, SearchIcon } from 'vue-feather-icons';
+import SearchIcon from '@/components/icons/Search';
+import ChevronRightIcon from '@/components/icons/ChevronRight';
 
 export default {
   components: {
