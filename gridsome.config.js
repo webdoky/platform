@@ -1,4 +1,5 @@
 const excludedUrls = require('./noindex-urls');
+const tailwindcss = require('tailwindcss');
 // This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
@@ -93,4 +94,11 @@ module.exports = {
       use: 'gridsome-plugin-typescript',
     },
   ],
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: [tailwindcss],
+      },
+    },
+  },
 };

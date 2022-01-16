@@ -25,4 +25,12 @@ module.exports = {
   },
   variants: {},
   plugins: [],
+  purge: {
+    content: ['./src/**/*.vue', './src/**/*.html', './src/**/*.js'],
+    options: {
+      // whitelist: ['my-special-class', 'other-class'],
+      // whitelistPatterns: [/^fa-/, /^svg-inline--fa/],
+      // whitelistPatternsChildren: [/^token/, /^pre/, /^code/],
+    },
+  },
 };
