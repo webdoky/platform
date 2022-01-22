@@ -146,7 +146,7 @@ export default {
   computed: {
     results() {
       const fuse = new Fuse(this.headings, {
-        keys: ['title', 'path'],
+        keys: ['title', 'path', 'slug'],
         threshold: 0.25,
       });
 
@@ -164,9 +164,11 @@ export default {
 
       // Create the array of all headings of all pages.
       [...allDocPages, ...allMdnPages].forEach((page) => {
+        const parts = page.path.split('/');
         result.push({
           path: page.path,
           title: page.title,
+          slug: parts[parts.length - 1],
         });
       });
 
