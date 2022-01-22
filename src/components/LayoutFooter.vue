@@ -83,7 +83,7 @@
             name="originalLink"
           >
             <span>Оригінал статті</span>
-            <GlobeIcon size="1.7" class="m-1" />
+            <GlobeIcon :size="1.7" class-name="m-1" />
           </a>
         </div>
       </div>

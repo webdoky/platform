@@ -20,7 +20,7 @@
           transition-colors
         "
       >
-        <ArrowLeftIcon class="mr-2" size="1.3" />
+        <ArrowLeftIcon class-name="mr-2" :size="1.3" />
         {{ prev.title }}
       </g-link>
 
@@ -42,7 +42,7 @@
         "
       >
         {{ next.title }}
-        <ArrowRightIcon class="ml-2" size="1.3" />
+        <ArrowRightIcon class-name="ml-2" :size="1.3" />
       </g-link>
     </div>
   </div>

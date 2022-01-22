@@ -6,8 +6,8 @@
       @click="isExpanded = !isExpanded"
     >
       <div class="inline-block align-middle">
-        <ChevronDownIcon v-if="isExpanded" size="1.5" />
-        <ChevronRightIcon v-else size="1.5" />
+        <ChevronDownIcon v-if="isExpanded" :size="1.5" />
+        <ChevronRightIcon v-else :size="1.5" />
       </div>
       <slot name="header" />
     </h3>

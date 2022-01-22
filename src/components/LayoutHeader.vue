@@ -54,13 +54,13 @@
             title="Ми на GitHub"
             name="Github"
           >
-            <GithubIcon size="1.7" />
+            <GithubIcon :size="1.7" />
           </a>
 
           <ToggleDarkMode class="ml-2 sm:ml-8">
             <template slot="default" slot-scope="{ dark }">
-              <MoonIcon v-if="dark" size="1.7" />
-              <SunIcon v-else size="1.7" />
+              <MoonIcon v-if="dark" :size="1.7" />
+              <SunIcon v-else :size="1.7" />
             </template>
           </ToggleDarkMode>
         </div>

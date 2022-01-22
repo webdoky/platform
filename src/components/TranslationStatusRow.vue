@@ -45,7 +45,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubIcon size="1.7"
+          <GithubIcon :size="1.7"
         /></a>
       </div>
     </td>
@@ -58,7 +58,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GlobeIcon size="1.7" /></a
+          <GlobeIcon :size="1.7" /></a
         ><a
           class="underline px-2"
           title="Переглянути сирці оригінальної статті на GitHub"
@@ -66,7 +66,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubIcon size="1.7" />
+          <GithubIcon :size="1.7" />
         </a>
       </div>
     </td>
@@ -77,7 +77,7 @@
         :classes="'px-2'"
         :title="'Скопіювати bash скрипт для ініціалізації файлу перекладу (скопіювати і виконати в корені репозиторію)'"
       >
-        <TerminalIcon size="1.7" />
+        <TerminalIcon :size="1.7" />
       </CopyToClipboard>
     </td>
   </tr>

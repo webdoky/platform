@@ -4,7 +4,7 @@
     viewBox="0 0 24 24"
     :width="`${size}em`"
     :height="`${size}em`"
-    :class="this.class"
+    :class="className"
     fill="currentColor"
   >
     <path fill="none" d="M0 0h24v24H0z" />
@@ -21,7 +21,7 @@ export default {
       type: Number,
       default: 1,
     },
-    class: {
+    className: {
       type: String,
       default: '',
     },
