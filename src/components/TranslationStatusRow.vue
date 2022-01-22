@@ -72,6 +72,14 @@
     </td>
     <td>
       <CopyToClipboard
+        v-if="page.updatesInOriginalRepo.length"
+        :text="listOfChanges"
+        :classes="'px-2'"
+        :title="'Скопіювати перелік комітів зі змінами'"
+      >
+        <CopyIcon :size="1.7" />
+      </CopyToClipboard>
+      <CopyToClipboard
         v-if="!page.hasContent"
         :text="bashCommand"
         :classes="'px-2'"
@@ -84,6 +92,7 @@
 </template>
 
 <script>
+import CopyIcon from '@/components/icons/Copy';
 import GlobeIcon from '@/components/icons/Globe';
 import GithubIcon from '@/components/icons/Github';
 import TerminalIcon from '@/components/icons/Terminal';
@@ -95,6 +104,7 @@ export default {
     TerminalIcon,
     GlobeIcon,
     CopyToClipboard,
+    CopyIcon,
   },
 
   props: {
@@ -118,6 +128,27 @@ export default {
         .replace('/index.md', '');
 
       return `mkdir -p ${baseRepoPath}${tree} && wget -O ${baseRepoPath}${this.page.originalPath} ${this.linkToRawOriginalGithubContent}`;
+    },
+    listOfChanges() {
+      const {
+        page: { title, path, updatesInOriginalRepo: updates },
+      } = this;
+
+      const changes = updates
+        ? `(нові зміни: ${updates
+            .map(
+              (commit) =>
+                `[${commit.slice(
+                  0,
+                  7
+                )}](https://github.com/mdn/content/commit/${
+                  commit.split(' - ')[0]
+                })`
+            )
+            .join(', ')})`
+        : '';
+
+      return `[${title}](${path})${changes ? `, ${changes}` : ''}`;
     },
   },
 };
