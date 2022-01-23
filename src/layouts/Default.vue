@@ -64,8 +64,8 @@
         "
         @click="sidebarOpen = !sidebarOpen"
       >
-        <XIcon v-if="sidebarOpen" size="1.5" />
-        <MenuIcon v-else size="1.5" />
+        <XIcon v-if="sidebarOpen" :size="1.5" />
+        <MenuIcon v-else :size="1.5" />
       </button>
     </div>
   </div>
