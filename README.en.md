@@ -26,7 +26,7 @@ The content lies inside [this](https://github.com/webdoky/content) repository, a
     > If this command throws an error, make sure you have NodeJs, NPM and Yarn installed
 3. Update submodules with text content (if you haven't done this in the first step):
     ```sh
-    git submodule update --init --recursive
+    git submodule update --init --recursive --remote
     ```
 4. Now we set up the configuration so it points to proper content repositories. There is a configuration preset already, just rename it from `example-uk.env` to `.env`
     ```sh
