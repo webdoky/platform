@@ -109,6 +109,11 @@ module.exports = function (api) {
           '\x1b[33mwarn\x1b[0m',
           `- content page is excluded from sitemap: ${path}`
         );
+      } else if (!content && !excludedUrls.includes(pageUrl)) {
+        console.warn(
+          '\x1b[33mwarn\x1b[0m',
+          `- empty content page is included in sitemap: ${pageUrl}`
+        );
       }
 
       // Check if links in the content lead to sensible destinations
