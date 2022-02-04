@@ -1,5 +1,11 @@
 <template>
   <tr>
+    <!-- Generates string of status -->
+    <!-- <span>
+      - [{{ page.hasContent ? 'x' : ' ' }}] {{ page.popularity }} — [{{
+        page.title
+      }}](https://webdoky.org{{ page.path }})
+    </span> -->
     <td v-if="includePopularity">
       {{ page.popularity }}
     </td>
@@ -153,4 +159,3 @@ export default {
   },
 };
 </script>
-
