@@ -556,4 +556,11 @@ table {
     );
   }
 }
+
+// responsive stuff
+
+.properties td,
+.properties th {
+  @apply block;
+}
 </style>
