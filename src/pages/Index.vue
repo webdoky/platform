@@ -76,6 +76,10 @@
         </div>
 
         <div class="flex flex-col w-full px-4 mb-8 md:w-1/3">
+          <p class="text-lg text-left">
+            WebDoky (ВебДоки) — це проект, покликаний зробит вміст MDN Web Docs
+            доступним українською мовою.
+          </p>
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">
             Долучитись
           </h3>

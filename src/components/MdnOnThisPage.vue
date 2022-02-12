@@ -3,6 +3,8 @@
     class="
       mt-8
       pr-2
+      hidden
+      md:block
       sm:pl-4
       md:pl-6 md:pt-12
       lg:pl-8
