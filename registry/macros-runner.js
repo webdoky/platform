@@ -40,13 +40,12 @@ const runMacros = (content, context, navigationOnly = false) => {
           );
         }
       } else {
-        failedMacros[functionName];
         if (failedMacros[functionName]) {
           failedMacros[functionName].count += 1;
           failedMacros[functionName].lastUsedExpression = match;
         } else {
           failedMacros[functionName] = {
-            count: 0,
+            count: 1,
             lastUsedExpression: match,
           };
         }
@@ -73,7 +72,7 @@ const runMacros = (content, context, navigationOnly = false) => {
     console.warn(`Got ${numberOfFailedMacros} failed macros`);
     Object.entries(failedMacros).forEach(([functionName, entry]) => {
       console.warn(
-        `${entry.count} failed ${functionName} macros, the last expression was: ${entry.lastUsedExpression}`
+        `\x1b[33m${entry.count} failed ${functionName} macros, the last expression was: ${entry.lastUsedExpression}\x1b[0m`
       );
     });
   }
