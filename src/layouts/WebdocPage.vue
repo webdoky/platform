@@ -152,7 +152,7 @@ html[lights-out] {
   --icon-browser-deno: url('/icons-dark/deno-fill.svg');
   --icon-browser-nodejs: url('/icons-dark/nodejs-line.svg');
 
-  pre[class*='language-'],
+  pre,
   code[class*='language-'] {
     @apply bg-ui-border;
   }
@@ -283,12 +283,12 @@ blockquote {
 }
 
 code {
-  @apply px-1 py-1 text-ui-typo bg-ui-sidebar font-mono border-b border-r border-ui-border text-sm rounded;
+  @apply text-ui-typo bg-ui-sidebar font-mono border-b border-r border-ui-border text-sm rounded;
 }
 
-pre[class*='language-'] {
+pre {
   z-index: 0;
-  @apply max-w-full overflow-x-auto rounded;
+  @apply px-5 py-4 max-w-full overflow-x-auto rounded;
 
   & + p {
     @apply mt-4;

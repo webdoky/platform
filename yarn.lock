@@ -2056,15 +2056,16 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@webdoky/yari-ports@2.12.4":
-  version "2.12.4"
-  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-2.12.4.tgz#d056bf5e9353f86f45ab07868a45b4738dcf7a2b"
-  integrity sha512-QKgVMVgptPy12ILKuB0kKkGSKQJeP5t/4JkyxByDuMFG3IRj9k+i9CMp7tGFt296hVSt7gMPhavpbMS06KF+Ng==
+"@webdoky/yari-ports@2.15.0":
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/@webdoky/yari-ports/-/yari-ports-2.15.0.tgz#5661706670cbe18968ce7de7a0e06f3ccab7a6e8"
+  integrity sha512-Pn38PGUy/8Gpgd0RZ2elIg5aVSsltQz4hxrEIpzjtCTQ3QPlTb9Hg8vYB4f5uK3wQvo8mCnOVvI4q+p/O1NfBw==
   dependencies:
     "@mdn/browser-compat-data" "^4.1.2"
     "@mdn/yari" "^0.4.804"
     ava "^3.15.0"
     browser-specs "^2.19.3"
+    mdn-data "^2.0.26"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -9133,6 +9134,11 @@ mdn-data@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.4.tgz#699b3c38ac6f1d728091a64650b65d388502fd5b"
   integrity sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
+
+mdn-data@^2.0.26:
+  version "2.0.26"
+  resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.26.tgz#683654b390ea9c31a94aa95078347afd3e015649"
+  integrity sha512-agAtU1PRFd+fbo4Rog2A5DLnxmWvJ5+ZgbTekPj0Fil7mJFalWkg7VRyJW2FpGNc5u7VfiPoQ85u3gzp2p9iFQ==
 
 mdurl@^1.0.0, mdurl@^1.0.1:
   version "1.0.1"
