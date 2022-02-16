@@ -557,6 +557,12 @@ table {
   }
 }
 
+// properties table
+
+table.properties {
+  min-width: 100%;
+}
+
 // responsive stuff
 
 .properties td,
