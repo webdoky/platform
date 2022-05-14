@@ -2391,4 +2391,6 @@ module.exports = [
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Tag/type/',
   '/uk/docs/Web/CSS/color_value/color_keywords/',
   '/uk/docs/Web/CSS/CSS_Colors/Applying_color/',
+  '/uk/docs/Web/CSS/hex-color/',
+  '/uk/docs/Web/JavaScript/Reference/Global_Objects/Atomics/waitAsync/',
 ];
