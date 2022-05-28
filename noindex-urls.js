@@ -2393,4 +2393,6 @@ module.exports = [
   '/uk/docs/Web/CSS/CSS_Colors/Applying_color/',
   '/uk/docs/Web/CSS/hex-color/',
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/Atomics/waitAsync/',
+  '/uk/docs/Web/CSS/important/',
+  '/uk/docs/Web/JavaScript/Reference/Global_Objects/Error/cause/',
 ];
