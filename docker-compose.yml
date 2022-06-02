@@ -1,47 +1,52 @@
 version: "2"
 
 services:
-  nginx:
-    build: ./infra/nginx
-    image: devcomanda/nginx
-    env_file:
-      - ./config.env
-    volumes:
-      - devcomanda_nginx_ssl:/etc/nginx/ssl
-      - devcomanda_certbot_certs:/etc/letsencrypt
-      - test1_devcomanda_com_certbot:/var/www/certbot/webdoky.org
-      - ./dist:/var/www/html/webdoky.org
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "webdoky-traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # Uncomment if need to test SSL generation
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=${DNS_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
-    restart: always
-
-  certbot:
-    build: ./infra/certbot
-    image: devcomanda/certbot
-    env_file:
-      - ./config.env
     volumes:
-      - devcomanda_certbot_certs:/etc/letsencrypt
-      - test1_devcomanda_com_certbot:/var/www/certbot/webdoky.org
-    depends_on:
-      - nginx
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  cron:
-    build: ./infra/cron
-    image: devcomanda/cron
-    environment:
-      COMPOSE_PROJECT_NAME: "webdoky"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./:/workdir:ro
-    depends_on:
-      - nginx
-      - certbot
+  # used in ACME challenge for performing HTTP challenge by certbot
+  whoami:
+    image: "traefik/whoami"
+    container_name: "webdoky-traefik_whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`${HOST_NAME}`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
 
-volumes:
-  devcomanda_nginx_ssl:
-    external: true
-  devcomanda_certbot_certs:
-    external: true
-  test1_devcomanda_com_certbot:
+  nginx:
+    image: flashspys/nginx-static
+    container_name: nginx
+    volumes: 
+      - ./dist:/static
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.client-https.redirectscheme.scheme=https" # register middleware
+      - "traefik.http.routers.client-http.entrypoints=web"
+      - "traefik.http.routers.client-http.rule=Host(`${HOST_NAME}`)"
+      - "traefik.http.routers.client-http.middlewares=client-https" # activate middleware
+      - "traefik.http.routers.client.entrypoints=websecure"
+      - "traefik.http.routers.client.rule=Host(`${HOST_NAME}`)"
+      - "traefik.http.routers.client.tls=true"
+      - "traefik.http.routers.client.tls.certresolver=myresolver"
+      - "traefik.port=80" # tell traefik to serve both http and https from this port in container
