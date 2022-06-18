@@ -1252,7 +1252,6 @@ module.exports = [
   '/uk/docs/Web/HTML/Element/dfn/',
   '/uk/docs/Web/HTML/Element/dialog/',
   '/uk/docs/Web/HTML/Element/dir/',
-  '/uk/docs/Web/HTML/Element/div/',
   '/uk/docs/Web/HTML/Element/dl/',
   '/uk/docs/Web/HTML/Element/dt/',
   '/uk/docs/Web/HTML/Global_attributes/dir/',
@@ -1289,7 +1288,6 @@ module.exports = [
   '/uk/docs/Web/HTML/Element/col/',
   '/uk/docs/Web/HTML/Element/colgroup/',
   '/uk/docs/Web/HTML/Element/content/',
-  '/uk/docs/Web/HTML/Global_attributes/class/',
   '/uk/docs/Web/HTML/Global_attributes/contenteditable/',
   '/uk/docs/Web/HTML/Global_attributes/contextmenu/',
   '/uk/docs/Web/SVG/Attribute/baseline-shift/',
@@ -2389,4 +2387,6 @@ module.exports = [
   '/uk/docs/Web/CSS/color_value/oklch/',
   '/uk/docs/Web/CSS/color_value/oklab/',
   '/uk/docs/Web/JavaScript/Reference/Global_Objects/Promise/@@species/',
+  '/uk/docs/Web/JavaScript/Reference/Global_Objects/Array/group/',
+  '/uk/docs/Web/JavaScript/Reference/Global_Objects/Array/groupToMap/',
 ];
